@@ -1,0 +1,147 @@
+[2023-12-03 20:55:25,779][  INFO][PID:903095] Marking build as starting
+[2023-12-03 20:55:25,840][  INFO][PID:903095] Trying to allocate VM
+[2023-12-03 20:55:28,921][  INFO][PID:903095] Allocated host ResallocHost, ticket_id=68334, hostname=2620:52:3:1:dead:beef:cafe:c189
+[2023-12-03 20:55:28,923][  INFO][PID:903095] Allocating ssh connection to builder
+[2023-12-03 20:55:28,923][  INFO][PID:903095] Checking that builder machine is OK
+[2023-12-03 20:55:28,938][  INFO][PID:903095] Popen command started: ssh -F /home/copr/.ssh/config mockbuilder@2620:52:3:1:dead:beef:cafe:c189 'rpm -q copr-rpmbuild --qf "%{VERSION}
+"'
+[2023-12-03 20:55:29,407][  INFO][PID:903095] Filling build.info file with builder info
+[2023-12-03 20:55:29,409][  INFO][PID:903095] Sending build state back to frontend: {
+    "builds": [
+        {
+            "timeout": 108000,
+            "frontend_base_url": "https://copr.fedorainfracloud.org",
+            "memory_reqs": null,
+            "enable_net": true,
+            "project_owner": "@copr",
+            "project_name": "copr-pull-requests",
+            "project_dirname": "copr-pull-requests:pr:2977",
+            "submitter": null,
+            "ended_on": null,
+            "started_on": 1701636929.4093444,
+            "submitted_on": null,
+            "status": 3,
+            "chroot": "srpm-builds",
+            "arch": "x86_64",
+            "buildroot_pkgs": null,
+            "task_id": "6720971",
+            "build_id": 6720971,
+            "package_name": "copr-frontend",
+            "package_version": null,
+            "git_repo": null,
+            "git_hash": null,
+            "git_branch": null,
+            "source_type": 9,
+            "source_json": "{\"script\": \"#! /bin/bash -x\\n\\nset -e\\n\\nclone_url_parent=https://github.com/fedora-copr/copr\\n\\nworkdir=$(basename \\\"$clone_url_parent\\\")\\nworkdir=${workdir%%.git}\\n\\nhook_payload=$(readlink -f \\\"${HOOK_PAYLOAD-hook_payload}\\\")\\n\\nmkdir -p \\\"$COPR_RESULTDIR\\\"\\nresultdir=$(readlink -f \\\"$COPR_RESULTDIR\\\")\\n\\n# clone the helper scripts when needed, and add to PATH\\ntest -d copr-ci-tooling \\\\\\n    || git clone --depth 1 https://github.com/praiskup/copr-ci-tooling.git\\nexport PATH=\\\"$PWD/copr-ci-tooling:$PATH\\\"\\n\\n# clone the tested project\\ngit clone \\\\\\n    --recursive \\\\\\n    --no-single-branch \\\\\\n    \\\"$clone_url_parent\\\"\\n\\n# checkout requested revision\\ncd \\\"$workdir\\\"\\n\\nwebhook-checkout \\\"$hook_payload\\\"\\n\\nbasename=$(basename \\\"$resultdir\\\")\\ncd \\\"$basename\\\"\\n\\ntito build --srpm --test -o \\\"$resultdir\\\"\\n\\ncd \\\"$resultdir\\\"\\nbsdtar -xf *.src.rpm\\n\", \"chroot\": \"fedora-39-x86_64\", \"builddeps\": \"bsdtar tito\", \"resultdir\": \"results/frontend\", \"tmp\": \"tmpw8jg98a7\", \"hook_data\": true}",
+            "pkg_name": null,
+            "pkg_main_version": null,
+            "pkg_epoch": null,
+            "pkg_release": null,
+            "srpm_url": null,
+            "uses_devel_repo": null,
+            "sandbox": "@copr/copr-pull-requests--12b8f529-290f-4c32-99b2-67a6cf85c248",
+            "results": null,
+            "appstream": false,
+            "background": true,
+            "repos": [],
+            "destdir": "/var/lib/copr/public_html/results/@copr/copr-pull-requests:pr:2977",
+            "results_repo_url": "https://download.copr.fedorainfracloud.org/results/@copr/copr-pull-requests:pr:2977",
+            "result_dir": "06720971",
+            "built_packages": "",
+            "tags": [
+                "arch_x86_64"
+            ],
+            "id": 6720971,
+            "mockchain_macros": {
+                "copr_username": "@copr",
+                "copr_projectname": "copr-pull-requests",
+                "vendor": "Fedora Project COPR (@copr/copr-pull-requests)"
+            }
+        }
+    ]
+}
+[2023-12-03 20:55:29,468][  INFO][PID:903095] Sending fedora-messaging bus message in build.start
+[2023-12-03 20:55:30,256][  INFO][PID:903095] Sending fedora-messaging bus message in chroot.start
+[2023-12-03 20:55:30,286][  INFO][PID:903095] Starting remote build: copr-rpmbuild --verbose --drop-resultdir --srpm --task-url https://copr.fedorainfracloud.org/backend/get-srpm-build-task/6720971 --detached
+[2023-12-03 20:55:30,302][  INFO][PID:903095] Popen command started: ssh -F /home/copr/.ssh/config mockbuilder@2620:52:3:1:dead:beef:cafe:c189 'copr-rpmbuild --verbose --drop-resultdir --srpm --task-url https://copr.fedorainfracloud.org/backend/get-srpm-build-task/6720971 --detached'
+[2023-12-03 20:55:30,969][  INFO][PID:903095] Downloading the builder-live.log file, attempt 1
+[2023-12-03 20:55:30,985][  INFO][PID:903095] Popen command started: ssh -F /home/copr/.ssh/config mockbuilder@2620:52:3:1:dead:beef:cafe:c189 copr-rpmbuild-log
+[2023-12-03 20:57:20,622][  INFO][PID:903095] Downloading results from builder
+[2023-12-03 20:57:20,623][  INFO][PID:903095] rsyncing of mockbuilder@[2620:52:3:1:dead:beef:cafe:c189]:/var/lib/copr-rpmbuild/results/ to /var/lib/copr/public_html/results/@copr/copr-pull-requests:pr:2977/srpm-builds/06720971 started
+[2023-12-03 20:57:20,636][  INFO][PID:903095] Popen command started: /usr/bin/rsync -rltDvH --chmod=D755,F644 -e 'ssh -F /home/copr/.ssh/config' mockbuilder@[2620:52:3:1:dead:beef:cafe:c189]:/var/lib/copr-rpmbuild/results/ /var/lib/copr/public_html/results/@copr/copr-pull-requests:pr:2977/srpm-builds/06720971/ &> /var/lib/copr/public_html/results/@copr/copr-pull-requests:pr:2977/srpm-builds/06720971/build-06720971.rsync.log
+[2023-12-03 20:57:21,075][  INFO][PID:903095] rsyncing finished.
+[2023-12-03 20:57:21,076][  INFO][PID:903095] Releasing VM back to pool
+[2023-12-03 20:57:21,086][  INFO][PID:903095] Searching for 'success' file in resultdir
+[2023-12-03 20:57:21,087][  INFO][PID:903095] Getting build details
+[2023-12-03 20:57:21,088][  INFO][PID:903095] Retrieving SRPM info from /var/lib/copr/public_html/results/@copr/copr-pull-requests:pr:2977/srpm-builds/06720971
+[2023-12-03 20:57:21,089][  INFO][PID:903095] SRPM URL: https://download.copr.fedorainfracloud.org/results/@copr/copr-pull-requests:pr:2977/srpm-builds/06720971/copr-frontend-1.202-1.git.13.6e59e72.src.rpm
+[2023-12-03 20:57:21,089][  INFO][PID:903095] build details: {'srpm_url': 'https://download.copr.fedorainfracloud.org/results/@copr/copr-pull-requests:pr:2977/srpm-builds/06720971/copr-frontend-1.202-1.git.13.6e59e72.src.rpm', 'pkg_name': 'copr-frontend', 'pkg_version': '1.202-1.git.13.6e59e72'}
+[2023-12-03 20:57:21,090][  INFO][PID:903095] Finished build: id=6720971 failed=False timeout=108000 destdir=/var/lib/copr/public_html/results/@copr/copr-pull-requests:pr:2977 chroot=srpm-builds 
+[2023-12-03 20:57:21,093][  INFO][PID:903095] Worker succeeded build, took 111.68380761146545
+[2023-12-03 20:57:21,094][  INFO][PID:903095] Sending build state back to frontend: {
+    "builds": [
+        {
+            "timeout": 108000,
+            "frontend_base_url": "https://copr.fedorainfracloud.org",
+            "memory_reqs": null,
+            "enable_net": true,
+            "project_owner": "@copr",
+            "project_name": "copr-pull-requests",
+            "project_dirname": "copr-pull-requests:pr:2977",
+            "submitter": null,
+            "ended_on": 1701637041.093152,
+            "started_on": 1701636929.4093444,
+            "submitted_on": null,
+            "status": 1,
+            "chroot": "srpm-builds",
+            "arch": "x86_64",
+            "buildroot_pkgs": null,
+            "task_id": "6720971",
+            "build_id": 6720971,
+            "package_name": "copr-frontend",
+            "package_version": null,
+            "git_repo": null,
+            "git_hash": null,
+            "git_branch": null,
+            "source_type": 9,
+            "source_json": "{\"script\": \"#! /bin/bash -x\\n\\nset -e\\n\\nclone_url_parent=https://github.com/fedora-copr/copr\\n\\nworkdir=$(basename \\\"$clone_url_parent\\\")\\nworkdir=${workdir%%.git}\\n\\nhook_payload=$(readlink -f \\\"${HOOK_PAYLOAD-hook_payload}\\\")\\n\\nmkdir -p \\\"$COPR_RESULTDIR\\\"\\nresultdir=$(readlink -f \\\"$COPR_RESULTDIR\\\")\\n\\n# clone the helper scripts when needed, and add to PATH\\ntest -d copr-ci-tooling \\\\\\n    || git clone --depth 1 https://github.com/praiskup/copr-ci-tooling.git\\nexport PATH=\\\"$PWD/copr-ci-tooling:$PATH\\\"\\n\\n# clone the tested project\\ngit clone \\\\\\n    --recursive \\\\\\n    --no-single-branch \\\\\\n    \\\"$clone_url_parent\\\"\\n\\n# checkout requested revision\\ncd \\\"$workdir\\\"\\n\\nwebhook-checkout \\\"$hook_payload\\\"\\n\\nbasename=$(basename \\\"$resultdir\\\")\\ncd \\\"$basename\\\"\\n\\ntito build --srpm --test -o \\\"$resultdir\\\"\\n\\ncd \\\"$resultdir\\\"\\nbsdtar -xf *.src.rpm\\n\", \"chroot\": \"fedora-39-x86_64\", \"builddeps\": \"bsdtar tito\", \"resultdir\": \"results/frontend\", \"tmp\": \"tmpw8jg98a7\", \"hook_data\": true}",
+            "pkg_name": "copr-frontend",
+            "pkg_main_version": null,
+            "pkg_epoch": null,
+            "pkg_release": null,
+            "srpm_url": "https://download.copr.fedorainfracloud.org/results/@copr/copr-pull-requests:pr:2977/srpm-builds/06720971/copr-frontend-1.202-1.git.13.6e59e72.src.rpm",
+            "uses_devel_repo": null,
+            "sandbox": "@copr/copr-pull-requests--12b8f529-290f-4c32-99b2-67a6cf85c248",
+            "results": {
+                "name": "copr-frontend",
+                "epoch": null,
+                "version": "1.202",
+                "release": "1.git.13.6e59e72",
+                "exclusivearch": [],
+                "excludearch": []
+            },
+            "appstream": false,
+            "background": true,
+            "repos": [],
+            "destdir": "/var/lib/copr/public_html/results/@copr/copr-pull-requests:pr:2977",
+            "results_repo_url": "https://download.copr.fedorainfracloud.org/results/@copr/copr-pull-requests:pr:2977",
+            "result_dir": "06720971",
+            "built_packages": "",
+            "tags": [
+                "arch_x86_64"
+            ],
+            "pkg_version": "1.202-1.git.13.6e59e72",
+            "id": 6720971,
+            "mockchain_macros": {
+                "copr_username": "@copr",
+                "copr_projectname": "copr-pull-requests",
+                "vendor": "Fedora Project COPR (@copr/copr-pull-requests)"
+            }
+        }
+    ]
+}
+[2023-12-03 20:57:21,158][  INFO][PID:903095] Sending fedora-messaging bus message in build.end
+[2023-12-03 20:57:21,185][  INFO][PID:903095] Compressing /var/lib/copr/public_html/results/@copr/copr-pull-requests:pr:2977/srpm-builds/06720971/builder-live.log by gzip
+[2023-12-03 20:57:21,199][  INFO][PID:903095] Running command 'gzip /var/lib/copr/public_html/results/@copr/copr-pull-requests:pr:2977/srpm-builds/06720971/builder-live.log' as PID 914754
+[2023-12-03 20:57:21,205][  INFO][PID:903095] Finished after 0 seconds with exit code 0 (gzip /var/lib/copr/public_html/results/@copr/copr-pull-requests:pr:2977/srpm-builds/06720971/builder-live.log)
+[2023-12-03 20:57:21,206][  INFO][PID:903095] Compressing /var/lib/copr/public_html/results/@copr/copr-pull-requests:pr:2977/srpm-builds/06720971/backend.log by gzip

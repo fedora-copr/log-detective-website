@@ -1,0 +1,2645 @@
+Warning: Permanently added '2620:52:3:1:dead:beef:cafe:c189' (ED25519) to the list of known hosts.
+
+You can reproduce this build on your computer by running:
+
+  sudo dnf install copr-rpmbuild
+  /usr/bin/copr-rpmbuild --verbose --drop-resultdir --srpm --task-url https://copr.fedorainfracloud.org/backend/get-srpm-build-task/6720971
+
+
+Version: 0.70
+PID: 6179
+Logging PID: 6180
+Task:
+{'appstream': False,
+ 'background': True,
+ 'build_id': 6720971,
+ 'chroot': 'fedora-39-x86_64',
+ 'package_name': 'copr-frontend',
+ 'project_dirname': 'copr-pull-requests:pr:2977',
+ 'project_name': 'copr-pull-requests',
+ 'project_owner': '@copr',
+ 'repos': [],
+ 'sandbox': '@copr/copr-pull-requests--b42a21a2-aa54-473c-8a3c-866dc7fc84a3',
+ 'source_json': {'builddeps': 'bsdtar tito',
+                 'chroot': 'fedora-39-x86_64',
+                 'hook_data': True,
+                 'resultdir': 'results/frontend',
+                 'script': '#! /bin/bash -x\n'
+                           '\n'
+                           'set -e\n'
+                           '\n'
+                           'clone_url_parent=https://github.com/fedora-copr/copr\n'
+                           '\n'
+                           'workdir=$(basename "$clone_url_parent")\n'
+                           'workdir=${workdir%%.git}\n'
+                           '\n'
+                           'hook_payload=$(readlink -f "${HOOK_PAYLOAD-hook_payload}")\n'
+                           '\n'
+                           'mkdir -p "$COPR_RESULTDIR"\n'
+                           'resultdir=$(readlink -f "$COPR_RESULTDIR")\n'
+                           '\n'
+                           '# clone the helper scripts when needed, and add to PATH\n'
+                           'test -d copr-ci-tooling \\\n'
+                           '    || git clone --depth 1 https://github.com/praiskup/copr-ci-tooling.git\n'
+                           'export PATH="$PWD/copr-ci-tooling:$PATH"\n'
+                           '\n'
+                           '# clone the tested project\n'
+                           'git clone \\\n'
+                           '    --recursive \\\n'
+                           '    --no-single-branch \\\n'
+                           '    "$clone_url_parent"\n'
+                           '\n'
+                           '# checkout requested revision\n'
+                           'cd "$workdir"\n'
+                           '\n'
+                           'webhook-checkout "$hook_payload"\n'
+                           '\n'
+                           'basename=$(basename "$resultdir")\n'
+                           'cd "$basename"\n'
+                           '\n'
+                           'tito build --srpm --test -o "$resultdir"\n'
+                           '\n'
+                           'cd "$resultdir"\n'
+                           'bsdtar -xf *.src.rpm\n',
+                 'tmp': 'tmpw8jg98a7'},
+ 'source_type': 9,
+ 'submitter': None,
+ 'task_id': '6720971'}
+
+Running (timeout=3600): unbuffer copr-sources-custom --workdir /workdir --mock-config /var/lib/copr-rpmbuild/results/mock-config.cfg --script /var/lib/copr-rpmbuild/workspace/workdir-hbhv3jjy/script --builddeps 'bsdtar tito' --hook-payload-file /var/lib/copr-rpmbuild/results/hook_payload --resultdir results/frontend --env COPR_OWNER=@copr --env COPR_PROJECT=copr-pull-requests --env COPR_PACKAGE=copr-frontend
+INFO:__main__:Working in '/workdir'
+INFO:__main__:Results should be created in '/workdir/results/frontend'
+INFO:__main__:running command: mock -r /var/lib/copr-rpmbuild/results/mock-config.cfg --init
+INFO: mock.py version 5.2 starting (python version = 3.11.3, NVR = mock-5.2-1.fc38), args: /usr/libexec/mock/mock -r /var/lib/copr-rpmbuild/results/mock-config.cfg --init
+Start(bootstrap): init plugins
+INFO: tmpfs initialized
+INFO: selinux enabled
+INFO: chroot_scan: initialized
+INFO: compress_logs: initialized
+Finish(bootstrap): init plugins
+Start: init plugins
+INFO: tmpfs initialized
+INFO: selinux enabled
+INFO: chroot_scan: initialized
+INFO: compress_logs: initialized
+Finish: init plugins
+INFO: Signal handler active
+Start: run
+Start: clean chroot
+Finish: clean chroot
+Mock Version: 5.2
+INFO: Mock Version: 5.2
+Start(bootstrap): chroot init
+INFO: mounting tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64-bootstrap/root.
+INFO: calling preinit hooks
+INFO: enabled root cache
+INFO: enabled package manager cache
+Start(bootstrap): cleaning package manager metadata
+Finish(bootstrap): cleaning package manager metadata
+INFO: Guessed host environment type: unknown
+INFO: Using bootstrap image: registry.fedoraproject.org/fedora:39
+INFO: Pulling image: registry.fedoraproject.org/fedora:39
+INFO: Copy content of container registry.fedoraproject.org/fedora:39 to /var/lib/mock/copr-custom-fedora-39-x86_64-bootstrap/root
+INFO: Checking that registry.fedoraproject.org/fedora:39 image matches host's architecture
+INFO: mounting registry.fedoraproject.org/fedora:39 with podman image mount
+INFO: image registry.fedoraproject.org/fedora:39 as /var/lib/containers/storage/overlay/8ff7ad910417a7b8a49019008335921d2aac0e3304a19ce258deabf431e59801/merged
+INFO: umounting image registry.fedoraproject.org/fedora:39 (/var/lib/containers/storage/overlay/8ff7ad910417a7b8a49019008335921d2aac0e3304a19ce258deabf431e59801/merged) with podman image umount
+INFO: Package manager dnf detected and used (fallback)
+INFO: Not updating bootstrap chroot, bootstrap_image_ready=True
+Start(bootstrap): creating root cache
+Finish(bootstrap): creating root cache
+Finish(bootstrap): chroot init
+Start: chroot init
+INFO: mounting tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64/root.
+INFO: calling preinit hooks
+INFO: enabled root cache
+INFO: enabled package manager cache
+Start: cleaning package manager metadata
+Finish: cleaning package manager metadata
+INFO: enabled HW Info plugin
+INFO: Package manager dnf detected and used (direct choice)
+Start: installing minimal buildroot with dnf
+No matches found for the following disable plugin patterns: local, spacewalk, versionlock
+fedora                                          6.8 MB/s |  89 MB     00:13    
+updates                                          18 MB/s |  19 MB     00:01    
+Last metadata expiration check: 0:00:05 ago on Sun Dec  3 20:56:15 2023.
+Dependencies resolved.
+================================================================================
+ Package                       Arch   Version                     Repo     Size
+================================================================================
+Installing group/module packages:
+ bash                          x86_64 5.2.21-1.fc39               updates 1.8 M
+ bzip2                         x86_64 1.0.8-16.fc39               fedora   52 k
+ coreutils                     x86_64 9.3-4.fc39                  fedora  1.1 M
+ cpio                          x86_64 2.14-4.fc39                 fedora  279 k
+ diffutils                     x86_64 3.10-3.fc39                 fedora  398 k
+ fedora-release-common         noarch 39-34                       updates  19 k
+ findutils                     x86_64 1:4.9.0-5.fc39              fedora  492 k
+ gawk                          x86_64 5.2.2-2.fc39                fedora  1.1 M
+ glibc-minimal-langpack        x86_64 2.38-11.fc39                updates  70 k
+ grep                          x86_64 3.11-3.fc39                 fedora  298 k
+ gzip                          x86_64 1.12-6.fc39                 fedora  166 k
+ info                          x86_64 7.0.3-3.fc39                fedora  182 k
+ patch                         x86_64 2.7.6-22.fc39               fedora  125 k
+ redhat-rpm-config             noarch 262-1.fc39                  fedora   84 k
+ rpm-build                     x86_64 4.19.0-1.fc39               fedora   78 k
+ sed                           x86_64 4.8-14.fc39                 fedora  306 k
+ shadow-utils                  x86_64 2:4.14.0-2.fc39             updates 1.3 M
+ tar                           x86_64 2:1.35-2.fc39               fedora  864 k
+ unzip                         x86_64 6.0-62.fc39                 fedora  184 k
+ util-linux                    x86_64 2.39.2-1.fc39               fedora  1.2 M
+ which                         x86_64 2.21-40.fc39                fedora   42 k
+ xz                            x86_64 5.4.4-1.fc39                fedora  556 k
+Installing dependencies:
+ alternatives                  x86_64 1.25-1.fc39                 fedora   39 k
+ ansible-srpm-macros           noarch 1-11.fc39                   fedora   21 k
+ audit-libs                    x86_64 3.1.2-5.fc39                updates 117 k
+ authselect                    x86_64 1.4.3-1.fc39                fedora  149 k
+ authselect-libs               x86_64 1.4.3-1.fc39                fedora  249 k
+ basesystem                    noarch 11-18.fc39                  fedora  7.2 k
+ binutils                      x86_64 2.40-13.fc39                fedora  5.6 M
+ binutils-gold                 x86_64 2.40-13.fc39                fedora  797 k
+ bzip2-libs                    x86_64 1.0.8-16.fc39               fedora   41 k
+ ca-certificates               noarch 2023.2.60_v7.0.306-2.fc39   fedora  837 k
+ coreutils-common              x86_64 9.3-4.fc39                  fedora  2.1 M
+ cracklib                      x86_64 2.9.11-2.fc39               fedora   94 k
+ crypto-policies               noarch 20231113-1.gitb402e82.fc39  updates  99 k
+ curl                          x86_64 8.2.1-3.fc39                fedora  345 k
+ cyrus-sasl-lib                x86_64 2.1.28-11.fc39              fedora  793 k
+ debugedit                     x86_64 5.0-10.fc39                 fedora   77 k
+ dwz                           x86_64 0.15-3.fc39                 fedora  134 k
+ ed                            x86_64 1.19-4.fc39                 fedora   79 k
+ efi-srpm-macros               noarch 5-9.fc39                    fedora   22 k
+ elfutils                      x86_64 0.190-1.fc39                updates 550 k
+ elfutils-debuginfod-client    x86_64 0.190-1.fc39                updates  38 k
+ elfutils-default-yama-scope   noarch 0.190-1.fc39                updates  14 k
+ elfutils-libelf               x86_64 0.190-1.fc39                updates 195 k
+ elfutils-libs                 x86_64 0.190-1.fc39                updates 260 k
+ fedora-gpg-keys               noarch 39-1                        fedora  130 k
+ fedora-release                noarch 39-34                       updates 8.4 k
+ fedora-release-identity-basic noarch 39-34                       updates 9.2 k
+ fedora-repos                  noarch 39-1                        fedora  9.3 k
+ file                          x86_64 5.44-5.fc39                 fedora   49 k
+ file-libs                     x86_64 5.44-5.fc39                 fedora  729 k
+ filesystem                    x86_64 3.18-6.fc39                 fedora  1.1 M
+ fonts-srpm-macros             noarch 1:2.0.5-12.fc39             fedora   26 k
+ fpc-srpm-macros               noarch 1.3-8.fc39                  fedora  7.4 k
+ gdb-minimal                   x86_64 13.2-11.fc39                updates 4.2 M
+ gdbm-libs                     x86_64 1:1.23-4.fc39               fedora   56 k
+ ghc-srpm-macros               noarch 1.6.1-2.fc39                fedora  7.8 k
+ glibc                         x86_64 2.38-11.fc39                updates 2.2 M
+ glibc-common                  x86_64 2.38-11.fc39                updates 351 k
+ glibc-gconv-extra             x86_64 2.38-11.fc39                updates 1.6 M
+ gmp                           x86_64 1:6.2.1-5.fc39              fedora  313 k
+ gnat-srpm-macros              noarch 6-3.fc39                    fedora  8.8 k
+ go-srpm-macros                noarch 3.3.1-1.fc39                updates  28 k
+ jansson                       x86_64 2.13.1-7.fc39               fedora   44 k
+ kernel-srpm-macros            noarch 1.0-20.fc39                 fedora   10 k
+ keyutils-libs                 x86_64 1.6.1-7.fc39                fedora   31 k
+ krb5-libs                     x86_64 1.21.2-2.fc39               updates 764 k
+ libacl                        x86_64 2.3.1-8.fc39                fedora   23 k
+ libarchive                    x86_64 3.7.1-1.fc39                fedora  408 k
+ libattr                       x86_64 2.5.1-8.fc39                fedora   18 k
+ libblkid                      x86_64 2.39.2-1.fc39               fedora  116 k
+ libbrotli                     x86_64 1.1.0-1.fc39                fedora  336 k
+ libcap                        x86_64 2.48-8.fc39                 updates  68 k
+ libcap-ng                     x86_64 0.8.3-8.fc39                fedora   32 k
+ libcom_err                    x86_64 1.47.0-2.fc39               fedora   26 k
+ libcurl                       x86_64 8.2.1-3.fc39                fedora  323 k
+ libdb                         x86_64 5.3.28-56.fc39              fedora  760 k
+ libeconf                      x86_64 0.5.2-1.fc39                fedora   30 k
+ libevent                      x86_64 2.1.12-9.fc39               fedora  258 k
+ libfdisk                      x86_64 2.39.2-1.fc39               fedora  162 k
+ libffi                        x86_64 3.4.4-4.fc39                fedora   40 k
+ libgcc                        x86_64 13.2.1-4.fc39               updates 111 k
+ libgomp                       x86_64 13.2.1-4.fc39               updates 320 k
+ libidn2                       x86_64 2.3.4-3.fc39                fedora  117 k
+ libmount                      x86_64 2.39.2-1.fc39               fedora  155 k
+ libnghttp2                    x86_64 1.55.1-4.fc39               updates  76 k
+ libnsl2                       x86_64 2.0.0-6.fc39                fedora   30 k
+ libpkgconf                    x86_64 1.9.5-2.fc39                fedora   38 k
+ libpsl                        x86_64 0.21.2-4.fc39               fedora   63 k
+ libpwquality                  x86_64 1.4.5-6.fc39                fedora  120 k
+ libselinux                    x86_64 3.5-5.fc39                  fedora   87 k
+ libsemanage                   x86_64 3.5-4.fc39                  fedora  120 k
+ libsepol                      x86_64 3.5-2.fc39                  fedora  324 k
+ libsigsegv                    x86_64 2.14-5.fc39                 fedora   27 k
+ libsmartcols                  x86_64 2.39.2-1.fc39               fedora   67 k
+ libssh                        x86_64 0.10.5-2.fc39               fedora  211 k
+ libssh-config                 noarch 0.10.5-2.fc39               fedora  9.2 k
+ libstdc++                     x86_64 13.2.1-4.fc39               updates 862 k
+ libtasn1                      x86_64 4.19.0-3.fc39               fedora   74 k
+ libtirpc                      x86_64 1.3.4-0.fc39                updates  94 k
+ libunistring                  x86_64 1.1-5.fc39                  fedora  543 k
+ libutempter                   x86_64 1.2.1-10.fc39               fedora   26 k
+ libuuid                       x86_64 2.39.2-1.fc39               fedora   28 k
+ libverto                      x86_64 0.3.2-6.fc39                fedora   20 k
+ libxcrypt                     x86_64 4.4.36-2.fc39               fedora  119 k
+ libxml2                       x86_64 2.10.4-3.fc39               fedora  701 k
+ libzstd                       x86_64 1.5.5-4.fc39                fedora  309 k
+ lua-libs                      x86_64 5.4.6-3.fc39                fedora  133 k
+ lua-srpm-macros               noarch 1-9.fc39                    fedora  8.6 k
+ lz4-libs                      x86_64 1.9.4-4.fc39                fedora   67 k
+ mpfr                          x86_64 4.2.0-3.fc39                fedora  344 k
+ ncurses-base                  noarch 6.4-7.20230520.fc39         fedora   88 k
+ ncurses-libs                  x86_64 6.4-7.20230520.fc39         fedora  336 k
+ ocaml-srpm-macros             noarch 8-2.fc39                    fedora   14 k
+ openblas-srpm-macros          noarch 2-14.fc39                   fedora  7.5 k
+ openldap                      x86_64 2.6.6-1.fc39                fedora  255 k
+ openssl-libs                  x86_64 1:3.1.1-4.fc39              fedora  2.2 M
+ p11-kit                       x86_64 0.25.3-1.fc39               updates 520 k
+ p11-kit-trust                 x86_64 0.25.3-1.fc39               updates 140 k
+ package-notes-srpm-macros     noarch 0.5-9.fc39                  fedora   11 k
+ pam                           x86_64 1.5.3-3.fc39                updates 542 k
+ pam-libs                      x86_64 1.5.3-3.fc39                updates  56 k
+ pcre2                         x86_64 10.42-1.fc39.2              fedora  233 k
+ pcre2-syntax                  noarch 10.42-1.fc39.2              fedora  143 k
+ perl-srpm-macros              noarch 1-51.fc39                   fedora  8.0 k
+ pkgconf                       x86_64 1.9.5-2.fc39                fedora   42 k
+ pkgconf-m4                    noarch 1.9.5-2.fc39                fedora   14 k
+ pkgconf-pkg-config            x86_64 1.9.5-2.fc39                fedora  9.6 k
+ popt                          x86_64 1.19-3.fc39                 fedora   66 k
+ publicsuffix-list-dafsa       noarch 20230812-1.fc39             fedora   57 k
+ pyproject-srpm-macros         noarch 1.10.0-1.fc39               updates  14 k
+ python-srpm-macros            noarch 3.12-4.fc39                 fedora   25 k
+ qt5-srpm-macros               noarch 5.15.11-1.fc39              updates 8.3 k
+ qt6-srpm-macros               noarch 6.6.0-1.fc39                updates 8.6 k
+ readline                      x86_64 8.2-4.fc39                  fedora  213 k
+ rpm                           x86_64 4.19.0-1.fc39               fedora  538 k
+ rpm-build-libs                x86_64 4.19.0-1.fc39               fedora   96 k
+ rpm-libs                      x86_64 4.19.0-1.fc39               fedora  312 k
+ rpm-sequoia                   x86_64 1.5.0-1.fc39                fedora  871 k
+ rpmautospec-rpm-macros        noarch 0.3.8-1.fc39                updates 9.0 k
+ rust-srpm-macros              noarch 25.2-2.fc39                 updates  13 k
+ setup                         noarch 2.14.4-1.fc39               fedora  154 k
+ sqlite-libs                   x86_64 3.42.0-7.fc39               fedora  678 k
+ systemd-libs                  x86_64 254.7-1.fc39                updates 689 k
+ util-linux-core               x86_64 2.39.2-1.fc39               fedora  494 k
+ xxhash-libs                   x86_64 0.8.2-1.fc39                fedora   37 k
+ xz-libs                       x86_64 5.4.4-1.fc39                fedora  108 k
+ zip                           x86_64 3.0-39.fc39                 fedora  266 k
+ zlib                          x86_64 1.2.13-4.fc39               fedora   94 k
+ zstd                          x86_64 1.5.5-4.fc39                fedora  482 k
+Installing Groups:
+ Buildsystem building group                                                    
+
+Transaction Summary
+================================================================================
+Install  151 Packages
+
+Total download size: 52 M
+Installed size: 178 M
+Downloading Packages:
+(1/151): alternatives-1.25-1.fc39.x86_64.rpm    279 kB/s |  39 kB     00:00    
+(2/151): ansible-srpm-macros-1-11.fc39.noarch.r 136 kB/s |  21 kB     00:00    
+(3/151): authselect-1.4.3-1.fc39.x86_64.rpm     888 kB/s | 149 kB     00:00    
+(4/151): authselect-libs-1.4.3-1.fc39.x86_64.rp 2.8 MB/s | 249 kB     00:00    
+(5/151): basesystem-11-18.fc39.noarch.rpm        97 kB/s | 7.2 kB     00:00    
+(6/151): bzip2-1.0.8-16.fc39.x86_64.rpm         821 kB/s |  52 kB     00:00    
+(7/151): binutils-2.40-13.fc39.x86_64.rpm        24 MB/s | 5.6 MB     00:00    
+(8/151): binutils-gold-2.40-13.fc39.x86_64.rpm  3.8 MB/s | 797 kB     00:00    
+(9/151): bzip2-libs-1.0.8-16.fc39.x86_64.rpm    282 kB/s |  41 kB     00:00    
+(10/151): ca-certificates-2023.2.60_v7.0.306-2. 8.8 MB/s | 837 kB     00:00    
+(11/151): coreutils-9.3-4.fc39.x86_64.rpm        12 MB/s | 1.1 MB     00:00    
+(12/151): coreutils-common-9.3-4.fc39.x86_64.rp  13 MB/s | 2.1 MB     00:00    
+(13/151): cpio-2.14-4.fc39.x86_64.rpm           1.8 MB/s | 279 kB     00:00    
+(14/151): cracklib-2.9.11-2.fc39.x86_64.rpm     573 kB/s |  94 kB     00:00    
+(15/151): curl-8.2.1-3.fc39.x86_64.rpm          1.6 MB/s | 345 kB     00:00    
+(16/151): cyrus-sasl-lib-2.1.28-11.fc39.x86_64. 3.2 MB/s | 793 kB     00:00    
+(17/151): debugedit-5.0-10.fc39.x86_64.rpm      356 kB/s |  77 kB     00:00    
+(18/151): diffutils-3.10-3.fc39.x86_64.rpm      3.1 MB/s | 398 kB     00:00    
+(19/151): dwz-0.15-3.fc39.x86_64.rpm            2.4 MB/s | 134 kB     00:00    
+(20/151): ed-1.19-4.fc39.x86_64.rpm             1.4 MB/s |  79 kB     00:00    
+(21/151): efi-srpm-macros-5-9.fc39.noarch.rpm   992 kB/s |  22 kB     00:00    
+(22/151): fedora-gpg-keys-39-1.noarch.rpm       5.0 MB/s | 130 kB     00:00    
+(23/151): fedora-repos-39-1.noarch.rpm          185 kB/s | 9.3 kB     00:00    
+(24/151): file-5.44-5.fc39.x86_64.rpm           723 kB/s |  49 kB     00:00    
+(25/151): file-libs-5.44-5.fc39.x86_64.rpm      5.1 MB/s | 729 kB     00:00    
+(26/151): filesystem-3.18-6.fc39.x86_64.rpm     8.7 MB/s | 1.1 MB     00:00    
+(27/151): findutils-4.9.0-5.fc39.x86_64.rpm     2.1 MB/s | 492 kB     00:00    
+(28/151): fonts-srpm-macros-2.0.5-12.fc39.noarc 122 kB/s |  26 kB     00:00    
+(29/151): fpc-srpm-macros-1.3-8.fc39.noarch.rpm  33 kB/s | 7.4 kB     00:00    
+(30/151): gawk-5.2.2-2.fc39.x86_64.rpm           10 MB/s | 1.1 MB     00:00    
+(31/151): gdbm-libs-1.23-4.fc39.x86_64.rpm      841 kB/s |  56 kB     00:00    
+(32/151): ghc-srpm-macros-1.6.1-2.fc39.noarch.r 158 kB/s | 7.8 kB     00:00    
+(33/151): gmp-6.2.1-5.fc39.x86_64.rpm           5.5 MB/s | 313 kB     00:00    
+(34/151): gnat-srpm-macros-6-3.fc39.noarch.rpm  334 kB/s | 8.8 kB     00:00    
+(35/151): grep-3.11-3.fc39.x86_64.rpm           9.3 MB/s | 298 kB     00:00    
+(36/151): gzip-1.12-6.fc39.x86_64.rpm           6.4 MB/s | 166 kB     00:00    
+(37/151): info-7.0.3-3.fc39.x86_64.rpm          4.1 MB/s | 182 kB     00:00    
+(38/151): jansson-2.13.1-7.fc39.x86_64.rpm      906 kB/s |  44 kB     00:00    
+(39/151): kernel-srpm-macros-1.0-20.fc39.noarch 215 kB/s |  10 kB     00:00    
+(40/151): keyutils-libs-1.6.1-7.fc39.x86_64.rpm 651 kB/s |  31 kB     00:00    
+(41/151): libacl-2.3.1-8.fc39.x86_64.rpm        430 kB/s |  23 kB     00:00    
+(42/151): libarchive-3.7.1-1.fc39.x86_64.rpm    4.8 MB/s | 408 kB     00:00    
+(43/151): libattr-2.5.1-8.fc39.x86_64.rpm       231 kB/s |  18 kB     00:00    
+(44/151): libblkid-2.39.2-1.fc39.x86_64.rpm     1.8 MB/s | 116 kB     00:00    
+(45/151): libbrotli-1.1.0-1.fc39.x86_64.rpm     3.0 MB/s | 336 kB     00:00    
+(46/151): libcap-ng-0.8.3-8.fc39.x86_64.rpm     270 kB/s |  32 kB     00:00    
+(47/151): libcom_err-1.47.0-2.fc39.x86_64.rpm   226 kB/s |  26 kB     00:00    
+(48/151): libcurl-8.2.1-3.fc39.x86_64.rpm       5.3 MB/s | 323 kB     00:00    
+(49/151): libdb-5.3.28-56.fc39.x86_64.rpm       6.3 MB/s | 760 kB     00:00    
+(50/151): libeconf-0.5.2-1.fc39.x86_64.rpm      255 kB/s |  30 kB     00:00    
+(51/151): libevent-2.1.12-9.fc39.x86_64.rpm     2.0 MB/s | 258 kB     00:00    
+(52/151): libfdisk-2.39.2-1.fc39.x86_64.rpm     2.3 MB/s | 162 kB     00:00    
+(53/151): libffi-3.4.4-4.fc39.x86_64.rpm        565 kB/s |  40 kB     00:00    
+(54/151): libidn2-2.3.4-3.fc39.x86_64.rpm       3.6 MB/s | 117 kB     00:00    
+(55/151): libmount-2.39.2-1.fc39.x86_64.rpm     3.7 MB/s | 155 kB     00:00    
+(56/151): libnsl2-2.0.0-6.fc39.x86_64.rpm       545 kB/s |  30 kB     00:00    
+(57/151): libpkgconf-1.9.5-2.fc39.x86_64.rpm    510 kB/s |  38 kB     00:00    
+(58/151): libpsl-0.21.2-4.fc39.x86_64.rpm       1.0 MB/s |  63 kB     00:00    
+(59/151): libpwquality-1.4.5-6.fc39.x86_64.rpm  1.2 MB/s | 120 kB     00:00    
+(60/151): libselinux-3.5-5.fc39.x86_64.rpm      1.1 MB/s |  87 kB     00:00    
+(61/151): libsemanage-3.5-4.fc39.x86_64.rpm     1.1 MB/s | 120 kB     00:00    
+(62/151): libsepol-3.5-2.fc39.x86_64.rpm        3.2 MB/s | 324 kB     00:00    
+(63/151): libsigsegv-2.14-5.fc39.x86_64.rpm     275 kB/s |  27 kB     00:00    
+(64/151): libsmartcols-2.39.2-1.fc39.x86_64.rpm 1.3 MB/s |  67 kB     00:00    
+(65/151): libssh-0.10.5-2.fc39.x86_64.rpm       7.7 MB/s | 211 kB     00:00    
+(66/151): libssh-config-0.10.5-2.fc39.noarch.rp 327 kB/s | 9.2 kB     00:00    
+(67/151): libtasn1-4.19.0-3.fc39.x86_64.rpm     1.6 MB/s |  74 kB     00:00    
+(68/151): libunistring-1.1-5.fc39.x86_64.rpm     16 MB/s | 543 kB     00:00    
+(69/151): libutempter-1.2.1-10.fc39.x86_64.rpm  833 kB/s |  26 kB     00:00    
+(70/151): libuuid-2.39.2-1.fc39.x86_64.rpm      833 kB/s |  28 kB     00:00    
+(71/151): libverto-0.3.2-6.fc39.x86_64.rpm      699 kB/s |  20 kB     00:00    
+(72/151): libxcrypt-4.4.36-2.fc39.x86_64.rpm    1.9 MB/s | 119 kB     00:00    
+(73/151): libxml2-2.10.4-3.fc39.x86_64.rpm      5.4 MB/s | 701 kB     00:00    
+(74/151): libzstd-1.5.5-4.fc39.x86_64.rpm       1.5 MB/s | 309 kB     00:00    
+(75/151): lua-libs-5.4.6-3.fc39.x86_64.rpm      615 kB/s | 133 kB     00:00    
+(76/151): lua-srpm-macros-1-9.fc39.noarch.rpm    64 kB/s | 8.6 kB     00:00    
+(77/151): lz4-libs-1.9.4-4.fc39.x86_64.rpm      973 kB/s |  67 kB     00:00    
+(78/151): mpfr-4.2.0-3.fc39.x86_64.rpm          3.1 MB/s | 344 kB     00:00    
+(79/151): ncurses-base-6.4-7.20230520.fc39.noar 874 kB/s |  88 kB     00:00    
+(80/151): ncurses-libs-6.4-7.20230520.fc39.x86_ 1.9 MB/s | 336 kB     00:00    
+(81/151): ocaml-srpm-macros-8-2.fc39.noarch.rpm 166 kB/s |  14 kB     00:00    
+(82/151): openblas-srpm-macros-2-14.fc39.noarch  96 kB/s | 7.5 kB     00:00    
+(83/151): openldap-2.6.6-1.fc39.x86_64.rpm      7.0 MB/s | 255 kB     00:00    
+(84/151): openssl-libs-3.1.1-4.fc39.x86_64.rpm   19 MB/s | 2.2 MB     00:00    
+(85/151): package-notes-srpm-macros-0.5-9.fc39.  97 kB/s |  11 kB     00:00    
+(86/151): patch-2.7.6-22.fc39.x86_64.rpm        1.4 MB/s | 125 kB     00:00    
+(87/151): pcre2-10.42-1.fc39.2.x86_64.rpm       6.0 MB/s | 233 kB     00:00    
+(88/151): pcre2-syntax-10.42-1.fc39.2.noarch.rp 1.7 MB/s | 143 kB     00:00    
+(89/151): perl-srpm-macros-1-51.fc39.noarch.rpm  98 kB/s | 8.0 kB     00:00    
+(90/151): pkgconf-1.9.5-2.fc39.x86_64.rpm       573 kB/s |  42 kB     00:00    
+(91/151): pkgconf-m4-1.9.5-2.fc39.noarch.rpm    441 kB/s |  14 kB     00:00    
+(92/151): pkgconf-pkg-config-1.9.5-2.fc39.x86_6 233 kB/s | 9.6 kB     00:00    
+(93/151): popt-1.19-3.fc39.x86_64.rpm           2.6 MB/s |  66 kB     00:00    
+(94/151): publicsuffix-list-dafsa-20230812-1.fc 1.4 MB/s |  57 kB     00:00    
+(95/151): python-srpm-macros-3.12-4.fc39.noarch 867 kB/s |  25 kB     00:00    
+(96/151): readline-8.2-4.fc39.x86_64.rpm        6.9 MB/s | 213 kB     00:00    
+(97/151): redhat-rpm-config-262-1.fc39.noarch.r 3.0 MB/s |  84 kB     00:00    
+(98/151): rpm-4.19.0-1.fc39.x86_64.rpm           14 MB/s | 538 kB     00:00    
+(99/151): rpm-build-4.19.0-1.fc39.x86_64.rpm    2.2 MB/s |  78 kB     00:00    
+(100/151): rpm-build-libs-4.19.0-1.fc39.x86_64. 3.1 MB/s |  96 kB     00:00    
+(101/151): rpm-libs-4.19.0-1.fc39.x86_64.rpm    2.0 MB/s | 312 kB     00:00    
+(102/151): rpm-sequoia-1.5.0-1.fc39.x86_64.rpm  5.2 MB/s | 871 kB     00:00    
+(103/151): sed-4.8-14.fc39.x86_64.rpm           1.4 MB/s | 306 kB     00:00    
+(104/151): setup-2.14.4-1.fc39.noarch.rpm       1.1 MB/s | 154 kB     00:00    
+(105/151): sqlite-libs-3.42.0-7.fc39.x86_64.rpm 3.4 MB/s | 678 kB     00:00    
+(106/151): tar-1.35-2.fc39.x86_64.rpm           4.0 MB/s | 864 kB     00:00    
+(107/151): unzip-6.0-62.fc39.x86_64.rpm         980 kB/s | 184 kB     00:00    
+(108/151): util-linux-2.39.2-1.fc39.x86_64.rpm  4.2 MB/s | 1.2 MB     00:00    
+(109/151): util-linux-core-2.39.2-1.fc39.x86_64 1.7 MB/s | 494 kB     00:00    
+(110/151): which-2.21-40.fc39.x86_64.rpm        159 kB/s |  42 kB     00:00    
+(111/151): xxhash-libs-0.8.2-1.fc39.x86_64.rpm  359 kB/s |  37 kB     00:00    
+(112/151): xz-5.4.4-1.fc39.x86_64.rpm           4.1 MB/s | 556 kB     00:00    
+(113/151): xz-libs-5.4.4-1.fc39.x86_64.rpm      945 kB/s | 108 kB     00:00    
+(114/151): zip-3.0-39.fc39.x86_64.rpm           1.9 MB/s | 266 kB     00:00    
+(115/151): zlib-1.2.13-4.fc39.x86_64.rpm        2.1 MB/s |  94 kB     00:00    
+(116/151): zstd-1.5.5-4.fc39.x86_64.rpm         6.1 MB/s | 482 kB     00:00    
+(117/151): audit-libs-3.1.2-5.fc39.x86_64.rpm   327 kB/s | 117 kB     00:00    
+(118/151): crypto-policies-20231113-1.gitb402e8 261 kB/s |  99 kB     00:00    
+(119/151): elfutils-debuginfod-client-0.190-1.f 524 kB/s |  38 kB     00:00    
+(120/151): elfutils-0.190-1.fc39.x86_64.rpm     2.5 MB/s | 550 kB     00:00    
+(121/151): elfutils-default-yama-scope-0.190-1. 182 kB/s |  14 kB     00:00    
+(122/151): elfutils-libelf-0.190-1.fc39.x86_64. 2.7 MB/s | 195 kB     00:00    
+(123/151): bash-5.2.21-1.fc39.x86_64.rpm        2.9 MB/s | 1.8 MB     00:00    
+(124/151): fedora-release-39-34.noarch.rpm      119 kB/s | 8.4 kB     00:00    
+(125/151): fedora-release-common-39-34.noarch.r 267 kB/s |  19 kB     00:00    
+(126/151): elfutils-libs-0.190-1.fc39.x86_64.rp 1.7 MB/s | 260 kB     00:00    
+(127/151): fedora-release-identity-basic-39-34. 130 kB/s | 9.2 kB     00:00    
+(128/151): glibc-common-2.38-11.fc39.x86_64.rpm 4.7 MB/s | 351 kB     00:00    
+(129/151): gdb-minimal-13.2-11.fc39.x86_64.rpm   19 MB/s | 4.2 MB     00:00    
+(130/151): glibc-2.38-11.fc39.x86_64.rpm        9.2 MB/s | 2.2 MB     00:00    
+(131/151): glibc-gconv-extra-2.38-11.fc39.x86_6  11 MB/s | 1.6 MB     00:00    
+(132/151): glibc-minimal-langpack-2.38-11.fc39. 984 kB/s |  70 kB     00:00    
+(133/151): go-srpm-macros-3.3.1-1.fc39.noarch.r 378 kB/s |  28 kB     00:00    
+(134/151): krb5-libs-1.21.2-2.fc39.x86_64.rpm   9.6 MB/s | 764 kB     00:00    
+(135/151): libcap-2.48-8.fc39.x86_64.rpm        940 kB/s |  68 kB     00:00    
+(136/151): libgcc-13.2.1-4.fc39.x86_64.rpm      1.5 MB/s | 111 kB     00:00    
+(137/151): libnghttp2-1.55.1-4.fc39.x86_64.rpm  1.0 MB/s |  76 kB     00:00    
+(138/151): libgomp-13.2.1-4.fc39.x86_64.rpm     4.2 MB/s | 320 kB     00:00    
+(139/151): libstdc++-13.2.1-4.fc39.x86_64.rpm    10 MB/s | 862 kB     00:00    
+(140/151): libtirpc-1.3.4-0.fc39.x86_64.rpm     1.3 MB/s |  94 kB     00:00    
+(141/151): p11-kit-0.25.3-1.fc39.x86_64.rpm     6.7 MB/s | 520 kB     00:00    
+(142/151): p11-kit-trust-0.25.3-1.fc39.x86_64.r 1.9 MB/s | 140 kB     00:00    
+(143/151): pam-1.5.3-3.fc39.x86_64.rpm          7.0 MB/s | 542 kB     00:00    
+(144/151): pam-libs-1.5.3-3.fc39.x86_64.rpm     786 kB/s |  56 kB     00:00    
+(145/151): pyproject-srpm-macros-1.10.0-1.fc39. 194 kB/s |  14 kB     00:00    
+(146/151): qt5-srpm-macros-5.15.11-1.fc39.noarc 118 kB/s | 8.3 kB     00:00    
+(147/151): qt6-srpm-macros-6.6.0-1.fc39.noarch. 123 kB/s | 8.6 kB     00:00    
+(148/151): rpmautospec-rpm-macros-0.3.8-1.fc39. 123 kB/s | 9.0 kB     00:00    
+(149/151): rust-srpm-macros-25.2-2.fc39.noarch. 183 kB/s |  13 kB     00:00    
+(150/151): shadow-utils-4.14.0-2.fc39.x86_64.rp  15 MB/s | 1.3 MB     00:00    
+(151/151): systemd-libs-254.7-1.fc39.x86_64.rpm 8.4 MB/s | 689 kB     00:00    
+--------------------------------------------------------------------------------
+Total                                           9.5 MB/s |  52 MB     00:05     
+fedora                                          1.6 MB/s | 1.6 kB     00:00    
+Importing GPG key 0x18B8E74C:
+ Userid     : "Fedora (39) <fedora-39-primary@fedoraproject.org>"
+ Fingerprint: E8F2 3996 F232 1864 0CB4 4CBE 75CF 5AC4 18B8 E74C
+ From       : /usr/share/distribution-gpg-keys/fedora/RPM-GPG-KEY-fedora-39-primary
+Key imported successfully
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Running scriptlet: filesystem-3.18-6.fc39.x86_64                          1/1 
+  Preparing        :                                                        1/1 
+  Installing       : libgcc-13.2.1-4.fc39.x86_64                          1/151 
+  Running scriptlet: libgcc-13.2.1-4.fc39.x86_64                          1/151 
+  Installing       : crypto-policies-20231113-1.gitb402e82.fc39.noarc     2/151 
+  Running scriptlet: crypto-policies-20231113-1.gitb402e82.fc39.noarc     2/151 
+  Installing       : fedora-release-identity-basic-39-34.noarch           3/151 
+  Installing       : fedora-gpg-keys-39-1.noarch                          4/151 
+  Installing       : fedora-repos-39-1.noarch                             5/151 
+  Installing       : fedora-release-common-39-34.noarch                   6/151 
+  Installing       : fedora-release-39-34.noarch                          7/151 
+  Installing       : setup-2.14.4-1.fc39.noarch                           8/151 
+  Running scriptlet: setup-2.14.4-1.fc39.noarch                           8/151 
+  Installing       : filesystem-3.18-6.fc39.x86_64                        9/151 
+  Installing       : basesystem-11-18.fc39.noarch                        10/151 
+  Installing       : rust-srpm-macros-25.2-2.fc39.noarch                 11/151 
+  Installing       : qt6-srpm-macros-6.6.0-1.fc39.noarch                 12/151 
+  Installing       : qt5-srpm-macros-5.15.11-1.fc39.noarch               13/151 
+  Installing       : publicsuffix-list-dafsa-20230812-1.fc39.noarch      14/151 
+  Installing       : pkgconf-m4-1.9.5-2.fc39.noarch                      15/151 
+  Installing       : perl-srpm-macros-1-51.fc39.noarch                   16/151 
+  Installing       : pcre2-syntax-10.42-1.fc39.2.noarch                  17/151 
+  Installing       : package-notes-srpm-macros-0.5-9.fc39.noarch         18/151 
+  Installing       : openblas-srpm-macros-2-14.fc39.noarch               19/151 
+  Installing       : ocaml-srpm-macros-8-2.fc39.noarch                   20/151 
+  Installing       : ncurses-base-6.4-7.20230520.fc39.noarch             21/151 
+  Installing       : ncurses-libs-6.4-7.20230520.fc39.x86_64             22/151 
+  Installing       : bash-5.2.21-1.fc39.x86_64                           23/151 
+  Running scriptlet: bash-5.2.21-1.fc39.x86_64                           23/151 
+  Installing       : glibc-common-2.38-11.fc39.x86_64                    24/151 
+  Installing       : glibc-gconv-extra-2.38-11.fc39.x86_64               25/151 
+  Running scriptlet: glibc-gconv-extra-2.38-11.fc39.x86_64               25/151 
+  Installing       : glibc-minimal-langpack-2.38-11.fc39.x86_64          26/151 
+  Running scriptlet: glibc-2.38-11.fc39.x86_64                           27/151 
+  Installing       : glibc-2.38-11.fc39.x86_64                           27/151 
+  Running scriptlet: glibc-2.38-11.fc39.x86_64                           27/151 
+  Installing       : zlib-1.2.13-4.fc39.x86_64                           28/151 
+  Installing       : xz-libs-5.4.4-1.fc39.x86_64                         29/151 
+  Installing       : bzip2-libs-1.0.8-16.fc39.x86_64                     30/151 
+  Installing       : libuuid-2.39.2-1.fc39.x86_64                        31/151 
+  Installing       : libzstd-1.5.5-4.fc39.x86_64                         32/151 
+  Installing       : elfutils-libelf-0.190-1.fc39.x86_64                 33/151 
+  Installing       : popt-1.19-3.fc39.x86_64                             34/151 
+  Installing       : libstdc++-13.2.1-4.fc39.x86_64                      35/151 
+  Installing       : libblkid-2.39.2-1.fc39.x86_64                       36/151 
+  Installing       : gmp-1:6.2.1-5.fc39.x86_64                           37/151 
+  Installing       : libattr-2.5.1-8.fc39.x86_64                         38/151 
+  Installing       : libacl-2.3.1-8.fc39.x86_64                          39/151 
+  Installing       : libxcrypt-4.4.36-2.fc39.x86_64                      40/151 
+  Installing       : readline-8.2-4.fc39.x86_64                          41/151 
+  Installing       : libcap-2.48-8.fc39.x86_64                           42/151 
+  Installing       : libeconf-0.5.2-1.fc39.x86_64                        43/151 
+  Installing       : lz4-libs-1.9.4-4.fc39.x86_64                        44/151 
+  Installing       : systemd-libs-254.7-1.fc39.x86_64                    45/151 
+  Installing       : mpfr-4.2.0-3.fc39.x86_64                            46/151 
+  Installing       : dwz-0.15-3.fc39.x86_64                              47/151 
+  Installing       : unzip-6.0-62.fc39.x86_64                            48/151 
+  Installing       : file-libs-5.44-5.fc39.x86_64                        49/151 
+  Installing       : file-5.44-5.fc39.x86_64                             50/151 
+  Installing       : alternatives-1.25-1.fc39.x86_64                     51/151 
+  Installing       : jansson-2.13.1-7.fc39.x86_64                        52/151 
+  Installing       : libcap-ng-0.8.3-8.fc39.x86_64                       53/151 
+  Installing       : audit-libs-3.1.2-5.fc39.x86_64                      54/151 
+  Installing       : pam-libs-1.5.3-3.fc39.x86_64                        55/151 
+  Installing       : libcom_err-1.47.0-2.fc39.x86_64                     56/151 
+  Installing       : libsepol-3.5-2.fc39.x86_64                          57/151 
+  Installing       : libsmartcols-2.39.2-1.fc39.x86_64                   58/151 
+  Installing       : libtasn1-4.19.0-3.fc39.x86_64                       59/151 
+  Installing       : libunistring-1.1-5.fc39.x86_64                      60/151 
+  Installing       : libidn2-2.3.4-3.fc39.x86_64                         61/151 
+  Installing       : lua-libs-5.4.6-3.fc39.x86_64                        62/151 
+  Installing       : pcre2-10.42-1.fc39.2.x86_64                         63/151 
+  Installing       : libselinux-3.5-5.fc39.x86_64                        64/151 
+  Installing       : sed-4.8-14.fc39.x86_64                              65/151 
+  Installing       : grep-3.11-3.fc39.x86_64                             66/151 
+  Installing       : findutils-1:4.9.0-5.fc39.x86_64                     67/151 
+  Installing       : xz-5.4.4-1.fc39.x86_64                              68/151 
+  Installing       : libmount-2.39.2-1.fc39.x86_64                       69/151 
+  Installing       : util-linux-core-2.39.2-1.fc39.x86_64                70/151 
+  Installing       : libsemanage-3.5-4.fc39.x86_64                       71/151 
+  Installing       : shadow-utils-2:4.14.0-2.fc39.x86_64                 72/151 
+  Running scriptlet: libutempter-1.2.1-10.fc39.x86_64                    73/151 
+  Installing       : libutempter-1.2.1-10.fc39.x86_64                    73/151 
+  Installing       : tar-2:1.35-2.fc39.x86_64                            74/151 
+  Installing       : libpsl-0.21.2-4.fc39.x86_64                         75/151 
+  Installing       : zip-3.0-39.fc39.x86_64                              76/151 
+  Installing       : zstd-1.5.5-4.fc39.x86_64                            77/151 
+  Installing       : libfdisk-2.39.2-1.fc39.x86_64                       78/151 
+  Installing       : bzip2-1.0.8-16.fc39.x86_64                          79/151 
+  Installing       : libxml2-2.10.4-3.fc39.x86_64                        80/151 
+  Installing       : sqlite-libs-3.42.0-7.fc39.x86_64                    81/151 
+  Installing       : cpio-2.14-4.fc39.x86_64                             82/151 
+  Installing       : diffutils-3.10-3.fc39.x86_64                        83/151 
+  Installing       : ed-1.19-4.fc39.x86_64                               84/151 
+  Installing       : patch-2.7.6-22.fc39.x86_64                          85/151 
+  Installing       : gdbm-libs-1:1.23-4.fc39.x86_64                      86/151 
+  Installing       : cyrus-sasl-lib-2.1.28-11.fc39.x86_64                87/151 
+  Installing       : keyutils-libs-1.6.1-7.fc39.x86_64                   88/151 
+  Installing       : libbrotli-1.1.0-1.fc39.x86_64                       89/151 
+  Installing       : libdb-5.3.28-56.fc39.x86_64                         90/151 
+  Installing       : libffi-3.4.4-4.fc39.x86_64                          91/151 
+  Installing       : p11-kit-0.25.3-1.fc39.x86_64                        92/151 
+  Installing       : p11-kit-trust-0.25.3-1.fc39.x86_64                  93/151 
+  Running scriptlet: p11-kit-trust-0.25.3-1.fc39.x86_64                  93/151 
+  Installing       : libpkgconf-1.9.5-2.fc39.x86_64                      94/151 
+  Installing       : pkgconf-1.9.5-2.fc39.x86_64                         95/151 
+  Installing       : pkgconf-pkg-config-1.9.5-2.fc39.x86_64              96/151 
+  Installing       : libsigsegv-2.14-5.fc39.x86_64                       97/151 
+  Installing       : gawk-5.2.2-2.fc39.x86_64                            98/151 
+  Installing       : libverto-0.3.2-6.fc39.x86_64                        99/151 
+  Installing       : xxhash-libs-0.8.2-1.fc39.x86_64                    100/151 
+  Installing       : libgomp-13.2.1-4.fc39.x86_64                       101/151 
+  Installing       : libnghttp2-1.55.1-4.fc39.x86_64                    102/151 
+  Installing       : elfutils-default-yama-scope-0.190-1.fc39.noarch    103/151 
+  Running scriptlet: elfutils-default-yama-scope-0.190-1.fc39.noarch    103/151 
+  Installing       : libssh-config-0.10.5-2.fc39.noarch                 104/151 
+  Installing       : kernel-srpm-macros-1.0-20.fc39.noarch              105/151 
+  Installing       : gnat-srpm-macros-6-3.fc39.noarch                   106/151 
+  Installing       : ghc-srpm-macros-1.6.1-2.fc39.noarch                107/151 
+  Installing       : fpc-srpm-macros-1.3-8.fc39.noarch                  108/151 
+  Installing       : coreutils-common-9.3-4.fc39.x86_64                 109/151 
+  Installing       : openssl-libs-1:3.1.1-4.fc39.x86_64                 110/151 
+  Installing       : coreutils-9.3-4.fc39.x86_64                        111/151 
+  Running scriptlet: ca-certificates-2023.2.60_v7.0.306-2.fc39.noarch   112/151 
+  Installing       : ca-certificates-2023.2.60_v7.0.306-2.fc39.noarch   112/151 
+  Running scriptlet: ca-certificates-2023.2.60_v7.0.306-2.fc39.noarch   112/151 
+  Installing       : krb5-libs-1.21.2-2.fc39.x86_64                     113/151 
+  Installing       : libtirpc-1.3.4-0.fc39.x86_64                       114/151 
+  Running scriptlet: authselect-libs-1.4.3-1.fc39.x86_64                115/151 
+  Installing       : authselect-libs-1.4.3-1.fc39.x86_64                115/151 
+  Installing       : gzip-1.12-6.fc39.x86_64                            116/151 
+  Installing       : cracklib-2.9.11-2.fc39.x86_64                      117/151 
+  Installing       : libpwquality-1.4.5-6.fc39.x86_64                   118/151 
+  Installing       : authselect-1.4.3-1.fc39.x86_64                     119/151 
+  Installing       : libnsl2-2.0.0-6.fc39.x86_64                        120/151 
+  Installing       : pam-1.5.3-3.fc39.x86_64                            121/151 
+  Installing       : libssh-0.10.5-2.fc39.x86_64                        122/151 
+  Installing       : libarchive-3.7.1-1.fc39.x86_64                     123/151 
+  Installing       : libevent-2.1.12-9.fc39.x86_64                      124/151 
+  Installing       : openldap-2.6.6-1.fc39.x86_64                       125/151 
+  Installing       : libcurl-8.2.1-3.fc39.x86_64                        126/151 
+  Installing       : elfutils-libs-0.190-1.fc39.x86_64                  127/151 
+  Installing       : elfutils-debuginfod-client-0.190-1.fc39.x86_64     128/151 
+  Installing       : binutils-gold-2.40-13.fc39.x86_64                  129/151 
+  Running scriptlet: binutils-gold-2.40-13.fc39.x86_64                  129/151 
+  Installing       : binutils-2.40-13.fc39.x86_64                       130/151 
+  Running scriptlet: binutils-2.40-13.fc39.x86_64                       130/151 
+  Installing       : elfutils-0.190-1.fc39.x86_64                       131/151 
+  Installing       : gdb-minimal-13.2-11.fc39.x86_64                    132/151 
+  Installing       : debugedit-5.0-10.fc39.x86_64                       133/151 
+  Installing       : curl-8.2.1-3.fc39.x86_64                           134/151 
+  Installing       : rpm-sequoia-1.5.0-1.fc39.x86_64                    135/151 
+  Installing       : rpm-libs-4.19.0-1.fc39.x86_64                      136/151 
+  Running scriptlet: rpm-4.19.0-1.fc39.x86_64                           137/151 
+  Installing       : rpm-4.19.0-1.fc39.x86_64                           137/151 
+  Installing       : efi-srpm-macros-5-9.fc39.noarch                    138/151 
+  Installing       : lua-srpm-macros-1-9.fc39.noarch                    139/151 
+  Installing       : rpmautospec-rpm-macros-0.3.8-1.fc39.noarch         140/151 
+  Installing       : rpm-build-libs-4.19.0-1.fc39.x86_64                141/151 
+  Installing       : ansible-srpm-macros-1-11.fc39.noarch               142/151 
+  Installing       : fonts-srpm-macros-1:2.0.5-12.fc39.noarch           143/151 
+  Installing       : python-srpm-macros-3.12-4.fc39.noarch              144/151 
+  Installing       : go-srpm-macros-3.3.1-1.fc39.noarch                 145/151 
+  Installing       : redhat-rpm-config-262-1.fc39.noarch                146/151 
+  Installing       : rpm-build-4.19.0-1.fc39.x86_64                     147/151 
+  Installing       : pyproject-srpm-macros-1.10.0-1.fc39.noarch         148/151 
+  Installing       : util-linux-2.39.2-1.fc39.x86_64                    149/151 
+  Installing       : which-2.21-40.fc39.x86_64                          150/151 
+  Installing       : info-7.0.3-3.fc39.x86_64                           151/151 
+  Running scriptlet: filesystem-3.18-6.fc39.x86_64                      151/151 
+  Running scriptlet: ca-certificates-2023.2.60_v7.0.306-2.fc39.noarch   151/151 
+  Running scriptlet: authselect-libs-1.4.3-1.fc39.x86_64                151/151 
+  Running scriptlet: rpm-4.19.0-1.fc39.x86_64                           151/151 
+  Running scriptlet: info-7.0.3-3.fc39.x86_64                           151/151 
+  Verifying        : alternatives-1.25-1.fc39.x86_64                      1/151 
+  Verifying        : ansible-srpm-macros-1-11.fc39.noarch                 2/151 
+  Verifying        : authselect-1.4.3-1.fc39.x86_64                       3/151 
+  Verifying        : authselect-libs-1.4.3-1.fc39.x86_64                  4/151 
+  Verifying        : basesystem-11-18.fc39.noarch                         5/151 
+  Verifying        : binutils-2.40-13.fc39.x86_64                         6/151 
+  Verifying        : binutils-gold-2.40-13.fc39.x86_64                    7/151 
+  Verifying        : bzip2-1.0.8-16.fc39.x86_64                           8/151 
+  Verifying        : bzip2-libs-1.0.8-16.fc39.x86_64                      9/151 
+  Verifying        : ca-certificates-2023.2.60_v7.0.306-2.fc39.noarch    10/151 
+  Verifying        : coreutils-9.3-4.fc39.x86_64                         11/151 
+  Verifying        : coreutils-common-9.3-4.fc39.x86_64                  12/151 
+  Verifying        : cpio-2.14-4.fc39.x86_64                             13/151 
+  Verifying        : cracklib-2.9.11-2.fc39.x86_64                       14/151 
+  Verifying        : curl-8.2.1-3.fc39.x86_64                            15/151 
+  Verifying        : cyrus-sasl-lib-2.1.28-11.fc39.x86_64                16/151 
+  Verifying        : debugedit-5.0-10.fc39.x86_64                        17/151 
+  Verifying        : diffutils-3.10-3.fc39.x86_64                        18/151 
+  Verifying        : dwz-0.15-3.fc39.x86_64                              19/151 
+  Verifying        : ed-1.19-4.fc39.x86_64                               20/151 
+  Verifying        : efi-srpm-macros-5-9.fc39.noarch                     21/151 
+  Verifying        : fedora-gpg-keys-39-1.noarch                         22/151 
+  Verifying        : fedora-repos-39-1.noarch                            23/151 
+  Verifying        : file-5.44-5.fc39.x86_64                             24/151 
+  Verifying        : file-libs-5.44-5.fc39.x86_64                        25/151 
+  Verifying        : filesystem-3.18-6.fc39.x86_64                       26/151 
+  Verifying        : findutils-1:4.9.0-5.fc39.x86_64                     27/151 
+  Verifying        : fonts-srpm-macros-1:2.0.5-12.fc39.noarch            28/151 
+  Verifying        : fpc-srpm-macros-1.3-8.fc39.noarch                   29/151 
+  Verifying        : gawk-5.2.2-2.fc39.x86_64                            30/151 
+  Verifying        : gdbm-libs-1:1.23-4.fc39.x86_64                      31/151 
+  Verifying        : ghc-srpm-macros-1.6.1-2.fc39.noarch                 32/151 
+  Verifying        : gmp-1:6.2.1-5.fc39.x86_64                           33/151 
+  Verifying        : gnat-srpm-macros-6-3.fc39.noarch                    34/151 
+  Verifying        : grep-3.11-3.fc39.x86_64                             35/151 
+  Verifying        : gzip-1.12-6.fc39.x86_64                             36/151 
+  Verifying        : info-7.0.3-3.fc39.x86_64                            37/151 
+  Verifying        : jansson-2.13.1-7.fc39.x86_64                        38/151 
+  Verifying        : kernel-srpm-macros-1.0-20.fc39.noarch               39/151 
+  Verifying        : keyutils-libs-1.6.1-7.fc39.x86_64                   40/151 
+  Verifying        : libacl-2.3.1-8.fc39.x86_64                          41/151 
+  Verifying        : libarchive-3.7.1-1.fc39.x86_64                      42/151 
+  Verifying        : libattr-2.5.1-8.fc39.x86_64                         43/151 
+  Verifying        : libblkid-2.39.2-1.fc39.x86_64                       44/151 
+  Verifying        : libbrotli-1.1.0-1.fc39.x86_64                       45/151 
+  Verifying        : libcap-ng-0.8.3-8.fc39.x86_64                       46/151 
+  Verifying        : libcom_err-1.47.0-2.fc39.x86_64                     47/151 
+  Verifying        : libcurl-8.2.1-3.fc39.x86_64                         48/151 
+  Verifying        : libdb-5.3.28-56.fc39.x86_64                         49/151 
+  Verifying        : libeconf-0.5.2-1.fc39.x86_64                        50/151 
+  Verifying        : libevent-2.1.12-9.fc39.x86_64                       51/151 
+  Verifying        : libfdisk-2.39.2-1.fc39.x86_64                       52/151 
+  Verifying        : libffi-3.4.4-4.fc39.x86_64                          53/151 
+  Verifying        : libidn2-2.3.4-3.fc39.x86_64                         54/151 
+  Verifying        : libmount-2.39.2-1.fc39.x86_64                       55/151 
+  Verifying        : libnsl2-2.0.0-6.fc39.x86_64                         56/151 
+  Verifying        : libpkgconf-1.9.5-2.fc39.x86_64                      57/151 
+  Verifying        : libpsl-0.21.2-4.fc39.x86_64                         58/151 
+  Verifying        : libpwquality-1.4.5-6.fc39.x86_64                    59/151 
+  Verifying        : libselinux-3.5-5.fc39.x86_64                        60/151 
+  Verifying        : libsemanage-3.5-4.fc39.x86_64                       61/151 
+  Verifying        : libsepol-3.5-2.fc39.x86_64                          62/151 
+  Verifying        : libsigsegv-2.14-5.fc39.x86_64                       63/151 
+  Verifying        : libsmartcols-2.39.2-1.fc39.x86_64                   64/151 
+  Verifying        : libssh-0.10.5-2.fc39.x86_64                         65/151 
+  Verifying        : libssh-config-0.10.5-2.fc39.noarch                  66/151 
+  Verifying        : libtasn1-4.19.0-3.fc39.x86_64                       67/151 
+  Verifying        : libunistring-1.1-5.fc39.x86_64                      68/151 
+  Verifying        : libutempter-1.2.1-10.fc39.x86_64                    69/151 
+  Verifying        : libuuid-2.39.2-1.fc39.x86_64                        70/151 
+  Verifying        : libverto-0.3.2-6.fc39.x86_64                        71/151 
+  Verifying        : libxcrypt-4.4.36-2.fc39.x86_64                      72/151 
+  Verifying        : libxml2-2.10.4-3.fc39.x86_64                        73/151 
+  Verifying        : libzstd-1.5.5-4.fc39.x86_64                         74/151 
+  Verifying        : lua-libs-5.4.6-3.fc39.x86_64                        75/151 
+  Verifying        : lua-srpm-macros-1-9.fc39.noarch                     76/151 
+  Verifying        : lz4-libs-1.9.4-4.fc39.x86_64                        77/151 
+  Verifying        : mpfr-4.2.0-3.fc39.x86_64                            78/151 
+  Verifying        : ncurses-base-6.4-7.20230520.fc39.noarch             79/151 
+  Verifying        : ncurses-libs-6.4-7.20230520.fc39.x86_64             80/151 
+  Verifying        : ocaml-srpm-macros-8-2.fc39.noarch                   81/151 
+  Verifying        : openblas-srpm-macros-2-14.fc39.noarch               82/151 
+  Verifying        : openldap-2.6.6-1.fc39.x86_64                        83/151 
+  Verifying        : openssl-libs-1:3.1.1-4.fc39.x86_64                  84/151 
+  Verifying        : package-notes-srpm-macros-0.5-9.fc39.noarch         85/151 
+  Verifying        : patch-2.7.6-22.fc39.x86_64                          86/151 
+  Verifying        : pcre2-10.42-1.fc39.2.x86_64                         87/151 
+  Verifying        : pcre2-syntax-10.42-1.fc39.2.noarch                  88/151 
+  Verifying        : perl-srpm-macros-1-51.fc39.noarch                   89/151 
+  Verifying        : pkgconf-1.9.5-2.fc39.x86_64                         90/151 
+  Verifying        : pkgconf-m4-1.9.5-2.fc39.noarch                      91/151 
+  Verifying        : pkgconf-pkg-config-1.9.5-2.fc39.x86_64              92/151 
+  Verifying        : popt-1.19-3.fc39.x86_64                             93/151 
+  Verifying        : publicsuffix-list-dafsa-20230812-1.fc39.noarch      94/151 
+  Verifying        : python-srpm-macros-3.12-4.fc39.noarch               95/151 
+  Verifying        : readline-8.2-4.fc39.x86_64                          96/151 
+  Verifying        : redhat-rpm-config-262-1.fc39.noarch                 97/151 
+  Verifying        : rpm-4.19.0-1.fc39.x86_64                            98/151 
+  Verifying        : rpm-build-4.19.0-1.fc39.x86_64                      99/151 
+  Verifying        : rpm-build-libs-4.19.0-1.fc39.x86_64                100/151 
+  Verifying        : rpm-libs-4.19.0-1.fc39.x86_64                      101/151 
+  Verifying        : rpm-sequoia-1.5.0-1.fc39.x86_64                    102/151 
+  Verifying        : sed-4.8-14.fc39.x86_64                             103/151 
+  Verifying        : setup-2.14.4-1.fc39.noarch                         104/151 
+  Verifying        : sqlite-libs-3.42.0-7.fc39.x86_64                   105/151 
+  Verifying        : tar-2:1.35-2.fc39.x86_64                           106/151 
+  Verifying        : unzip-6.0-62.fc39.x86_64                           107/151 
+  Verifying        : util-linux-2.39.2-1.fc39.x86_64                    108/151 
+  Verifying        : util-linux-core-2.39.2-1.fc39.x86_64               109/151 
+  Verifying        : which-2.21-40.fc39.x86_64                          110/151 
+  Verifying        : xxhash-libs-0.8.2-1.fc39.x86_64                    111/151 
+  Verifying        : xz-5.4.4-1.fc39.x86_64                             112/151 
+  Verifying        : xz-libs-5.4.4-1.fc39.x86_64                        113/151 
+  Verifying        : zip-3.0-39.fc39.x86_64                             114/151 
+  Verifying        : zlib-1.2.13-4.fc39.x86_64                          115/151 
+  Verifying        : zstd-1.5.5-4.fc39.x86_64                           116/151 
+  Verifying        : audit-libs-3.1.2-5.fc39.x86_64                     117/151 
+  Verifying        : bash-5.2.21-1.fc39.x86_64                          118/151 
+  Verifying        : crypto-policies-20231113-1.gitb402e82.fc39.noarc   119/151 
+  Verifying        : elfutils-0.190-1.fc39.x86_64                       120/151 
+  Verifying        : elfutils-debuginfod-client-0.190-1.fc39.x86_64     121/151 
+  Verifying        : elfutils-default-yama-scope-0.190-1.fc39.noarch    122/151 
+  Verifying        : elfutils-libelf-0.190-1.fc39.x86_64                123/151 
+  Verifying        : elfutils-libs-0.190-1.fc39.x86_64                  124/151 
+  Verifying        : fedora-release-39-34.noarch                        125/151 
+  Verifying        : fedora-release-common-39-34.noarch                 126/151 
+  Verifying        : fedora-release-identity-basic-39-34.noarch         127/151 
+  Verifying        : gdb-minimal-13.2-11.fc39.x86_64                    128/151 
+  Verifying        : glibc-2.38-11.fc39.x86_64                          129/151 
+  Verifying        : glibc-common-2.38-11.fc39.x86_64                   130/151 
+  Verifying        : glibc-gconv-extra-2.38-11.fc39.x86_64              131/151 
+  Verifying        : glibc-minimal-langpack-2.38-11.fc39.x86_64         132/151 
+  Verifying        : go-srpm-macros-3.3.1-1.fc39.noarch                 133/151 
+  Verifying        : krb5-libs-1.21.2-2.fc39.x86_64                     134/151 
+  Verifying        : libcap-2.48-8.fc39.x86_64                          135/151 
+  Verifying        : libgcc-13.2.1-4.fc39.x86_64                        136/151 
+  Verifying        : libgomp-13.2.1-4.fc39.x86_64                       137/151 
+  Verifying        : libnghttp2-1.55.1-4.fc39.x86_64                    138/151 
+  Verifying        : libstdc++-13.2.1-4.fc39.x86_64                     139/151 
+  Verifying        : libtirpc-1.3.4-0.fc39.x86_64                       140/151 
+  Verifying        : p11-kit-0.25.3-1.fc39.x86_64                       141/151 
+  Verifying        : p11-kit-trust-0.25.3-1.fc39.x86_64                 142/151 
+  Verifying        : pam-1.5.3-3.fc39.x86_64                            143/151 
+  Verifying        : pam-libs-1.5.3-3.fc39.x86_64                       144/151 
+  Verifying        : pyproject-srpm-macros-1.10.0-1.fc39.noarch         145/151 
+  Verifying        : qt5-srpm-macros-5.15.11-1.fc39.noarch              146/151 
+  Verifying        : qt6-srpm-macros-6.6.0-1.fc39.noarch                147/151 
+  Verifying        : rpmautospec-rpm-macros-0.3.8-1.fc39.noarch         148/151 
+  Verifying        : rust-srpm-macros-25.2-2.fc39.noarch                149/151 
+  Verifying        : shadow-utils-2:4.14.0-2.fc39.x86_64                150/151 
+  Verifying        : systemd-libs-254.7-1.fc39.x86_64                   151/151 
+
+Installed:
+  alternatives-1.25-1.fc39.x86_64                                               
+  ansible-srpm-macros-1-11.fc39.noarch                                          
+  audit-libs-3.1.2-5.fc39.x86_64                                                
+  authselect-1.4.3-1.fc39.x86_64                                                
+  authselect-libs-1.4.3-1.fc39.x86_64                                           
+  basesystem-11-18.fc39.noarch                                                  
+  bash-5.2.21-1.fc39.x86_64                                                     
+  binutils-2.40-13.fc39.x86_64                                                  
+  binutils-gold-2.40-13.fc39.x86_64                                             
+  bzip2-1.0.8-16.fc39.x86_64                                                    
+  bzip2-libs-1.0.8-16.fc39.x86_64                                               
+  ca-certificates-2023.2.60_v7.0.306-2.fc39.noarch                              
+  coreutils-9.3-4.fc39.x86_64                                                   
+  coreutils-common-9.3-4.fc39.x86_64                                            
+  cpio-2.14-4.fc39.x86_64                                                       
+  cracklib-2.9.11-2.fc39.x86_64                                                 
+  crypto-policies-20231113-1.gitb402e82.fc39.noarch                             
+  curl-8.2.1-3.fc39.x86_64                                                      
+  cyrus-sasl-lib-2.1.28-11.fc39.x86_64                                          
+  debugedit-5.0-10.fc39.x86_64                                                  
+  diffutils-3.10-3.fc39.x86_64                                                  
+  dwz-0.15-3.fc39.x86_64                                                        
+  ed-1.19-4.fc39.x86_64                                                         
+  efi-srpm-macros-5-9.fc39.noarch                                               
+  elfutils-0.190-1.fc39.x86_64                                                  
+  elfutils-debuginfod-client-0.190-1.fc39.x86_64                                
+  elfutils-default-yama-scope-0.190-1.fc39.noarch                               
+  elfutils-libelf-0.190-1.fc39.x86_64                                           
+  elfutils-libs-0.190-1.fc39.x86_64                                             
+  fedora-gpg-keys-39-1.noarch                                                   
+  fedora-release-39-34.noarch                                                   
+  fedora-release-common-39-34.noarch                                            
+  fedora-release-identity-basic-39-34.noarch                                    
+  fedora-repos-39-1.noarch                                                      
+  file-5.44-5.fc39.x86_64                                                       
+  file-libs-5.44-5.fc39.x86_64                                                  
+  filesystem-3.18-6.fc39.x86_64                                                 
+  findutils-1:4.9.0-5.fc39.x86_64                                               
+  fonts-srpm-macros-1:2.0.5-12.fc39.noarch                                      
+  fpc-srpm-macros-1.3-8.fc39.noarch                                             
+  gawk-5.2.2-2.fc39.x86_64                                                      
+  gdb-minimal-13.2-11.fc39.x86_64                                               
+  gdbm-libs-1:1.23-4.fc39.x86_64                                                
+  ghc-srpm-macros-1.6.1-2.fc39.noarch                                           
+  glibc-2.38-11.fc39.x86_64                                                     
+  glibc-common-2.38-11.fc39.x86_64                                              
+  glibc-gconv-extra-2.38-11.fc39.x86_64                                         
+  glibc-minimal-langpack-2.38-11.fc39.x86_64                                    
+  gmp-1:6.2.1-5.fc39.x86_64                                                     
+  gnat-srpm-macros-6-3.fc39.noarch                                              
+  go-srpm-macros-3.3.1-1.fc39.noarch                                            
+  grep-3.11-3.fc39.x86_64                                                       
+  gzip-1.12-6.fc39.x86_64                                                       
+  info-7.0.3-3.fc39.x86_64                                                      
+  jansson-2.13.1-7.fc39.x86_64                                                  
+  kernel-srpm-macros-1.0-20.fc39.noarch                                         
+  keyutils-libs-1.6.1-7.fc39.x86_64                                             
+  krb5-libs-1.21.2-2.fc39.x86_64                                                
+  libacl-2.3.1-8.fc39.x86_64                                                    
+  libarchive-3.7.1-1.fc39.x86_64                                                
+  libattr-2.5.1-8.fc39.x86_64                                                   
+  libblkid-2.39.2-1.fc39.x86_64                                                 
+  libbrotli-1.1.0-1.fc39.x86_64                                                 
+  libcap-2.48-8.fc39.x86_64                                                     
+  libcap-ng-0.8.3-8.fc39.x86_64                                                 
+  libcom_err-1.47.0-2.fc39.x86_64                                               
+  libcurl-8.2.1-3.fc39.x86_64                                                   
+  libdb-5.3.28-56.fc39.x86_64                                                   
+  libeconf-0.5.2-1.fc39.x86_64                                                  
+  libevent-2.1.12-9.fc39.x86_64                                                 
+  libfdisk-2.39.2-1.fc39.x86_64                                                 
+  libffi-3.4.4-4.fc39.x86_64                                                    
+  libgcc-13.2.1-4.fc39.x86_64                                                   
+  libgomp-13.2.1-4.fc39.x86_64                                                  
+  libidn2-2.3.4-3.fc39.x86_64                                                   
+  libmount-2.39.2-1.fc39.x86_64                                                 
+  libnghttp2-1.55.1-4.fc39.x86_64                                               
+  libnsl2-2.0.0-6.fc39.x86_64                                                   
+  libpkgconf-1.9.5-2.fc39.x86_64                                                
+  libpsl-0.21.2-4.fc39.x86_64                                                   
+  libpwquality-1.4.5-6.fc39.x86_64                                              
+  libselinux-3.5-5.fc39.x86_64                                                  
+  libsemanage-3.5-4.fc39.x86_64                                                 
+  libsepol-3.5-2.fc39.x86_64                                                    
+  libsigsegv-2.14-5.fc39.x86_64                                                 
+  libsmartcols-2.39.2-1.fc39.x86_64                                             
+  libssh-0.10.5-2.fc39.x86_64                                                   
+  libssh-config-0.10.5-2.fc39.noarch                                            
+  libstdc++-13.2.1-4.fc39.x86_64                                                
+  libtasn1-4.19.0-3.fc39.x86_64                                                 
+  libtirpc-1.3.4-0.fc39.x86_64                                                  
+  libunistring-1.1-5.fc39.x86_64                                                
+  libutempter-1.2.1-10.fc39.x86_64                                              
+  libuuid-2.39.2-1.fc39.x86_64                                                  
+  libverto-0.3.2-6.fc39.x86_64                                                  
+  libxcrypt-4.4.36-2.fc39.x86_64                                                
+  libxml2-2.10.4-3.fc39.x86_64                                                  
+  libzstd-1.5.5-4.fc39.x86_64                                                   
+  lua-libs-5.4.6-3.fc39.x86_64                                                  
+  lua-srpm-macros-1-9.fc39.noarch                                               
+  lz4-libs-1.9.4-4.fc39.x86_64                                                  
+  mpfr-4.2.0-3.fc39.x86_64                                                      
+  ncurses-base-6.4-7.20230520.fc39.noarch                                       
+  ncurses-libs-6.4-7.20230520.fc39.x86_64                                       
+  ocaml-srpm-macros-8-2.fc39.noarch                                             
+  openblas-srpm-macros-2-14.fc39.noarch                                         
+  openldap-2.6.6-1.fc39.x86_64                                                  
+  openssl-libs-1:3.1.1-4.fc39.x86_64                                            
+  p11-kit-0.25.3-1.fc39.x86_64                                                  
+  p11-kit-trust-0.25.3-1.fc39.x86_64                                            
+  package-notes-srpm-macros-0.5-9.fc39.noarch                                   
+  pam-1.5.3-3.fc39.x86_64                                                       
+  pam-libs-1.5.3-3.fc39.x86_64                                                  
+  patch-2.7.6-22.fc39.x86_64                                                    
+  pcre2-10.42-1.fc39.2.x86_64                                                   
+  pcre2-syntax-10.42-1.fc39.2.noarch                                            
+  perl-srpm-macros-1-51.fc39.noarch                                             
+  pkgconf-1.9.5-2.fc39.x86_64                                                   
+  pkgconf-m4-1.9.5-2.fc39.noarch                                                
+  pkgconf-pkg-config-1.9.5-2.fc39.x86_64                                        
+  popt-1.19-3.fc39.x86_64                                                       
+  publicsuffix-list-dafsa-20230812-1.fc39.noarch                                
+  pyproject-srpm-macros-1.10.0-1.fc39.noarch                                    
+  python-srpm-macros-3.12-4.fc39.noarch                                         
+  qt5-srpm-macros-5.15.11-1.fc39.noarch                                         
+  qt6-srpm-macros-6.6.0-1.fc39.noarch                                           
+  readline-8.2-4.fc39.x86_64                                                    
+  redhat-rpm-config-262-1.fc39.noarch                                           
+  rpm-4.19.0-1.fc39.x86_64                                                      
+  rpm-build-4.19.0-1.fc39.x86_64                                                
+  rpm-build-libs-4.19.0-1.fc39.x86_64                                           
+  rpm-libs-4.19.0-1.fc39.x86_64                                                 
+  rpm-sequoia-1.5.0-1.fc39.x86_64                                               
+  rpmautospec-rpm-macros-0.3.8-1.fc39.noarch                                    
+  rust-srpm-macros-25.2-2.fc39.noarch                                           
+  sed-4.8-14.fc39.x86_64                                                        
+  setup-2.14.4-1.fc39.noarch                                                    
+  shadow-utils-2:4.14.0-2.fc39.x86_64                                           
+  sqlite-libs-3.42.0-7.fc39.x86_64                                              
+  systemd-libs-254.7-1.fc39.x86_64                                              
+  tar-2:1.35-2.fc39.x86_64                                                      
+  unzip-6.0-62.fc39.x86_64                                                      
+  util-linux-2.39.2-1.fc39.x86_64                                               
+  util-linux-core-2.39.2-1.fc39.x86_64                                          
+  which-2.21-40.fc39.x86_64                                                     
+  xxhash-libs-0.8.2-1.fc39.x86_64                                               
+  xz-5.4.4-1.fc39.x86_64                                                        
+  xz-libs-5.4.4-1.fc39.x86_64                                                   
+  zip-3.0-39.fc39.x86_64                                                        
+  zlib-1.2.13-4.fc39.x86_64                                                     
+  zstd-1.5.5-4.fc39.x86_64                                                      
+
+Complete!
+Finish: installing minimal buildroot with dnf
+Start: creating root cache
+Finish: creating root cache
+Finish: chroot init
+INFO: Installed packages:
+INFO: alternatives-1.25-1.fc39.x86_64
+ansible-srpm-macros-1-11.fc39.noarch
+audit-libs-3.1.2-5.fc39.x86_64
+authselect-1.4.3-1.fc39.x86_64
+authselect-libs-1.4.3-1.fc39.x86_64
+basesystem-11-18.fc39.noarch
+bash-5.2.21-1.fc39.x86_64
+binutils-2.40-13.fc39.x86_64
+binutils-gold-2.40-13.fc39.x86_64
+bzip2-1.0.8-16.fc39.x86_64
+bzip2-libs-1.0.8-16.fc39.x86_64
+ca-certificates-2023.2.60_v7.0.306-2.fc39.noarch
+coreutils-9.3-4.fc39.x86_64
+coreutils-common-9.3-4.fc39.x86_64
+cpio-2.14-4.fc39.x86_64
+cracklib-2.9.11-2.fc39.x86_64
+crypto-policies-20231113-1.gitb402e82.fc39.noarch
+curl-8.2.1-3.fc39.x86_64
+cyrus-sasl-lib-2.1.28-11.fc39.x86_64
+debugedit-5.0-10.fc39.x86_64
+diffutils-3.10-3.fc39.x86_64
+dwz-0.15-3.fc39.x86_64
+ed-1.19-4.fc39.x86_64
+efi-srpm-macros-5-9.fc39.noarch
+elfutils-0.190-1.fc39.x86_64
+elfutils-debuginfod-client-0.190-1.fc39.x86_64
+elfutils-default-yama-scope-0.190-1.fc39.noarch
+elfutils-libelf-0.190-1.fc39.x86_64
+elfutils-libs-0.190-1.fc39.x86_64
+fedora-gpg-keys-39-1.noarch
+fedora-release-39-34.noarch
+fedora-release-common-39-34.noarch
+fedora-release-identity-basic-39-34.noarch
+fedora-repos-39-1.noarch
+file-5.44-5.fc39.x86_64
+file-libs-5.44-5.fc39.x86_64
+filesystem-3.18-6.fc39.x86_64
+findutils-4.9.0-5.fc39.x86_64
+fonts-srpm-macros-2.0.5-12.fc39.noarch
+fpc-srpm-macros-1.3-8.fc39.noarch
+gawk-5.2.2-2.fc39.x86_64
+gdb-minimal-13.2-11.fc39.x86_64
+gdbm-libs-1.23-4.fc39.x86_64
+ghc-srpm-macros-1.6.1-2.fc39.noarch
+glibc-2.38-11.fc39.x86_64
+glibc-common-2.38-11.fc39.x86_64
+glibc-gconv-extra-2.38-11.fc39.x86_64
+glibc-minimal-langpack-2.38-11.fc39.x86_64
+gmp-6.2.1-5.fc39.x86_64
+gnat-srpm-macros-6-3.fc39.noarch
+go-srpm-macros-3.3.1-1.fc39.noarch
+gpg-pubkey-18b8e74c-62f2920f
+grep-3.11-3.fc39.x86_64
+gzip-1.12-6.fc39.x86_64
+info-7.0.3-3.fc39.x86_64
+jansson-2.13.1-7.fc39.x86_64
+kernel-srpm-macros-1.0-20.fc39.noarch
+keyutils-libs-1.6.1-7.fc39.x86_64
+krb5-libs-1.21.2-2.fc39.x86_64
+libacl-2.3.1-8.fc39.x86_64
+libarchive-3.7.1-1.fc39.x86_64
+libattr-2.5.1-8.fc39.x86_64
+libblkid-2.39.2-1.fc39.x86_64
+libbrotli-1.1.0-1.fc39.x86_64
+libcap-2.48-8.fc39.x86_64
+libcap-ng-0.8.3-8.fc39.x86_64
+libcom_err-1.47.0-2.fc39.x86_64
+libcurl-8.2.1-3.fc39.x86_64
+libdb-5.3.28-56.fc39.x86_64
+libeconf-0.5.2-1.fc39.x86_64
+libevent-2.1.12-9.fc39.x86_64
+libfdisk-2.39.2-1.fc39.x86_64
+libffi-3.4.4-4.fc39.x86_64
+libgcc-13.2.1-4.fc39.x86_64
+libgomp-13.2.1-4.fc39.x86_64
+libidn2-2.3.4-3.fc39.x86_64
+libmount-2.39.2-1.fc39.x86_64
+libnghttp2-1.55.1-4.fc39.x86_64
+libnsl2-2.0.0-6.fc39.x86_64
+libpkgconf-1.9.5-2.fc39.x86_64
+libpsl-0.21.2-4.fc39.x86_64
+libpwquality-1.4.5-6.fc39.x86_64
+libselinux-3.5-5.fc39.x86_64
+libsemanage-3.5-4.fc39.x86_64
+libsepol-3.5-2.fc39.x86_64
+libsigsegv-2.14-5.fc39.x86_64
+libsmartcols-2.39.2-1.fc39.x86_64
+libssh-0.10.5-2.fc39.x86_64
+libssh-config-0.10.5-2.fc39.noarch
+libstdc++-13.2.1-4.fc39.x86_64
+libtasn1-4.19.0-3.fc39.x86_64
+libtirpc-1.3.4-0.fc39.x86_64
+libunistring-1.1-5.fc39.x86_64
+libutempter-1.2.1-10.fc39.x86_64
+libuuid-2.39.2-1.fc39.x86_64
+libverto-0.3.2-6.fc39.x86_64
+libxcrypt-4.4.36-2.fc39.x86_64
+libxml2-2.10.4-3.fc39.x86_64
+libzstd-1.5.5-4.fc39.x86_64
+lua-libs-5.4.6-3.fc39.x86_64
+lua-srpm-macros-1-9.fc39.noarch
+lz4-libs-1.9.4-4.fc39.x86_64
+mpfr-4.2.0-3.fc39.x86_64
+ncurses-base-6.4-7.20230520.fc39.noarch
+ncurses-libs-6.4-7.20230520.fc39.x86_64
+ocaml-srpm-macros-8-2.fc39.noarch
+openblas-srpm-macros-2-14.fc39.noarch
+openldap-2.6.6-1.fc39.x86_64
+openssl-libs-3.1.1-4.fc39.x86_64
+p11-kit-0.25.3-1.fc39.x86_64
+p11-kit-trust-0.25.3-1.fc39.x86_64
+package-notes-srpm-macros-0.5-9.fc39.noarch
+pam-1.5.3-3.fc39.x86_64
+pam-libs-1.5.3-3.fc39.x86_64
+patch-2.7.6-22.fc39.x86_64
+pcre2-10.42-1.fc39.2.x86_64
+pcre2-syntax-10.42-1.fc39.2.noarch
+perl-srpm-macros-1-51.fc39.noarch
+pkgconf-1.9.5-2.fc39.x86_64
+pkgconf-m4-1.9.5-2.fc39.noarch
+pkgconf-pkg-config-1.9.5-2.fc39.x86_64
+popt-1.19-3.fc39.x86_64
+publicsuffix-list-dafsa-20230812-1.fc39.noarch
+pyproject-srpm-macros-1.10.0-1.fc39.noarch
+python-srpm-macros-3.12-4.fc39.noarch
+qt5-srpm-macros-5.15.11-1.fc39.noarch
+qt6-srpm-macros-6.6.0-1.fc39.noarch
+readline-8.2-4.fc39.x86_64
+redhat-rpm-config-262-1.fc39.noarch
+rpm-4.19.0-1.fc39.x86_64
+rpm-build-4.19.0-1.fc39.x86_64
+rpm-build-libs-4.19.0-1.fc39.x86_64
+rpm-libs-4.19.0-1.fc39.x86_64
+rpm-sequoia-1.5.0-1.fc39.x86_64
+rpmautospec-rpm-macros-0.3.8-1.fc39.noarch
+rust-srpm-macros-25.2-2.fc39.noarch
+sed-4.8-14.fc39.x86_64
+setup-2.14.4-1.fc39.noarch
+shadow-utils-4.14.0-2.fc39.x86_64
+sqlite-libs-3.42.0-7.fc39.x86_64
+systemd-libs-254.7-1.fc39.x86_64
+tar-1.35-2.fc39.x86_64
+unzip-6.0-62.fc39.x86_64
+util-linux-2.39.2-1.fc39.x86_64
+util-linux-core-2.39.2-1.fc39.x86_64
+which-2.21-40.fc39.x86_64
+xxhash-libs-0.8.2-1.fc39.x86_64
+xz-5.4.4-1.fc39.x86_64
+xz-libs-5.4.4-1.fc39.x86_64
+zip-3.0-39.fc39.x86_64
+zlib-1.2.13-4.fc39.x86_64
+zstd-1.5.5-4.fc39.x86_64
+Finish: run
+INFO:__main__:running command: mock -r /var/lib/copr-rpmbuild/results/mock-config.cfg --install bsdtar tito
+INFO: mock.py version 5.2 starting (python version = 3.11.3, NVR = mock-5.2-1.fc38), args: /usr/libexec/mock/mock -r /var/lib/copr-rpmbuild/results/mock-config.cfg --install bsdtar tito
+Start(bootstrap): init plugins
+INFO: tmpfs initialized
+INFO: selinux enabled
+INFO: chroot_scan: initialized
+INFO: compress_logs: initialized
+Finish(bootstrap): init plugins
+Start: init plugins
+INFO: tmpfs initialized
+INFO: selinux enabled
+INFO: chroot_scan: initialized
+INFO: compress_logs: initialized
+Finish: init plugins
+INFO: Signal handler active
+Start: run
+Mock Version: 5.2
+INFO: Mock Version: 5.2
+Start(bootstrap): chroot init
+INFO: mounting tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64-bootstrap/root.
+INFO: reusing tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64-bootstrap/root.
+INFO: calling preinit hooks
+INFO: enabled root cache
+INFO: enabled package manager cache
+Start(bootstrap): cleaning package manager metadata
+Finish(bootstrap): cleaning package manager metadata
+INFO: Package manager dnf detected and used (fallback)
+Finish(bootstrap): chroot init
+Start: chroot init
+INFO: mounting tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64/root.
+INFO: reusing tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64/root.
+INFO: calling preinit hooks
+INFO: enabled root cache
+INFO: enabled package manager cache
+Start: cleaning package manager metadata
+Finish: cleaning package manager metadata
+INFO: enabled HW Info plugin
+INFO: Package manager dnf detected and used (direct choice)
+Finish: chroot init
+INFO: installing package(s): bsdtar tito
+No matches found for the following disable plugin patterns: local, spacewalk, versionlock
+fedora                                          800 kB/s |  25 kB     00:00    
+updates                                         770 kB/s |  25 kB     00:00    
+Dependencies resolved.
+=======================================================================================
+ Package                        Arch    Version                          Repo      Size
+=======================================================================================
+Installing:
+ bsdtar                         x86_64  3.7.1-1.fc39                     fedora    65 k
+ tito                           noarch  0.6.24-2.fc39                    fedora   215 k
+Installing dependencies:
+ bodhi-client                   noarch  7.2.2-1.fc39                     updates   89 k
+ createrepo_c                   x86_64  1.0.2-2.fc39                     updates   78 k
+ createrepo_c-libs              x86_64  1.0.2-2.fc39                     updates  111 k
+ dash                           x86_64  0.5.12-1.fc39                    fedora    98 k
+ dbus                           x86_64  1:1.14.10-1.fc39                 fedora   8.1 k
+ dbus-broker                    x86_64  33-2.fc39                        fedora   173 k
+ dbus-common                    noarch  1:1.14.10-1.fc39                 fedora    15 k
+ desktop-file-utils             x86_64  0.26-9.fc39                      fedora    72 k
+ devscripts-checkbashisms       noarch  2.23.5-3.fc39                    fedora    28 k
+ distribution-gpg-keys          noarch  1.98-1.fc39                      updates  515 k
+ dnf-data                       noarch  4.18.1-2.fc39                    updates   39 k
+ drpm                           x86_64  0.5.2-3.fc39                     fedora    64 k
+ emacs-filesystem               noarch  1:29.1-2.fc39                    fedora   7.1 k
+ enchant2                       x86_64  2.5.0-5.fc39                     fedora    62 k
+ expat                          x86_64  2.5.0-3.fc39                     fedora   110 k
+ fakeroot                       x86_64  1.32.1-1.fc39                    fedora    93 k
+ fakeroot-libs                  x86_64  1.32.1-1.fc39                    fedora    39 k
+ fedora-packager                noarch  0.6.0.7-7.fc39                   updates   27 k
+ fedpkg                         noarch  1.44-6.fc39                      fedora   119 k
+ gdk-pixbuf2                    x86_64  2.42.10-5.fc39                   fedora   484 k
+ git-core                       x86_64  2.43.0-1.fc39                    updates  4.5 M
+ glib2                          x86_64  2.78.1-1.fc39                    updates  2.8 M
+ gnupg2                         x86_64  2.4.3-4.fc39                     updates  2.6 M
+ gnutls                         x86_64  3.8.2-1.fc39                     updates  1.1 M
+ gobject-introspection          x86_64  1.78.1-1.fc39                    fedora   261 k
+ groff-base                     x86_64  1.23.0-3.fc39                    updates  1.1 M
+ http-parser                    x86_64  2.9.4-9.fc39                     fedora    36 k
+ hunspell                       x86_64  1.7.2-5.fc39                     fedora   472 k
+ hunspell-en-US                 noarch  0.20201207-7.fc39                fedora   181 k
+ hunspell-filesystem            x86_64  1.7.2-5.fc39                     fedora   9.2 k
+ ima-evm-utils                  x86_64  1.5-2.fc39                       fedora    63 k
+ json-c                         x86_64  0.17-1.fc39                      fedora    43 k
+ json-glib                      x86_64  1.8.0-1.fc39                     fedora   166 k
+ kmod-libs                      x86_64  30-6.fc39                        fedora    67 k
+ koji                           noarch  1.33.1-2.fc39                    fedora   245 k
+ less                           x86_64  633-2.fc39                       fedora   175 k
+ libappstream-glib              x86_64  0.8.2-4.fc39                     fedora   409 k
+ libassuan                      x86_64  2.5.6-2.fc39                     fedora    67 k
+ libb2                          x86_64  0.98.1-9.fc39                    fedora    25 k
+ libcbor                        x86_64  0.10.2-2.fc39                    fedora    58 k
+ libcomps                       x86_64  0.1.20-1.fc39                    updates   78 k
+ libdnf                         x86_64  0.72.0-1.fc39                    fedora   680 k
+ libedit                        x86_64  3.1-48.20230828cvs.fc39          fedora   107 k
+ libfido2                       x86_64  1.13.0-3.fc39                    fedora    98 k
+ libfsverity                    x86_64  1.4-10.fc39                      fedora    19 k
+ libgcrypt                      x86_64  1.10.2-2.fc39                    fedora   507 k
+ libgit2                        x86_64  1.7.1-2.fc39                     fedora   538 k
+ libgpg-error                   x86_64  1.47-2.fc39                      fedora   230 k
+ libjpeg-turbo                  x86_64  2.1.4-3.fc39                     fedora   183 k
+ libksba                        x86_64  1.6.4-2.fc39                     fedora   159 k
+ libmodulemd                    x86_64  2.15.0-5.fc39                    fedora   232 k
+ libpng                         x86_64  2:1.6.37-15.fc39                 fedora   119 k
+ librepo                        x86_64  1.17.0-1.fc39                    fedora    98 k
+ libreport-filesystem           noarch  2.17.11-3.fc39                   fedora    14 k
+ libseccomp                     x86_64  2.5.3-6.fc39                     fedora    71 k
+ libsolv                        x86_64  0.7.25-1.fc39                    updates  426 k
+ libssh2                        x86_64  1.11.0-2.fc39                    fedora   132 k
+ libstemmer                     x86_64  2.2.0-7.fc39                     fedora   171 k
+ libuser                        x86_64  0.64-4.fc39                      fedora   404 k
+ libxslt                        x86_64  1.1.39-1.fc39                    updates  187 k
+ libyaml                        x86_64  0.2.5-12.fc39                    fedora    59 k
+ mock                           noarch  5.2-1.fc39                       fedora   279 k
+ mock-core-configs              noarch  39.2-1.fc39                      updates  145 k
+ mock-filesystem                noarch  5.2-1.fc39                       fedora    18 k
+ mpdecimal                      x86_64  2.5.1-7.fc39                     fedora    89 k
+ ncurses                        x86_64  6.4-7.20230520.fc39              fedora   416 k
+ nettle                         x86_64  3.9.1-2.fc39                     fedora   425 k
+ npth                           x86_64  1.6-14.fc39                      fedora    25 k
+ openssh                        x86_64  9.3p1-9.fc39                     fedora   438 k
+ openssh-clients                x86_64  9.3p1-9.fc39                     fedora   734 k
+ passwd                         x86_64  0.80-15.fc39                     fedora   120 k
+ perl-AutoLoader                noarch  5.74-501.fc39                    updates   21 k
+ perl-B                         x86_64  1.88-501.fc39                    updates  177 k
+ perl-Carp                      noarch  1.54-500.fc39                    fedora    29 k
+ perl-Class-Struct              noarch  0.68-501.fc39                    updates   22 k
+ perl-Data-Dumper               x86_64  2.188-501.fc39                   fedora    56 k
+ perl-Digest                    noarch  1.20-500.fc39                    fedora    25 k
+ perl-Digest-MD5                x86_64  2.58-500.fc39                    fedora    35 k
+ perl-DynaLoader                x86_64  1.54-501.fc39                    updates   26 k
+ perl-Encode                    x86_64  4:3.19-500.fc39                  fedora   1.7 M
+ perl-Errno                     x86_64  1.37-501.fc39                    updates   15 k
+ perl-Exporter                  noarch  5.77-500.fc39                    fedora    31 k
+ perl-Fcntl                     x86_64  1.15-501.fc39                    updates   21 k
+ perl-File-Basename             noarch  2.86-501.fc39                    updates   17 k
+ perl-File-Path                 noarch  2.18-500.fc39                    fedora    35 k
+ perl-File-Temp                 noarch  1:0.231.100-500.fc39             fedora    58 k
+ perl-File-stat                 noarch  1.13-501.fc39                    updates   17 k
+ perl-FileHandle                noarch  2.05-501.fc39                    updates   16 k
+ perl-Getopt-Long               noarch  1:2.54-500.fc39                  fedora    60 k
+ perl-Getopt-Std                noarch  1.13-501.fc39                    updates   16 k
+ perl-HTTP-Tiny                 noarch  0.088-3.fc39                     fedora    56 k
+ perl-IO                        x86_64  1.52-501.fc39                    updates   82 k
+ perl-IO-Socket-IP              noarch  0.42-1.fc39                      fedora    42 k
+ perl-IO-Socket-SSL             noarch  2.083-3.fc39                     fedora   225 k
+ perl-IPC-Open3                 noarch  1.22-501.fc39                    updates   22 k
+ perl-MIME-Base64               x86_64  3.16-500.fc39                    fedora    29 k
+ perl-Mozilla-CA                noarch  20230801-1.fc39                  fedora    13 k
+ perl-Net-SSLeay                x86_64  1.92-10.fc39                     fedora   360 k
+ perl-POSIX                     x86_64  2.13-501.fc39                    updates   97 k
+ perl-PathTools                 x86_64  3.89-500.fc39                    fedora    87 k
+ perl-Pod-Escapes               noarch  1:1.07-500.fc39                  fedora    20 k
+ perl-Pod-Perldoc               noarch  3.28.01-501.fc39                 fedora    86 k
+ perl-Pod-Simple                noarch  1:3.45-4.fc39                    fedora   218 k
+ perl-Pod-Usage                 noarch  4:2.03-500.fc39                  fedora    39 k
+ perl-Scalar-List-Utils         x86_64  5:1.63-500.fc39                  fedora    72 k
+ perl-SelectSaver               noarch  1.02-501.fc39                    updates   12 k
+ perl-Socket                    x86_64  4:2.037-3.fc39                   fedora    55 k
+ perl-Storable                  x86_64  1:3.32-500.fc39                  fedora    99 k
+ perl-Symbol                    noarch  1.09-501.fc39                    updates   14 k
+ perl-Term-ANSIColor            noarch  5.01-501.fc39                    fedora    47 k
+ perl-Term-Cap                  noarch  1.18-500.fc39                    fedora    22 k
+ perl-Text-ParseWords           noarch  3.31-500.fc39                    fedora    16 k
+ perl-Text-Tabs+Wrap            noarch  2023.0511-3.fc39                 fedora    22 k
+ perl-Time-Local                noarch  2:1.350-3.fc39                   fedora    34 k
+ perl-URI                       noarch  5.21-1.fc39                      fedora   125 k
+ perl-base                      noarch  2.27-501.fc39                    updates   16 k
+ perl-constant                  noarch  1.33-501.fc39                    fedora    22 k
+ perl-if                        noarch  0.61.000-501.fc39                updates   14 k
+ perl-interpreter               x86_64  4:5.38.0-501.fc39                updates   72 k
+ perl-libnet                    noarch  3.15-501.fc39                    fedora   129 k
+ perl-libs                      x86_64  4:5.38.0-501.fc39                updates  2.3 M
+ perl-locale                    noarch  1.10-501.fc39                    updates   14 k
+ perl-mro                       x86_64  1.28-501.fc39                    updates   29 k
+ perl-overload                  noarch  1.37-501.fc39                    updates   46 k
+ perl-overloading               noarch  0.02-501.fc39                    updates   13 k
+ perl-parent                    noarch  1:0.241-500.fc39                 fedora    14 k
+ perl-podlators                 noarch  1:5.01-500.fc39                  fedora   125 k
+ perl-vars                      noarch  1.05-501.fc39                    updates   13 k
+ pigz                           x86_64  2.8-2.fc39                       fedora    94 k
+ procps-ng                      x86_64  4.0.3-5.fc39                     updates  372 k
+ python-pip-wheel               noarch  23.2.1-1.fc39                    fedora   1.5 M
+ python3                        x86_64  3.12.0-1.fc39                    fedora    26 k
+ python3-GitPython              noarch  3.1.40-1.fc39                    updates  381 k
+ python3-argcomplete            noarch  2.0.0-12.fc39                    fedora    76 k
+ python3-authlib                noarch  1.2.1-2.fc39                     fedora   462 k
+ python3-babel                  noarch  2.12.1-6.fc39                    fedora   6.9 M
+ python3-backoff                noarch  2.2.1-4.fc39                     fedora    42 k
+ python3-beautifulsoup4         noarch  4.12.2-4.fc39                    fedora   313 k
+ python3-blessed                noarch  1.19.1-6.fc39                    fedora   137 k
+ python3-bugzilla               noarch  3.2.0-8.fc39                     updates  134 k
+ python3-cccolutils             x86_64  1.5-25.fc39                      fedora    21 k
+ python3-cffi                   x86_64  1.15.1-6.fc39                    fedora   307 k
+ python3-chardet                noarch  5.2.0-1.fc39                     fedora   299 k
+ python3-charset-normalizer     noarch  3.2.0-2.fc39                     fedora   105 k
+ python3-cheetah                x86_64  3.2.6.post1-6.fc39               fedora   420 k
+ python3-click                  noarch  8.1.3-5.fc39                     fedora   233 k
+ python3-construct              noarch  2.10.68-6.fc39                   fedora   146 k
+ python3-cryptography           x86_64  41.0.3-1.fc39                    fedora   1.2 M
+ python3-dateutil               noarch  1:2.8.2-10.fc39                  fedora   355 k
+ python3-decorator              noarch  5.1.1-7.fc39                     fedora    30 k
+ python3-distro                 noarch  1.8.0-6.fc39                     fedora    49 k
+ python3-dnf                    noarch  4.18.1-2.fc39                    updates  590 k
+ python3-enchant                noarch  3.2.2-10.fc39                    fedora   101 k
+ python3-fedora                 noarch  1.1.1-10.fc39                    fedora   128 k
+ python3-file-magic             noarch  5.44-5.fc39                      fedora    20 k
+ python3-gitdb                  noarch  4.0.10-3.fc39                    fedora   142 k
+ python3-gobject-base           x86_64  3.46.0-1.fc39                    fedora   200 k
+ python3-gobject-base-noarch    noarch  3.46.0-1.fc39                    fedora   191 k
+ python3-gssapi                 x86_64  1.7.3-6.fc39                     fedora   645 k
+ python3-hawkey                 x86_64  0.72.0-1.fc39                    fedora   107 k
+ python3-idna                   noarch  3.4-4.fc39                       fedora   109 k
+ python3-jinja2                 noarch  3.1.2-5.fc39                     fedora   506 k
+ python3-kerberos               x86_64  1.3.0-21.fc39                    fedora    31 k
+ python3-kitchen                noarch  1.2.6-17.fc39                    fedora   108 k
+ python3-koji                   noarch  1.33.1-2.fc39                    fedora   406 k
+ python3-libcomps               x86_64  0.1.20-1.fc39                    updates   48 k
+ python3-libdnf                 x86_64  0.72.0-1.fc39                    fedora   862 k
+ python3-libmodulemd            x86_64  2.15.0-5.fc39                    fedora    14 k
+ python3-libs                   x86_64  3.12.0-1.fc39                    fedora   9.2 M
+ python3-lockfile               noarch  1:0.12.2-11.fc39                 fedora    39 k
+ python3-lxml                   x86_64  4.9.3-2.fc39                     fedora   1.4 M
+ python3-markupsafe             x86_64  2.1.3-2.fc39                     fedora    30 k
+ python3-munch                  noarch  2.5.0-13.fc39                    fedora    26 k
+ python3-openidc-client         noarch  0.6.0-20.20220119git0e2ed81.fc39 fedora    27 k
+ python3-ply                    noarch  3.11-20.fc39                     fedora   135 k
+ python3-progressbar2           noarch  3.53.2-9.fc39                    fedora    73 k
+ python3-pybeam                 noarch  0.7-7.fc39                       fedora    31 k
+ python3-pycparser              noarch  2.20-11.fc39                     fedora   153 k
+ python3-pycurl                 x86_64  7.45.2-5.fc39                    fedora   217 k
+ python3-pygit2                 x86_64  1.13.3-1.fc39                    updates  268 k
+ python3-pyroute2               noarch  0.7.3-3.fc39                     fedora   984 k
+ python3-pysocks                noarch  1.7.1-20.fc39                    fedora    39 k
+ python3-pyxdg                  noarch  0.27-9.fc39                      fedora   130 k
+ python3-pyyaml                 x86_64  6.0.1-11.fc39                    fedora   230 k
+ python3-requests               noarch  2.28.2-5.fc39                    fedora   152 k
+ python3-requests-gssapi        noarch  1.2.3-9.fc39                     fedora    32 k
+ python3-requests-kerberos      noarch  0.12.0-21.fc39                   fedora    33 k
+ python3-rpkg                   noarch  1.66-13.fc39                     updates  234 k
+ python3-rpm                    x86_64  4.19.0-1.fc39                    fedora    69 k
+ python3-rpmautospec            noarch  0.3.8-1.fc39                     updates   67 k
+ python3-setuptools             noarch  67.7.2-7.fc39                    fedora   1.5 M
+ python3-six                    noarch  1.16.0-12.fc39                   fedora    41 k
+ python3-smmap                  noarch  5.0.0-6.fc39                     fedora    62 k
+ python3-soupsieve              noarch  2.5-1.fc39                       fedora    98 k
+ python3-templated-dictionary   noarch  1.2-4.fc39                       fedora    20 k
+ python3-tomli-w                noarch  1.0.0-9.fc39                     fedora    21 k
+ python3-urllib3                noarch  1.26.18-1.fc39                   updates  274 k
+ python3-urllib3+socks          noarch  1.26.18-1.fc39                   updates   10 k
+ python3-utils                  noarch  3.3.3-4.fc39                     fedora    61 k
+ python3-wcwidth                noarch  0.2.5-14.fc39                    fedora    46 k
+ python3-zstandard              x86_64  0.21.0-3.fc39                    fedora   486 k
+ rpkg-common                    noarch  1.66-13.fc39                     updates   19 k
+ rpm-sign-libs                  x86_64  4.19.0-1.fc39                    fedora    26 k
+ rpmautospec                    noarch  0.3.8-1.fc39                     updates  8.7 k
+ rpmdevtools                    noarch  9.6-4.fc39                       fedora    96 k
+ rpmlint                        noarch  2.4.0-10.fc39                    fedora   322 k
+ rpmlint-fedora-license-data    noarch  1.35-1.fc39                      updates   30 k
+ shared-mime-info               x86_64  2.2-4.fc39                       fedora   380 k
+ systemd                        x86_64  254.7-1.fc39                     updates  4.7 M
+ systemd-container              x86_64  254.7-1.fc39                     updates  567 k
+ systemd-pam                    x86_64  254.7-1.fc39                     updates  362 k
+ systemd-rpm-macros             noarch  254.7-1.fc39                     updates   30 k
+ tpm2-tss                       x86_64  4.0.1-4.fc39                     fedora   676 k
+ tzdata                         noarch  2023c-2.fc39                     fedora   717 k
+ usermode                       x86_64  1.114-8.fc39                     fedora   188 k
+ zchunk-libs                    x86_64  1.3.2-1.fc39                     updates   51 k
+
+Transaction Summary
+=======================================================================================
+Install  218 Packages
+
+Total download size: 73 M
+Installed size: 279 M
+Downloading Packages:
+(1/218): dbus-1.14.10-1.fc39.x86_64.rpm          37 kB/s | 8.1 kB     00:00    
+(2/218): bsdtar-3.7.1-1.fc39.x86_64.rpm         182 kB/s |  65 kB     00:00    
+(3/218): dash-0.5.12-1.fc39.x86_64.rpm          231 kB/s |  98 kB     00:00    
+(4/218): dbus-common-1.14.10-1.fc39.noarch.rpm  208 kB/s |  15 kB     00:00    
+(5/218): dbus-broker-33-2.fc39.x86_64.rpm       626 kB/s | 173 kB     00:00    
+(6/218): devscripts-checkbashisms-2.23.5-3.fc39 385 kB/s |  28 kB     00:00    
+(7/218): desktop-file-utils-0.26-9.fc39.x86_64. 932 kB/s |  72 kB     00:00    
+(8/218): drpm-0.5.2-3.fc39.x86_64.rpm           833 kB/s |  64 kB     00:00    
+(9/218): emacs-filesystem-29.1-2.fc39.noarch.rp  99 kB/s | 7.1 kB     00:00    
+(10/218): enchant2-2.5.0-5.fc39.x86_64.rpm      812 kB/s |  62 kB     00:00    
+(11/218): fakeroot-libs-1.32.1-1.fc39.x86_64.rp 533 kB/s |  39 kB     00:00    
+(12/218): expat-2.5.0-3.fc39.x86_64.rpm         1.3 MB/s | 110 kB     00:00    
+(13/218): fakeroot-1.32.1-1.fc39.x86_64.rpm     662 kB/s |  93 kB     00:00    
+(14/218): fedpkg-1.44-6.fc39.noarch.rpm         1.4 MB/s | 119 kB     00:00    
+(15/218): gdk-pixbuf2-2.42.10-5.fc39.x86_64.rpm 3.1 MB/s | 484 kB     00:00    
+(16/218): http-parser-2.9.4-9.fc39.x86_64.rpm   476 kB/s |  36 kB     00:00    
+(17/218): gobject-introspection-1.78.1-1.fc39.x 1.8 MB/s | 261 kB     00:00    
+(18/218): hunspell-1.7.2-5.fc39.x86_64.rpm      5.2 MB/s | 472 kB     00:00    
+(19/218): hunspell-en-US-0.20201207-7.fc39.noar 2.1 MB/s | 181 kB     00:00    
+(20/218): hunspell-filesystem-1.7.2-5.fc39.x86_ 127 kB/s | 9.2 kB     00:00    
+(21/218): json-c-0.17-1.fc39.x86_64.rpm         567 kB/s |  43 kB     00:00    
+(22/218): ima-evm-utils-1.5-2.fc39.x86_64.rpm   821 kB/s |  63 kB     00:00    
+(23/218): json-glib-1.8.0-1.fc39.x86_64.rpm     1.9 MB/s | 166 kB     00:00    
+(24/218): kmod-libs-30-6.fc39.x86_64.rpm        869 kB/s |  67 kB     00:00    
+(25/218): koji-1.33.1-2.fc39.noarch.rpm         2.8 MB/s | 245 kB     00:00    
+(26/218): less-633-2.fc39.x86_64.rpm            2.0 MB/s | 175 kB     00:00    
+(27/218): libassuan-2.5.6-2.fc39.x86_64.rpm     867 kB/s |  67 kB     00:00    
+(28/218): libb2-0.98.1-9.fc39.x86_64.rpm        347 kB/s |  25 kB     00:00    
+(29/218): libappstream-glib-0.8.2-4.fc39.x86_64 2.8 MB/s | 409 kB     00:00    
+(30/218): libcbor-0.10.2-2.fc39.x86_64.rpm      759 kB/s |  58 kB     00:00    
+(31/218): libedit-3.1-48.20230828cvs.fc39.x86_6 1.3 MB/s | 107 kB     00:00    
+(32/218): libfido2-1.13.0-3.fc39.x86_64.rpm     1.2 MB/s |  98 kB     00:00    
+(33/218): libdnf-0.72.0-1.fc39.x86_64.rpm       4.4 MB/s | 680 kB     00:00    
+(34/218): libfsverity-1.4-10.fc39.x86_64.rpm    265 kB/s |  19 kB     00:00    
+(35/218): libgcrypt-1.10.2-2.fc39.x86_64.rpm    5.6 MB/s | 507 kB     00:00    
+(36/218): libgit2-1.7.1-2.fc39.x86_64.rpm       6.1 MB/s | 538 kB     00:00    
+(37/218): libgpg-error-1.47-2.fc39.x86_64.rpm   2.7 MB/s | 230 kB     00:00    
+(38/218): libjpeg-turbo-2.1.4-3.fc39.x86_64.rpm 2.1 MB/s | 183 kB     00:00    
+(39/218): libksba-1.6.4-2.fc39.x86_64.rpm       1.9 MB/s | 159 kB     00:00    
+(40/218): libmodulemd-2.15.0-5.fc39.x86_64.rpm  2.7 MB/s | 232 kB     00:00    
+(41/218): libpng-1.6.37-15.fc39.x86_64.rpm      1.4 MB/s | 119 kB     00:00    
+(42/218): librepo-1.17.0-1.fc39.x86_64.rpm      1.2 MB/s |  98 kB     00:00    
+(43/218): libreport-filesystem-2.17.11-3.fc39.n 199 kB/s |  14 kB     00:00    
+(44/218): libseccomp-2.5.3-6.fc39.x86_64.rpm    918 kB/s |  71 kB     00:00    
+(45/218): libssh2-1.11.0-2.fc39.x86_64.rpm      1.5 MB/s | 132 kB     00:00    
+(46/218): libstemmer-2.2.0-7.fc39.x86_64.rpm    2.0 MB/s | 171 kB     00:00    
+(47/218): libuser-0.64-4.fc39.x86_64.rpm        4.6 MB/s | 404 kB     00:00    
+(48/218): libyaml-0.2.5-12.fc39.x86_64.rpm      786 kB/s |  59 kB     00:00    
+(49/218): mock-5.2-1.fc39.noarch.rpm            3.2 MB/s | 279 kB     00:00    
+(50/218): mock-filesystem-5.2-1.fc39.noarch.rpm 252 kB/s |  18 kB     00:00    
+(51/218): mpdecimal-2.5.1-7.fc39.x86_64.rpm     1.1 MB/s |  89 kB     00:00    
+(52/218): ncurses-6.4-7.20230520.fc39.x86_64.rp 4.7 MB/s | 416 kB     00:00    
+(53/218): nettle-3.9.1-2.fc39.x86_64.rpm        4.7 MB/s | 425 kB     00:00    
+(54/218): npth-1.6-14.fc39.x86_64.rpm           335 kB/s |  25 kB     00:00    
+(55/218): openssh-9.3p1-9.fc39.x86_64.rpm       5.0 MB/s | 438 kB     00:00    
+(56/218): openssh-clients-9.3p1-9.fc39.x86_64.r 7.6 MB/s | 734 kB     00:00    
+(57/218): passwd-0.80-15.fc39.x86_64.rpm        1.4 MB/s | 120 kB     00:00    
+(58/218): perl-Carp-1.54-500.fc39.noarch.rpm    393 kB/s |  29 kB     00:00    
+(59/218): perl-Data-Dumper-2.188-501.fc39.x86_6 739 kB/s |  56 kB     00:00    
+(60/218): perl-Digest-1.20-500.fc39.noarch.rpm  339 kB/s |  25 kB     00:00    
+(61/218): perl-Digest-MD5-2.58-500.fc39.x86_64. 481 kB/s |  35 kB     00:00    
+(62/218): perl-Exporter-5.77-500.fc39.noarch.rp 412 kB/s |  31 kB     00:00    
+(63/218): perl-File-Path-2.18-500.fc39.noarch.r 472 kB/s |  35 kB     00:00    
+(64/218): perl-File-Temp-0.231.100-500.fc39.noa 735 kB/s |  58 kB     00:00    
+(65/218): perl-Getopt-Long-2.54-500.fc39.noarch 742 kB/s |  60 kB     00:00    
+(66/218): perl-HTTP-Tiny-0.088-3.fc39.noarch.rp 736 kB/s |  56 kB     00:00    
+(67/218): perl-IO-Socket-IP-0.42-1.fc39.noarch. 564 kB/s |  42 kB     00:00    
+(68/218): perl-IO-Socket-SSL-2.083-3.fc39.noarc 2.6 MB/s | 225 kB     00:00    
+(69/218): perl-MIME-Base64-3.16-500.fc39.x86_64 405 kB/s |  29 kB     00:00    
+(70/218): perl-Mozilla-CA-20230801-1.fc39.noarc 180 kB/s |  13 kB     00:00    
+(71/218): perl-Net-SSLeay-1.92-10.fc39.x86_64.r 4.1 MB/s | 360 kB     00:00    
+(72/218): perl-PathTools-3.89-500.fc39.x86_64.r 1.1 MB/s |  87 kB     00:00    
+(73/218): perl-Pod-Escapes-1.07-500.fc39.noarch 272 kB/s |  20 kB     00:00    
+(74/218): perl-Pod-Perldoc-3.28.01-501.fc39.noa 1.1 MB/s |  86 kB     00:00    
+(75/218): perl-Encode-3.19-500.fc39.x86_64.rpm  2.9 MB/s | 1.7 MB     00:00    
+(76/218): perl-Pod-Simple-3.45-4.fc39.noarch.rp 2.5 MB/s | 218 kB     00:00    
+(77/218): perl-Pod-Usage-2.03-500.fc39.noarch.r 533 kB/s |  39 kB     00:00    
+(78/218): perl-Socket-2.037-3.fc39.x86_64.rpm   740 kB/s |  55 kB     00:00    
+(79/218): perl-Storable-3.32-500.fc39.x86_64.rp 1.2 MB/s |  99 kB     00:00    
+(80/218): perl-Term-ANSIColor-5.01-501.fc39.noa 634 kB/s |  47 kB     00:00    
+(81/218): perl-Term-Cap-1.18-500.fc39.noarch.rp 303 kB/s |  22 kB     00:00    
+(82/218): perl-Text-ParseWords-3.31-500.fc39.no 222 kB/s |  16 kB     00:00    
+(83/218): perl-Text-Tabs+Wrap-2023.0511-3.fc39. 310 kB/s |  22 kB     00:00    
+(84/218): perl-Time-Local-1.350-3.fc39.noarch.r 473 kB/s |  34 kB     00:00    
+(85/218): perl-Scalar-List-Utils-1.63-500.fc39. 209 kB/s |  72 kB     00:00    
+(86/218): perl-URI-5.21-1.fc39.noarch.rpm       1.5 MB/s | 125 kB     00:00    
+(87/218): perl-constant-1.33-501.fc39.noarch.rp 311 kB/s |  22 kB     00:00    
+(88/218): perl-parent-0.241-500.fc39.noarch.rpm 201 kB/s |  14 kB     00:00    
+(89/218): perl-podlators-5.01-500.fc39.noarch.r 1.5 MB/s | 125 kB     00:00    
+(90/218): perl-libnet-3.15-501.fc39.noarch.rpm  898 kB/s | 129 kB     00:00    
+(91/218): pigz-2.8-2.fc39.x86_64.rpm            1.1 MB/s |  94 kB     00:00    
+(92/218): python3-3.12.0-1.fc39.x86_64.rpm      352 kB/s |  26 kB     00:00    
+(93/218): python3-argcomplete-2.0.0-12.fc39.noa 955 kB/s |  76 kB     00:00    
+(94/218): python-pip-wheel-23.2.1-1.fc39.noarch 9.3 MB/s | 1.5 MB     00:00    
+(95/218): python3-backoff-2.2.1-4.fc39.noarch.r 552 kB/s |  42 kB     00:00    
+(96/218): python3-authlib-1.2.1-2.fc39.noarch.r 3.0 MB/s | 462 kB     00:00    
+(97/218): python3-beautifulsoup4-4.12.2-4.fc39. 3.5 MB/s | 313 kB     00:00    
+(98/218): python3-blessed-1.19.1-6.fc39.noarch. 1.6 MB/s | 137 kB     00:00    
+(99/218): python3-cccolutils-1.5-25.fc39.x86_64 276 kB/s |  21 kB     00:00    
+(100/218): python3-cffi-1.15.1-6.fc39.x86_64.rp 3.5 MB/s | 307 kB     00:00    
+(101/218): python3-chardet-5.2.0-1.fc39.noarch. 3.3 MB/s | 299 kB     00:00    
+(102/218): python3-charset-normalizer-3.2.0-2.f 1.3 MB/s | 105 kB     00:00    
+(103/218): python3-cheetah-3.2.6.post1-6.fc39.x 4.6 MB/s | 420 kB     00:00    
+(104/218): python3-click-8.1.3-5.fc39.noarch.rp 2.7 MB/s | 233 kB     00:00    
+(105/218): python3-babel-2.12.1-6.fc39.noarch.r  14 MB/s | 6.9 MB     00:00    
+(106/218): python3-construct-2.10.68-6.fc39.noa 1.7 MB/s | 146 kB     00:00    
+(107/218): python3-dateutil-2.8.2-10.fc39.noarc 3.9 MB/s | 355 kB     00:00    
+(108/218): python3-decorator-5.1.1-7.fc39.noarc 404 kB/s |  30 kB     00:00    
+(109/218): python3-cryptography-41.0.3-1.fc39.x 7.7 MB/s | 1.2 MB     00:00    
+(110/218): python3-distro-1.8.0-6.fc39.noarch.r 631 kB/s |  49 kB     00:00    
+(111/218): python3-enchant-3.2.2-10.fc39.noarch 1.2 MB/s | 101 kB     00:00    
+(112/218): python3-fedora-1.1.1-10.fc39.noarch. 1.5 MB/s | 128 kB     00:00    
+(113/218): python3-file-magic-5.44-5.fc39.noarc 265 kB/s |  20 kB     00:00    
+(114/218): python3-gitdb-4.0.10-3.fc39.noarch.r 1.6 MB/s | 142 kB     00:00    
+(115/218): python3-gobject-base-3.46.0-1.fc39.x 2.3 MB/s | 200 kB     00:00    
+(116/218): python3-gobject-base-noarch-3.46.0-1 2.2 MB/s | 191 kB     00:00    
+(117/218): python3-gssapi-1.7.3-6.fc39.x86_64.r 6.8 MB/s | 645 kB     00:00    
+(118/218): python3-hawkey-0.72.0-1.fc39.x86_64. 1.3 MB/s | 107 kB     00:00    
+(119/218): python3-idna-3.4-4.fc39.noarch.rpm   1.3 MB/s | 109 kB     00:00    
+(120/218): python3-jinja2-3.1.2-5.fc39.noarch.r 5.4 MB/s | 506 kB     00:00    
+(121/218): python3-kerberos-1.3.0-21.fc39.x86_6 413 kB/s |  31 kB     00:00    
+(122/218): python3-kitchen-1.2.6-17.fc39.noarch 1.3 MB/s | 108 kB     00:00    
+(123/218): python3-koji-1.33.1-2.fc39.noarch.rp 4.3 MB/s | 406 kB     00:00    
+(124/218): python3-libmodulemd-2.15.0-5.fc39.x8 185 kB/s |  14 kB     00:00    
+(125/218): python3-libdnf-0.72.0-1.fc39.x86_64. 5.6 MB/s | 862 kB     00:00    
+(126/218): python3-lockfile-0.12.2-11.fc39.noar 507 kB/s |  39 kB     00:00    
+(127/218): python3-markupsafe-2.1.3-2.fc39.x86_ 401 kB/s |  30 kB     00:00    
+(128/218): python3-lxml-4.9.3-2.fc39.x86_64.rpm 9.0 MB/s | 1.4 MB     00:00    
+(129/218): python3-munch-2.5.0-13.fc39.noarch.r 346 kB/s |  26 kB     00:00    
+(130/218): python3-openidc-client-0.6.0-20.2022 356 kB/s |  27 kB     00:00    
+(131/218): python3-ply-3.11-20.fc39.noarch.rpm  1.6 MB/s | 135 kB     00:00    
+(132/218): python3-progressbar2-3.53.2-9.fc39.n 915 kB/s |  73 kB     00:00    
+(133/218): python3-pybeam-0.7-7.fc39.noarch.rpm 415 kB/s |  31 kB     00:00    
+(134/218): python3-pycparser-2.20-11.fc39.noarc 1.8 MB/s | 153 kB     00:00    
+(135/218): python3-libs-3.12.0-1.fc39.x86_64.rp  18 MB/s | 9.2 MB     00:00    
+(136/218): python3-pycurl-7.45.2-5.fc39.x86_64. 2.2 MB/s | 217 kB     00:00    
+(137/218): python3-pysocks-1.7.1-20.fc39.noarch 512 kB/s |  39 kB     00:00    
+(138/218): python3-pyxdg-0.27-9.fc39.noarch.rpm 1.5 MB/s | 130 kB     00:00    
+(139/218): python3-pyroute2-0.7.3-3.fc39.noarch 6.3 MB/s | 984 kB     00:00    
+(140/218): python3-pyyaml-6.0.1-11.fc39.x86_64. 2.6 MB/s | 230 kB     00:00    
+(141/218): python3-requests-gssapi-1.2.3-9.fc39 429 kB/s |  32 kB     00:00    
+(142/218): python3-requests-2.28.2-5.fc39.noarc 1.7 MB/s | 152 kB     00:00    
+(143/218): python3-requests-kerberos-0.12.0-21. 434 kB/s |  33 kB     00:00    
+(144/218): python3-rpm-4.19.0-1.fc39.x86_64.rpm 885 kB/s |  69 kB     00:00    
+(145/218): python3-setuptools-67.7.2-7.fc39.noa  15 MB/s | 1.5 MB     00:00    
+(146/218): python3-six-1.16.0-12.fc39.noarch.rp 538 kB/s |  41 kB     00:00    
+(147/218): python3-smmap-5.0.0-6.fc39.noarch.rp 799 kB/s |  62 kB     00:00    
+(148/218): python3-soupsieve-2.5-1.fc39.noarch. 1.2 MB/s |  98 kB     00:00    
+(149/218): python3-templated-dictionary-1.2-4.f 275 kB/s |  20 kB     00:00    
+(150/218): python3-tomli-w-1.0.0-9.fc39.noarch. 285 kB/s |  21 kB     00:00    
+(151/218): python3-utils-3.3.3-4.fc39.noarch.rp 777 kB/s |  61 kB     00:00    
+(152/218): python3-wcwidth-0.2.5-14.fc39.noarch 603 kB/s |  46 kB     00:00    
+(153/218): python3-zstandard-0.21.0-3.fc39.x86_ 5.4 MB/s | 486 kB     00:00    
+(154/218): rpm-sign-libs-4.19.0-1.fc39.x86_64.r 364 kB/s |  26 kB     00:00    
+(155/218): rpmdevtools-9.6-4.fc39.noarch.rpm    1.2 MB/s |  96 kB     00:00    
+(156/218): rpmlint-2.4.0-10.fc39.noarch.rpm     3.7 MB/s | 322 kB     00:00    
+(157/218): shared-mime-info-2.2-4.fc39.x86_64.r 4.2 MB/s | 380 kB     00:00    
+(158/218): tito-0.6.24-2.fc39.noarch.rpm        2.4 MB/s | 215 kB     00:00    
+(159/218): tpm2-tss-4.0.1-4.fc39.x86_64.rpm     7.2 MB/s | 676 kB     00:00    
+(160/218): tzdata-2023c-2.fc39.noarch.rpm       8.0 MB/s | 717 kB     00:00    
+(161/218): usermode-1.114-8.fc39.x86_64.rpm     1.9 MB/s | 188 kB     00:00    
+(162/218): bodhi-client-7.2.2-1.fc39.noarch.rpm 315 kB/s |  89 kB     00:00    
+(163/218): createrepo_c-1.0.2-2.fc39.x86_64.rpm 287 kB/s |  78 kB     00:00    
+(164/218): createrepo_c-libs-1.0.2-2.fc39.x86_6 420 kB/s | 111 kB     00:00    
+(165/218): dnf-data-4.18.1-2.fc39.noarch.rpm    634 kB/s |  39 kB     00:00    
+(166/218): fedora-packager-0.6.0.7-7.fc39.noarc 423 kB/s |  27 kB     00:00    
+(167/218): distribution-gpg-keys-1.98-1.fc39.no 2.8 MB/s | 515 kB     00:00    
+(168/218): glib2-2.78.1-1.fc39.x86_64.rpm       8.2 MB/s | 2.8 MB     00:00    
+(169/218): git-core-2.43.0-1.fc39.x86_64.rpm     11 MB/s | 4.5 MB     00:00    
+(170/218): gnupg2-2.4.3-4.fc39.x86_64.rpm       9.6 MB/s | 2.6 MB     00:00    
+(171/218): libcomps-0.1.20-1.fc39.x86_64.rpm    1.6 MB/s |  78 kB     00:00    
+(172/218): gnutls-3.8.2-1.fc39.x86_64.rpm        15 MB/s | 1.1 MB     00:00    
+(173/218): groff-base-1.23.0-3.fc39.x86_64.rpm   17 MB/s | 1.1 MB     00:00    
+(174/218): libsolv-0.7.25-1.fc39.x86_64.rpm     8.3 MB/s | 426 kB     00:00    
+(175/218): libxslt-1.1.39-1.fc39.x86_64.rpm     3.7 MB/s | 187 kB     00:00    
+(176/218): mock-core-configs-39.2-1.fc39.noarch 2.5 MB/s | 145 kB     00:00    
+(177/218): perl-AutoLoader-5.74-501.fc39.noarch 455 kB/s |  21 kB     00:00    
+(178/218): perl-B-1.88-501.fc39.x86_64.rpm      3.4 MB/s | 177 kB     00:00    
+(179/218): perl-Class-Struct-0.68-501.fc39.noar 469 kB/s |  22 kB     00:00    
+(180/218): perl-DynaLoader-1.54-501.fc39.x86_64 581 kB/s |  26 kB     00:00    
+(181/218): perl-Errno-1.37-501.fc39.x86_64.rpm  306 kB/s |  15 kB     00:00    
+(182/218): perl-Fcntl-1.15-501.fc39.x86_64.rpm  439 kB/s |  21 kB     00:00    
+(183/218): perl-File-Basename-2.86-501.fc39.noa 386 kB/s |  17 kB     00:00    
+(184/218): perl-File-stat-1.13-501.fc39.noarch. 361 kB/s |  17 kB     00:00    
+(185/218): perl-FileHandle-2.05-501.fc39.noarch 332 kB/s |  16 kB     00:00    
+(186/218): perl-Getopt-Std-1.13-501.fc39.noarch 352 kB/s |  16 kB     00:00    
+(187/218): perl-IPC-Open3-1.22-501.fc39.noarch. 467 kB/s |  22 kB     00:00    
+(188/218): perl-IO-1.52-501.fc39.x86_64.rpm     1.7 MB/s |  82 kB     00:00    
+(189/218): perl-POSIX-2.13-501.fc39.x86_64.rpm  2.1 MB/s |  97 kB     00:00    
+(190/218): perl-SelectSaver-1.02-501.fc39.noarc 248 kB/s |  12 kB     00:00    
+(191/218): perl-Symbol-1.09-501.fc39.noarch.rpm 299 kB/s |  14 kB     00:00    
+(192/218): perl-base-2.27-501.fc39.noarch.rpm   364 kB/s |  16 kB     00:00    
+(193/218): perl-if-0.61.000-501.fc39.noarch.rpm 299 kB/s |  14 kB     00:00    
+(194/218): perl-interpreter-5.38.0-501.fc39.x86 1.5 MB/s |  72 kB     00:00    
+(195/218): perl-locale-1.10-501.fc39.noarch.rpm 292 kB/s |  14 kB     00:00    
+(196/218): perl-mro-1.28-501.fc39.x86_64.rpm    608 kB/s |  29 kB     00:00    
+(197/218): perl-libs-5.38.0-501.fc39.x86_64.rpm  26 MB/s | 2.3 MB     00:00    
+(198/218): perl-overload-1.37-501.fc39.noarch.r 961 kB/s |  46 kB     00:00    
+(199/218): perl-vars-1.05-501.fc39.noarch.rpm   293 kB/s |  13 kB     00:00    
+(200/218): perl-overloading-0.02-501.fc39.noarc 270 kB/s |  13 kB     00:00    
+(201/218): procps-ng-4.0.3-5.fc39.x86_64.rpm    6.8 MB/s | 372 kB     00:00    
+(202/218): python3-bugzilla-3.2.0-8.fc39.noarch 1.9 MB/s | 134 kB     00:00    
+(203/218): python3-GitPython-3.1.40-1.fc39.noar 4.5 MB/s | 381 kB     00:00    
+(204/218): python3-dnf-4.18.1-2.fc39.noarch.rpm  10 MB/s | 590 kB     00:00    
+(205/218): python3-libcomps-0.1.20-1.fc39.x86_6 991 kB/s |  48 kB     00:00    
+(206/218): python3-pygit2-1.13.3-1.fc39.x86_64. 5.4 MB/s | 268 kB     00:00    
+(207/218): python3-rpkg-1.66-13.fc39.noarch.rpm 4.7 MB/s | 234 kB     00:00    
+(208/218): python3-rpmautospec-0.3.8-1.fc39.noa 1.4 MB/s |  67 kB     00:00    
+(209/218): python3-urllib3+socks-1.26.18-1.fc39 224 kB/s |  10 kB     00:00    
+(210/218): python3-urllib3-1.26.18-1.fc39.noarc 5.3 MB/s | 274 kB     00:00    
+(211/218): rpkg-common-1.66-13.fc39.noarch.rpm  310 kB/s |  19 kB     00:00    
+(212/218): rpmautospec-0.3.8-1.fc39.noarch.rpm  119 kB/s | 8.7 kB     00:00    
+(213/218): rpmlint-fedora-license-data-1.35-1.f 633 kB/s |  30 kB     00:00    
+(214/218): systemd-container-254.7-1.fc39.x86_6  10 MB/s | 567 kB     00:00    
+(215/218): systemd-pam-254.7-1.fc39.x86_64.rpm  6.3 MB/s | 362 kB     00:00    
+(216/218): systemd-rpm-macros-254.7-1.fc39.noar 664 kB/s |  30 kB     00:00    
+(217/218): systemd-254.7-1.fc39.x86_64.rpm       34 MB/s | 4.7 MB     00:00    
+(218/218): zchunk-libs-1.3.2-1.fc39.x86_64.rpm  940 kB/s |  51 kB     00:00    
+--------------------------------------------------------------------------------
+Total                                            10 MB/s |  73 MB     00:07     
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1 
+  Installing       : libgpg-error-1.47-2.fc39.x86_64                      1/218 
+  Installing       : expat-2.5.0-3.fc39.x86_64                            2/218 
+  Installing       : zchunk-libs-1.3.2-1.fc39.x86_64                      3/218 
+  Installing       : libsolv-0.7.25-1.fc39.x86_64                         4/218 
+  Installing       : tzdata-2023c-2.fc39.noarch                           5/218 
+  Running scriptlet: mock-filesystem-5.2-1.fc39.noarch                    6/218 
+  Installing       : mock-filesystem-5.2-1.fc39.noarch                    6/218 
+  Installing       : libyaml-0.2.5-12.fc39.x86_64                         7/218 
+  Installing       : libseccomp-2.5.3-6.fc39.x86_64                       8/218 
+  Installing       : json-c-0.17-1.fc39.x86_64                            9/218 
+  Running scriptlet: tpm2-tss-4.0.1-4.fc39.x86_64                        10/218 
+  Installing       : tpm2-tss-4.0.1-4.fc39.x86_64                        10/218 
+  Installing       : hunspell-filesystem-1.7.2-5.fc39.x86_64             11/218 
+  Installing       : hunspell-en-US-0.20201207-7.fc39.noarch             12/218 
+  Installing       : hunspell-1.7.2-5.fc39.x86_64                        13/218 
+  Installing       : emacs-filesystem-1:29.1-2.fc39.noarch               14/218 
+  Installing       : ima-evm-utils-1.5-2.fc39.x86_64                     15/218 
+  Installing       : libcomps-0.1.20-1.fc39.x86_64                       16/218 
+  Installing       : libassuan-2.5.6-2.fc39.x86_64                       17/218 
+  Installing       : libgcrypt-1.10.2-2.fc39.x86_64                      18/218 
+  Installing       : libksba-1.6.4-2.fc39.x86_64                         19/218 
+  Installing       : rpkg-common-1.66-13.fc39.noarch                     20/218 
+  Installing       : procps-ng-4.0.3-5.fc39.x86_64                       21/218 
+  Installing       : libxslt-1.1.39-1.fc39.x86_64                        22/218 
+  Running scriptlet: groff-base-1.23.0-3.fc39.x86_64                     23/218 
+  Installing       : groff-base-1.23.0-3.fc39.x86_64                     23/218 
+  Running scriptlet: groff-base-1.23.0-3.fc39.x86_64                     23/218 
+  Installing       : distribution-gpg-keys-1.98-1.fc39.noarch            24/218 
+  Installing       : python-pip-wheel-23.2.1-1.fc39.noarch               25/218 
+  Installing       : pigz-2.8-2.fc39.x86_64                              26/218 
+  Installing       : openssh-9.3p1-9.fc39.x86_64                         27/218 
+  Installing       : npth-1.6-14.fc39.x86_64                             28/218 
+  Installing       : nettle-3.9.1-2.fc39.x86_64                          29/218 
+  Installing       : gnutls-3.8.2-1.fc39.x86_64                          30/218 
+  Installing       : glib2-2.78.1-1.fc39.x86_64                          31/218 
+  Installing       : libmodulemd-2.15.0-5.fc39.x86_64                    32/218 
+  Installing       : libuser-0.64-4.fc39.x86_64                          33/218 
+  Installing       : passwd-0.80-15.fc39.x86_64                          34/218 
+  Installing       : usermode-1.114-8.fc39.x86_64                        35/218 
+  Installing       : desktop-file-utils-0.26-9.fc39.x86_64               36/218 
+  Installing       : enchant2-2.5.0-5.fc39.x86_64                        37/218 
+  Installing       : gobject-introspection-1.78.1-1.fc39.x86_64          38/218 
+  Installing       : json-glib-1.8.0-1.fc39.x86_64                       39/218 
+  Installing       : librepo-1.17.0-1.fc39.x86_64                        40/218 
+  Installing       : libdnf-0.72.0-1.fc39.x86_64                         41/218 
+  Installing       : shared-mime-info-2.2-4.fc39.x86_64                  42/218 
+  Running scriptlet: shared-mime-info-2.2-4.fc39.x86_64                  42/218 
+  Installing       : gnupg2-2.4.3-4.fc39.x86_64                          43/218 
+  Installing       : ncurses-6.4-7.20230520.fc39.x86_64                  44/218 
+  Installing       : perl-Digest-1.20-500.fc39.noarch                    45/218 
+  Installing       : perl-Digest-MD5-2.58-500.fc39.x86_64                46/218 
+  Installing       : perl-B-1.88-501.fc39.x86_64                         47/218 
+  Installing       : perl-FileHandle-2.05-501.fc39.noarch                48/218 
+  Installing       : perl-Data-Dumper-2.188-501.fc39.x86_64              49/218 
+  Installing       : perl-libnet-3.15-501.fc39.noarch                    50/218 
+  Installing       : perl-AutoLoader-5.74-501.fc39.noarch                51/218 
+  Installing       : perl-base-2.27-501.fc39.noarch                      52/218 
+  Installing       : perl-URI-5.21-1.fc39.noarch                         53/218 
+  Installing       : perl-Text-Tabs+Wrap-2023.0511-3.fc39.noarch         54/218 
+  Installing       : perl-Time-Local-2:1.350-3.fc39.noarch               55/218 
+  Installing       : perl-Mozilla-CA-20230801-1.fc39.noarch              56/218 
+  Installing       : perl-if-0.61.000-501.fc39.noarch                    57/218 
+  Installing       : perl-locale-1.10-501.fc39.noarch                    58/218 
+  Installing       : perl-IO-Socket-IP-0.42-1.fc39.noarch                59/218 
+  Installing       : perl-File-Path-2.18-500.fc39.noarch                 60/218 
+  Installing       : perl-IO-Socket-SSL-2.083-3.fc39.noarch              61/218 
+  Installing       : perl-Net-SSLeay-1.92-10.fc39.x86_64                 62/218 
+  Installing       : perl-Pod-Escapes-1:1.07-500.fc39.noarch             63/218 
+  Installing       : perl-Term-ANSIColor-5.01-501.fc39.noarch            64/218 
+  Installing       : perl-Class-Struct-0.68-501.fc39.noarch              65/218 
+  Installing       : perl-POSIX-2.13-501.fc39.x86_64                     66/218 
+  Installing       : perl-IPC-Open3-1.22-501.fc39.noarch                 67/218 
+  Installing       : perl-File-Temp-1:0.231.100-500.fc39.noarch          68/218 
+  Installing       : perl-HTTP-Tiny-0.088-3.fc39.noarch                  69/218 
+  Installing       : perl-Pod-Simple-1:3.45-4.fc39.noarch                70/218 
+  Installing       : perl-Term-Cap-1.18-500.fc39.noarch                  71/218 
+  Installing       : perl-Socket-4:2.037-3.fc39.x86_64                   72/218 
+  Installing       : perl-SelectSaver-1.02-501.fc39.noarch               73/218 
+  Installing       : perl-Symbol-1.09-501.fc39.noarch                    74/218 
+  Installing       : perl-File-stat-1.13-501.fc39.noarch                 75/218 
+  Installing       : perl-Pod-Perldoc-3.28.01-501.fc39.noarch            76/218 
+  Installing       : perl-podlators-1:5.01-500.fc39.noarch               77/218 
+  Installing       : perl-Text-ParseWords-3.31-500.fc39.noarch           78/218 
+  Installing       : perl-Fcntl-1.15-501.fc39.x86_64                     79/218 
+  Installing       : perl-mro-1.28-501.fc39.x86_64                       80/218 
+  Installing       : perl-IO-1.52-501.fc39.x86_64                        81/218 
+  Installing       : perl-overloading-0.02-501.fc39.noarch               82/218 
+  Installing       : perl-Pod-Usage-4:2.03-500.fc39.noarch               83/218 
+  Installing       : perl-MIME-Base64-3.16-500.fc39.x86_64               84/218 
+  Installing       : perl-Scalar-List-Utils-5:1.63-500.fc39.x86_64       85/218 
+  Installing       : perl-constant-1.33-501.fc39.noarch                  86/218 
+  Installing       : perl-parent-1:0.241-500.fc39.noarch                 87/218 
+  Installing       : perl-Errno-1.37-501.fc39.x86_64                     88/218 
+  Installing       : perl-File-Basename-2.86-501.fc39.noarch             89/218 
+  Installing       : perl-Getopt-Std-1.13-501.fc39.noarch                90/218 
+  Installing       : perl-Storable-1:3.32-500.fc39.x86_64                91/218 
+  Installing       : perl-overload-1.37-501.fc39.noarch                  92/218 
+  Installing       : perl-vars-1.05-501.fc39.noarch                      93/218 
+  Installing       : perl-Getopt-Long-1:2.54-500.fc39.noarch             94/218 
+  Installing       : perl-Carp-1.54-500.fc39.noarch                      95/218 
+  Installing       : perl-Exporter-5.77-500.fc39.noarch                  96/218 
+  Installing       : perl-PathTools-3.89-500.fc39.x86_64                 97/218 
+  Installing       : perl-DynaLoader-1.54-501.fc39.x86_64                98/218 
+  Installing       : perl-Encode-4:3.19-500.fc39.x86_64                  99/218 
+  Installing       : perl-libs-4:5.38.0-501.fc39.x86_64                 100/218 
+  Installing       : perl-interpreter-4:5.38.0-501.fc39.x86_64          101/218 
+  Installing       : devscripts-checkbashisms-2.23.5-3.fc39.noarch      102/218 
+  Installing       : mpdecimal-2.5.1-7.fc39.x86_64                      103/218 
+  Installing       : libstemmer-2.2.0-7.fc39.x86_64                     104/218 
+  Installing       : libssh2-1.11.0-2.fc39.x86_64                       105/218 
+  Installing       : libreport-filesystem-2.17.11-3.fc39.noarch         106/218 
+  Installing       : dnf-data-4.18.1-2.fc39.noarch                      107/218 
+warning: /etc/dnf/dnf.conf created as /etc/dnf/dnf.conf.rpmnew
+
+  Installing       : libpng-2:1.6.37-15.fc39.x86_64                     108/218 
+  Installing       : libjpeg-turbo-2.1.4-3.fc39.x86_64                  109/218 
+  Installing       : gdk-pixbuf2-2.42.10-5.fc39.x86_64                  110/218 
+  Installing       : libappstream-glib-0.8.2-4.fc39.x86_64              111/218 
+  Installing       : libfsverity-1.4-10.fc39.x86_64                     112/218 
+  Installing       : rpm-sign-libs-4.19.0-1.fc39.x86_64                 113/218 
+  Installing       : libedit-3.1-48.20230828cvs.fc39.x86_64             114/218 
+  Installing       : libcbor-0.10.2-2.fc39.x86_64                       115/218 
+  Installing       : libfido2-1.13.0-3.fc39.x86_64                      116/218 
+  Installing       : openssh-clients-9.3p1-9.fc39.x86_64                117/218 
+  Running scriptlet: openssh-clients-9.3p1-9.fc39.x86_64                117/218 
+  Installing       : libb2-0.98.1-9.fc39.x86_64                         118/218 
+  Installing       : python3-3.12.0-1.fc39.x86_64                       119/218 
+  Installing       : python3-libs-3.12.0-1.fc39.x86_64                  120/218 
+  Installing       : python3-six-1.16.0-12.fc39.noarch                  121/218 
+  Installing       : python3-rpm-4.19.0-1.fc39.x86_64                   122/218 
+  Installing       : python3-setuptools-67.7.2-7.fc39.noarch            123/218 
+  Installing       : python3-argcomplete-2.0.0-12.fc39.noarch           124/218 
+  Installing       : python3-munch-2.5.0-13.fc39.noarch                 125/218 
+  Installing       : python3-libdnf-0.72.0-1.fc39.x86_64                126/218 
+  Installing       : python3-hawkey-0.72.0-1.fc39.x86_64                127/218 
+  Installing       : python3-libcomps-0.1.20-1.fc39.x86_64              128/218 
+  Installing       : python3-dnf-4.18.1-2.fc39.noarch                   129/218 
+  Installing       : python3-distro-1.8.0-6.fc39.noarch                 130/218 
+  Installing       : python3-gobject-base-3.46.0-1.fc39.x86_64          131/218 
+  Installing       : python3-gobject-base-noarch-3.46.0-1.fc39.noarch   132/218 
+  Installing       : python3-idna-3.4-4.fc39.noarch                     133/218 
+  Installing       : python3-libmodulemd-2.15.0-5.fc39.x86_64           134/218 
+  Installing       : python3-construct-2.10.68-6.fc39.noarch            135/218 
+  Installing       : python3-pybeam-0.7-7.fc39.noarch                   136/218 
+  Installing       : python3-dateutil-1:2.8.2-10.fc39.noarch            137/218 
+  Installing       : python3-babel-2.12.1-6.fc39.noarch                 138/218 
+  Installing       : python3-backoff-2.2.1-4.fc39.noarch                139/218 
+  Installing       : python3-cccolutils-1.5-25.fc39.x86_64              140/218 
+  Installing       : python3-chardet-5.2.0-1.fc39.noarch                141/218 
+  Installing       : python3-kitchen-1.2.6-17.fc39.noarch               142/218 
+  Installing       : python3-charset-normalizer-3.2.0-2.fc39.noarch     143/218 
+  Installing       : python3-cheetah-3.2.6.post1-6.fc39.x86_64          144/218 
+  Installing       : python3-click-8.1.3-5.fc39.noarch                  145/218 
+  Installing       : python3-decorator-5.1.1-7.fc39.noarch              146/218 
+  Installing       : python3-gssapi-1.7.3-6.fc39.x86_64                 147/218 
+  Installing       : python3-enchant-3.2.2-10.fc39.noarch               148/218 
+  Installing       : python3-file-magic-5.44-5.fc39.noarch              149/218 
+  Installing       : python3-kerberos-1.3.0-21.fc39.x86_64              150/218 
+  Installing       : python3-lockfile-1:0.12.2-11.fc39.noarch           151/218 
+  Installing       : python3-lxml-4.9.3-2.fc39.x86_64                   152/218 
+  Installing       : python3-markupsafe-2.1.3-2.fc39.x86_64             153/218 
+  Installing       : python3-jinja2-3.1.2-5.fc39.noarch                 154/218 
+  Installing       : python3-templated-dictionary-1.2-4.fc39.noarch     155/218 
+  Installing       : python3-ply-3.11-20.fc39.noarch                    156/218 
+  Installing       : python3-pycparser-2.20-11.fc39.noarch              157/218 
+  Installing       : python3-cffi-1.15.1-6.fc39.x86_64                  158/218 
+  Installing       : python3-cryptography-41.0.3-1.fc39.x86_64          159/218 
+  Installing       : python3-authlib-1.2.1-2.fc39.noarch                160/218 
+  Installing       : python3-pycurl-7.45.2-5.fc39.x86_64                161/218 
+  Installing       : python3-pyroute2-0.7.3-3.fc39.noarch               162/218 
+  Installing       : python3-pysocks-1.7.1-20.fc39.noarch               163/218 
+  Installing       : python3-urllib3+socks-1.26.18-1.fc39.noarch        164/218 
+  Installing       : python3-urllib3-1.26.18-1.fc39.noarch              165/218 
+  Installing       : python3-requests-2.28.2-5.fc39.noarch              166/218 
+  Installing       : python3-openidc-client-0.6.0-20.20220119git0e2ed   167/218 
+  Installing       : python3-bugzilla-3.2.0-8.fc39.noarch               168/218 
+  Installing       : python3-requests-gssapi-1.2.3-9.fc39.noarch        169/218 
+  Installing       : python3-koji-1.33.1-2.fc39.noarch                  170/218 
+  Installing       : koji-1.33.1-2.fc39.noarch                          171/218 
+  Installing       : python3-requests-kerberos-0.12.0-21.fc39.noarch    172/218 
+  Installing       : bodhi-client-7.2.2-1.fc39.noarch                   173/218 
+  Installing       : python3-pyxdg-0.27-9.fc39.noarch                   174/218 
+  Installing       : python3-pyyaml-6.0.1-11.fc39.x86_64                175/218 
+  Installing       : python3-smmap-5.0.0-6.fc39.noarch                  176/218 
+  Installing       : python3-gitdb-4.0.10-3.fc39.noarch                 177/218 
+  Installing       : python3-soupsieve-2.5-1.fc39.noarch                178/218 
+  Installing       : python3-beautifulsoup4-4.12.2-4.fc39.noarch        179/218 
+  Installing       : python3-fedora-1.1.1-10.fc39.noarch                180/218 
+  Installing       : python3-tomli-w-1.0.0-9.fc39.noarch                181/218 
+  Installing       : python3-utils-3.3.3-4.fc39.noarch                  182/218 
+  Installing       : python3-progressbar2-3.53.2-9.fc39.noarch          183/218 
+  Installing       : python3-wcwidth-0.2.5-14.fc39.noarch               184/218 
+  Installing       : python3-blessed-1.19.1-6.fc39.noarch               185/218 
+  Installing       : python3-zstandard-0.21.0-3.fc39.x86_64             186/218 
+  Installing       : less-633-2.fc39.x86_64                             187/218 
+  Installing       : git-core-2.43.0-1.fc39.x86_64                      188/218 
+  Installing       : python3-GitPython-3.1.40-1.fc39.noarch             189/218 
+  Installing       : kmod-libs-30-6.fc39.x86_64                         190/218 
+  Installing       : http-parser-2.9.4-9.fc39.x86_64                    191/218 
+  Installing       : libgit2-1.7.1-2.fc39.x86_64                        192/218 
+  Installing       : python3-pygit2-1.13.3-1.fc39.x86_64                193/218 
+  Installing       : python3-rpmautospec-0.3.8-1.fc39.noarch            194/218 
+  Installing       : rpmautospec-0.3.8-1.fc39.noarch                    195/218 
+  Installing       : fakeroot-libs-1.32.1-1.fc39.x86_64                 196/218 
+  Installing       : fakeroot-1.32.1-1.fc39.x86_64                      197/218 
+  Running scriptlet: fakeroot-1.32.1-1.fc39.x86_64                      197/218 
+  Installing       : rpmdevtools-9.6-4.fc39.noarch                      198/218 
+  Installing       : drpm-0.5.2-3.fc39.x86_64                           199/218 
+  Installing       : createrepo_c-libs-1.0.2-2.fc39.x86_64              200/218 
+  Installing       : createrepo_c-1.0.2-2.fc39.x86_64                   201/218 
+  Installing       : dbus-common-1:1.14.10-1.fc39.noarch                202/218 
+  Running scriptlet: dbus-common-1:1.14.10-1.fc39.noarch                202/218 
+  Running scriptlet: dbus-broker-33-2.fc39.x86_64                       203/218 
+  Installing       : dbus-broker-33-2.fc39.x86_64                       203/218 
+  Running scriptlet: dbus-broker-33-2.fc39.x86_64                       203/218 
+  Installing       : dbus-1:1.14.10-1.fc39.x86_64                       204/218 
+  Installing       : systemd-pam-254.7-1.fc39.x86_64                    205/218 
+  Installing       : systemd-254.7-1.fc39.x86_64                        206/218 
+  Running scriptlet: systemd-254.7-1.fc39.x86_64                        206/218 
+Creating group 'input' with GID 104.
+Creating group 'kvm' with GID 36.
+Creating group 'render' with GID 105.
+Creating group 'sgx' with GID 106.
+Creating group 'systemd-journal' with GID 190.
+Creating group 'systemd-oom' with GID 999.
+Creating user 'systemd-oom' (systemd Userspace OOM Killer) with UID 999 and GID 999.
+
+  Installing       : systemd-container-254.7-1.fc39.x86_64              207/218 
+  Installing       : mock-core-configs-39.2-1.fc39.noarch               208/218 
+  Running scriptlet: mock-core-configs-39.2-1.fc39.noarch               208/218 
+  Installing       : mock-5.2-1.fc39.noarch                             209/218 
+  Installing       : dash-0.5.12-1.fc39.x86_64                          210/218 
+  Running scriptlet: dash-0.5.12-1.fc39.x86_64                          210/218 
+  Installing       : rpmlint-fedora-license-data-1.35-1.fc39.noarch     211/218 
+  Installing       : rpmlint-2.4.0-10.fc39.noarch                       212/218 
+  Installing       : python3-rpkg-1.66-13.fc39.noarch                   213/218 
+  Installing       : fedora-packager-0.6.0.7-7.fc39.noarch              214/218 
+  Installing       : fedpkg-1.44-6.fc39.noarch                          215/218 
+  Installing       : tito-0.6.24-2.fc39.noarch                          216/218 
+  Installing       : systemd-rpm-macros-254.7-1.fc39.noarch             217/218 
+  Installing       : bsdtar-3.7.1-1.fc39.x86_64                         218/218 
+  Running scriptlet: bsdtar-3.7.1-1.fc39.x86_64                         218/218 
+  Verifying        : bsdtar-3.7.1-1.fc39.x86_64                           1/218 
+  Verifying        : dash-0.5.12-1.fc39.x86_64                            2/218 
+  Verifying        : dbus-1:1.14.10-1.fc39.x86_64                         3/218 
+  Verifying        : dbus-broker-33-2.fc39.x86_64                         4/218 
+  Verifying        : dbus-common-1:1.14.10-1.fc39.noarch                  5/218 
+  Verifying        : desktop-file-utils-0.26-9.fc39.x86_64                6/218 
+  Verifying        : devscripts-checkbashisms-2.23.5-3.fc39.noarch        7/218 
+  Verifying        : drpm-0.5.2-3.fc39.x86_64                             8/218 
+  Verifying        : emacs-filesystem-1:29.1-2.fc39.noarch                9/218 
+  Verifying        : enchant2-2.5.0-5.fc39.x86_64                        10/218 
+  Verifying        : expat-2.5.0-3.fc39.x86_64                           11/218 
+  Verifying        : fakeroot-1.32.1-1.fc39.x86_64                       12/218 
+  Verifying        : fakeroot-libs-1.32.1-1.fc39.x86_64                  13/218 
+  Verifying        : fedpkg-1.44-6.fc39.noarch                           14/218 
+  Verifying        : gdk-pixbuf2-2.42.10-5.fc39.x86_64                   15/218 
+  Verifying        : gobject-introspection-1.78.1-1.fc39.x86_64          16/218 
+  Verifying        : http-parser-2.9.4-9.fc39.x86_64                     17/218 
+  Verifying        : hunspell-1.7.2-5.fc39.x86_64                        18/218 
+  Verifying        : hunspell-en-US-0.20201207-7.fc39.noarch             19/218 
+  Verifying        : hunspell-filesystem-1.7.2-5.fc39.x86_64             20/218 
+  Verifying        : ima-evm-utils-1.5-2.fc39.x86_64                     21/218 
+  Verifying        : json-c-0.17-1.fc39.x86_64                           22/218 
+  Verifying        : json-glib-1.8.0-1.fc39.x86_64                       23/218 
+  Verifying        : kmod-libs-30-6.fc39.x86_64                          24/218 
+  Verifying        : koji-1.33.1-2.fc39.noarch                           25/218 
+  Verifying        : less-633-2.fc39.x86_64                              26/218 
+  Verifying        : libappstream-glib-0.8.2-4.fc39.x86_64               27/218 
+  Verifying        : libassuan-2.5.6-2.fc39.x86_64                       28/218 
+  Verifying        : libb2-0.98.1-9.fc39.x86_64                          29/218 
+  Verifying        : libcbor-0.10.2-2.fc39.x86_64                        30/218 
+  Verifying        : libdnf-0.72.0-1.fc39.x86_64                         31/218 
+  Verifying        : libedit-3.1-48.20230828cvs.fc39.x86_64              32/218 
+  Verifying        : libfido2-1.13.0-3.fc39.x86_64                       33/218 
+  Verifying        : libfsverity-1.4-10.fc39.x86_64                      34/218 
+  Verifying        : libgcrypt-1.10.2-2.fc39.x86_64                      35/218 
+  Verifying        : libgit2-1.7.1-2.fc39.x86_64                         36/218 
+  Verifying        : libgpg-error-1.47-2.fc39.x86_64                     37/218 
+  Verifying        : libjpeg-turbo-2.1.4-3.fc39.x86_64                   38/218 
+  Verifying        : libksba-1.6.4-2.fc39.x86_64                         39/218 
+  Verifying        : libmodulemd-2.15.0-5.fc39.x86_64                    40/218 
+  Verifying        : libpng-2:1.6.37-15.fc39.x86_64                      41/218 
+  Verifying        : librepo-1.17.0-1.fc39.x86_64                        42/218 
+  Verifying        : libreport-filesystem-2.17.11-3.fc39.noarch          43/218 
+  Verifying        : libseccomp-2.5.3-6.fc39.x86_64                      44/218 
+  Verifying        : libssh2-1.11.0-2.fc39.x86_64                        45/218 
+  Verifying        : libstemmer-2.2.0-7.fc39.x86_64                      46/218 
+  Verifying        : libuser-0.64-4.fc39.x86_64                          47/218 
+  Verifying        : libyaml-0.2.5-12.fc39.x86_64                        48/218 
+  Verifying        : mock-5.2-1.fc39.noarch                              49/218 
+  Verifying        : mock-filesystem-5.2-1.fc39.noarch                   50/218 
+  Verifying        : mpdecimal-2.5.1-7.fc39.x86_64                       51/218 
+  Verifying        : ncurses-6.4-7.20230520.fc39.x86_64                  52/218 
+  Verifying        : nettle-3.9.1-2.fc39.x86_64                          53/218 
+  Verifying        : npth-1.6-14.fc39.x86_64                             54/218 
+  Verifying        : openssh-9.3p1-9.fc39.x86_64                         55/218 
+  Verifying        : openssh-clients-9.3p1-9.fc39.x86_64                 56/218 
+  Verifying        : passwd-0.80-15.fc39.x86_64                          57/218 
+  Verifying        : perl-Carp-1.54-500.fc39.noarch                      58/218 
+  Verifying        : perl-Data-Dumper-2.188-501.fc39.x86_64              59/218 
+  Verifying        : perl-Digest-1.20-500.fc39.noarch                    60/218 
+  Verifying        : perl-Digest-MD5-2.58-500.fc39.x86_64                61/218 
+  Verifying        : perl-Encode-4:3.19-500.fc39.x86_64                  62/218 
+  Verifying        : perl-Exporter-5.77-500.fc39.noarch                  63/218 
+  Verifying        : perl-File-Path-2.18-500.fc39.noarch                 64/218 
+  Verifying        : perl-File-Temp-1:0.231.100-500.fc39.noarch          65/218 
+  Verifying        : perl-Getopt-Long-1:2.54-500.fc39.noarch             66/218 
+  Verifying        : perl-HTTP-Tiny-0.088-3.fc39.noarch                  67/218 
+  Verifying        : perl-IO-Socket-IP-0.42-1.fc39.noarch                68/218 
+  Verifying        : perl-IO-Socket-SSL-2.083-3.fc39.noarch              69/218 
+  Verifying        : perl-MIME-Base64-3.16-500.fc39.x86_64               70/218 
+  Verifying        : perl-Mozilla-CA-20230801-1.fc39.noarch              71/218 
+  Verifying        : perl-Net-SSLeay-1.92-10.fc39.x86_64                 72/218 
+  Verifying        : perl-PathTools-3.89-500.fc39.x86_64                 73/218 
+  Verifying        : perl-Pod-Escapes-1:1.07-500.fc39.noarch             74/218 
+  Verifying        : perl-Pod-Perldoc-3.28.01-501.fc39.noarch            75/218 
+  Verifying        : perl-Pod-Simple-1:3.45-4.fc39.noarch                76/218 
+  Verifying        : perl-Pod-Usage-4:2.03-500.fc39.noarch               77/218 
+  Verifying        : perl-Scalar-List-Utils-5:1.63-500.fc39.x86_64       78/218 
+  Verifying        : perl-Socket-4:2.037-3.fc39.x86_64                   79/218 
+  Verifying        : perl-Storable-1:3.32-500.fc39.x86_64                80/218 
+  Verifying        : perl-Term-ANSIColor-5.01-501.fc39.noarch            81/218 
+  Verifying        : perl-Term-Cap-1.18-500.fc39.noarch                  82/218 
+  Verifying        : perl-Text-ParseWords-3.31-500.fc39.noarch           83/218 
+  Verifying        : perl-Text-Tabs+Wrap-2023.0511-3.fc39.noarch         84/218 
+  Verifying        : perl-Time-Local-2:1.350-3.fc39.noarch               85/218 
+  Verifying        : perl-URI-5.21-1.fc39.noarch                         86/218 
+  Verifying        : perl-constant-1.33-501.fc39.noarch                  87/218 
+  Verifying        : perl-libnet-3.15-501.fc39.noarch                    88/218 
+  Verifying        : perl-parent-1:0.241-500.fc39.noarch                 89/218 
+  Verifying        : perl-podlators-1:5.01-500.fc39.noarch               90/218 
+  Verifying        : pigz-2.8-2.fc39.x86_64                              91/218 
+  Verifying        : python-pip-wheel-23.2.1-1.fc39.noarch               92/218 
+  Verifying        : python3-3.12.0-1.fc39.x86_64                        93/218 
+  Verifying        : python3-argcomplete-2.0.0-12.fc39.noarch            94/218 
+  Verifying        : python3-authlib-1.2.1-2.fc39.noarch                 95/218 
+  Verifying        : python3-babel-2.12.1-6.fc39.noarch                  96/218 
+  Verifying        : python3-backoff-2.2.1-4.fc39.noarch                 97/218 
+  Verifying        : python3-beautifulsoup4-4.12.2-4.fc39.noarch         98/218 
+  Verifying        : python3-blessed-1.19.1-6.fc39.noarch                99/218 
+  Verifying        : python3-cccolutils-1.5-25.fc39.x86_64              100/218 
+  Verifying        : python3-cffi-1.15.1-6.fc39.x86_64                  101/218 
+  Verifying        : python3-chardet-5.2.0-1.fc39.noarch                102/218 
+  Verifying        : python3-charset-normalizer-3.2.0-2.fc39.noarch     103/218 
+  Verifying        : python3-cheetah-3.2.6.post1-6.fc39.x86_64          104/218 
+  Verifying        : python3-click-8.1.3-5.fc39.noarch                  105/218 
+  Verifying        : python3-construct-2.10.68-6.fc39.noarch            106/218 
+  Verifying        : python3-cryptography-41.0.3-1.fc39.x86_64          107/218 
+  Verifying        : python3-dateutil-1:2.8.2-10.fc39.noarch            108/218 
+  Verifying        : python3-decorator-5.1.1-7.fc39.noarch              109/218 
+  Verifying        : python3-distro-1.8.0-6.fc39.noarch                 110/218 
+  Verifying        : python3-enchant-3.2.2-10.fc39.noarch               111/218 
+  Verifying        : python3-fedora-1.1.1-10.fc39.noarch                112/218 
+  Verifying        : python3-file-magic-5.44-5.fc39.noarch              113/218 
+  Verifying        : python3-gitdb-4.0.10-3.fc39.noarch                 114/218 
+  Verifying        : python3-gobject-base-3.46.0-1.fc39.x86_64          115/218 
+  Verifying        : python3-gobject-base-noarch-3.46.0-1.fc39.noarch   116/218 
+  Verifying        : python3-gssapi-1.7.3-6.fc39.x86_64                 117/218 
+  Verifying        : python3-hawkey-0.72.0-1.fc39.x86_64                118/218 
+  Verifying        : python3-idna-3.4-4.fc39.noarch                     119/218 
+  Verifying        : python3-jinja2-3.1.2-5.fc39.noarch                 120/218 
+  Verifying        : python3-kerberos-1.3.0-21.fc39.x86_64              121/218 
+  Verifying        : python3-kitchen-1.2.6-17.fc39.noarch               122/218 
+  Verifying        : python3-koji-1.33.1-2.fc39.noarch                  123/218 
+  Verifying        : python3-libdnf-0.72.0-1.fc39.x86_64                124/218 
+  Verifying        : python3-libmodulemd-2.15.0-5.fc39.x86_64           125/218 
+  Verifying        : python3-libs-3.12.0-1.fc39.x86_64                  126/218 
+  Verifying        : python3-lockfile-1:0.12.2-11.fc39.noarch           127/218 
+  Verifying        : python3-lxml-4.9.3-2.fc39.x86_64                   128/218 
+  Verifying        : python3-markupsafe-2.1.3-2.fc39.x86_64             129/218 
+  Verifying        : python3-munch-2.5.0-13.fc39.noarch                 130/218 
+  Verifying        : python3-openidc-client-0.6.0-20.20220119git0e2ed   131/218 
+  Verifying        : python3-ply-3.11-20.fc39.noarch                    132/218 
+  Verifying        : python3-progressbar2-3.53.2-9.fc39.noarch          133/218 
+  Verifying        : python3-pybeam-0.7-7.fc39.noarch                   134/218 
+  Verifying        : python3-pycparser-2.20-11.fc39.noarch              135/218 
+  Verifying        : python3-pycurl-7.45.2-5.fc39.x86_64                136/218 
+  Verifying        : python3-pyroute2-0.7.3-3.fc39.noarch               137/218 
+  Verifying        : python3-pysocks-1.7.1-20.fc39.noarch               138/218 
+  Verifying        : python3-pyxdg-0.27-9.fc39.noarch                   139/218 
+  Verifying        : python3-pyyaml-6.0.1-11.fc39.x86_64                140/218 
+  Verifying        : python3-requests-2.28.2-5.fc39.noarch              141/218 
+  Verifying        : python3-requests-gssapi-1.2.3-9.fc39.noarch        142/218 
+  Verifying        : python3-requests-kerberos-0.12.0-21.fc39.noarch    143/218 
+  Verifying        : python3-rpm-4.19.0-1.fc39.x86_64                   144/218 
+  Verifying        : python3-setuptools-67.7.2-7.fc39.noarch            145/218 
+  Verifying        : python3-six-1.16.0-12.fc39.noarch                  146/218 
+  Verifying        : python3-smmap-5.0.0-6.fc39.noarch                  147/218 
+  Verifying        : python3-soupsieve-2.5-1.fc39.noarch                148/218 
+  Verifying        : python3-templated-dictionary-1.2-4.fc39.noarch     149/218 
+  Verifying        : python3-tomli-w-1.0.0-9.fc39.noarch                150/218 
+  Verifying        : python3-utils-3.3.3-4.fc39.noarch                  151/218 
+  Verifying        : python3-wcwidth-0.2.5-14.fc39.noarch               152/218 
+  Verifying        : python3-zstandard-0.21.0-3.fc39.x86_64             153/218 
+  Verifying        : rpm-sign-libs-4.19.0-1.fc39.x86_64                 154/218 
+  Verifying        : rpmdevtools-9.6-4.fc39.noarch                      155/218 
+  Verifying        : rpmlint-2.4.0-10.fc39.noarch                       156/218 
+  Verifying        : shared-mime-info-2.2-4.fc39.x86_64                 157/218 
+  Verifying        : tito-0.6.24-2.fc39.noarch                          158/218 
+  Verifying        : tpm2-tss-4.0.1-4.fc39.x86_64                       159/218 
+  Verifying        : tzdata-2023c-2.fc39.noarch                         160/218 
+  Verifying        : usermode-1.114-8.fc39.x86_64                       161/218 
+  Verifying        : bodhi-client-7.2.2-1.fc39.noarch                   162/218 
+  Verifying        : createrepo_c-1.0.2-2.fc39.x86_64                   163/218 
+  Verifying        : createrepo_c-libs-1.0.2-2.fc39.x86_64              164/218 
+  Verifying        : distribution-gpg-keys-1.98-1.fc39.noarch           165/218 
+  Verifying        : dnf-data-4.18.1-2.fc39.noarch                      166/218 
+  Verifying        : fedora-packager-0.6.0.7-7.fc39.noarch              167/218 
+  Verifying        : git-core-2.43.0-1.fc39.x86_64                      168/218 
+  Verifying        : glib2-2.78.1-1.fc39.x86_64                         169/218 
+  Verifying        : gnupg2-2.4.3-4.fc39.x86_64                         170/218 
+  Verifying        : gnutls-3.8.2-1.fc39.x86_64                         171/218 
+  Verifying        : groff-base-1.23.0-3.fc39.x86_64                    172/218 
+  Verifying        : libcomps-0.1.20-1.fc39.x86_64                      173/218 
+  Verifying        : libsolv-0.7.25-1.fc39.x86_64                       174/218 
+  Verifying        : libxslt-1.1.39-1.fc39.x86_64                       175/218 
+  Verifying        : mock-core-configs-39.2-1.fc39.noarch               176/218 
+  Verifying        : perl-AutoLoader-5.74-501.fc39.noarch               177/218 
+  Verifying        : perl-B-1.88-501.fc39.x86_64                        178/218 
+  Verifying        : perl-Class-Struct-0.68-501.fc39.noarch             179/218 
+  Verifying        : perl-DynaLoader-1.54-501.fc39.x86_64               180/218 
+  Verifying        : perl-Errno-1.37-501.fc39.x86_64                    181/218 
+  Verifying        : perl-Fcntl-1.15-501.fc39.x86_64                    182/218 
+  Verifying        : perl-File-Basename-2.86-501.fc39.noarch            183/218 
+  Verifying        : perl-File-stat-1.13-501.fc39.noarch                184/218 
+  Verifying        : perl-FileHandle-2.05-501.fc39.noarch               185/218 
+  Verifying        : perl-Getopt-Std-1.13-501.fc39.noarch               186/218 
+  Verifying        : perl-IO-1.52-501.fc39.x86_64                       187/218 
+  Verifying        : perl-IPC-Open3-1.22-501.fc39.noarch                188/218 
+  Verifying        : perl-POSIX-2.13-501.fc39.x86_64                    189/218 
+  Verifying        : perl-SelectSaver-1.02-501.fc39.noarch              190/218 
+  Verifying        : perl-Symbol-1.09-501.fc39.noarch                   191/218 
+  Verifying        : perl-base-2.27-501.fc39.noarch                     192/218 
+  Verifying        : perl-if-0.61.000-501.fc39.noarch                   193/218 
+  Verifying        : perl-interpreter-4:5.38.0-501.fc39.x86_64          194/218 
+  Verifying        : perl-libs-4:5.38.0-501.fc39.x86_64                 195/218 
+  Verifying        : perl-locale-1.10-501.fc39.noarch                   196/218 
+  Verifying        : perl-mro-1.28-501.fc39.x86_64                      197/218 
+  Verifying        : perl-overload-1.37-501.fc39.noarch                 198/218 
+  Verifying        : perl-overloading-0.02-501.fc39.noarch              199/218 
+  Verifying        : perl-vars-1.05-501.fc39.noarch                     200/218 
+  Verifying        : procps-ng-4.0.3-5.fc39.x86_64                      201/218 
+  Verifying        : python3-GitPython-3.1.40-1.fc39.noarch             202/218 
+  Verifying        : python3-bugzilla-3.2.0-8.fc39.noarch               203/218 
+  Verifying        : python3-dnf-4.18.1-2.fc39.noarch                   204/218 
+  Verifying        : python3-libcomps-0.1.20-1.fc39.x86_64              205/218 
+  Verifying        : python3-pygit2-1.13.3-1.fc39.x86_64                206/218 
+  Verifying        : python3-rpkg-1.66-13.fc39.noarch                   207/218 
+  Verifying        : python3-rpmautospec-0.3.8-1.fc39.noarch            208/218 
+  Verifying        : python3-urllib3+socks-1.26.18-1.fc39.noarch        209/218 
+  Verifying        : python3-urllib3-1.26.18-1.fc39.noarch              210/218 
+  Verifying        : rpkg-common-1.66-13.fc39.noarch                    211/218 
+  Verifying        : rpmautospec-0.3.8-1.fc39.noarch                    212/218 
+  Verifying        : rpmlint-fedora-license-data-1.35-1.fc39.noarch     213/218 
+  Verifying        : systemd-254.7-1.fc39.x86_64                        214/218 
+  Verifying        : systemd-container-254.7-1.fc39.x86_64              215/218 
+  Verifying        : systemd-pam-254.7-1.fc39.x86_64                    216/218 
+  Verifying        : systemd-rpm-macros-254.7-1.fc39.noarch             217/218 
+  Verifying        : zchunk-libs-1.3.2-1.fc39.x86_64                    218/218 
+
+Installed:
+  bodhi-client-7.2.2-1.fc39.noarch                                              
+  bsdtar-3.7.1-1.fc39.x86_64                                                    
+  createrepo_c-1.0.2-2.fc39.x86_64                                              
+  createrepo_c-libs-1.0.2-2.fc39.x86_64                                         
+  dash-0.5.12-1.fc39.x86_64                                                     
+  dbus-1:1.14.10-1.fc39.x86_64                                                  
+  dbus-broker-33-2.fc39.x86_64                                                  
+  dbus-common-1:1.14.10-1.fc39.noarch                                           
+  desktop-file-utils-0.26-9.fc39.x86_64                                         
+  devscripts-checkbashisms-2.23.5-3.fc39.noarch                                 
+  distribution-gpg-keys-1.98-1.fc39.noarch                                      
+  dnf-data-4.18.1-2.fc39.noarch                                                 
+  drpm-0.5.2-3.fc39.x86_64                                                      
+  emacs-filesystem-1:29.1-2.fc39.noarch                                         
+  enchant2-2.5.0-5.fc39.x86_64                                                  
+  expat-2.5.0-3.fc39.x86_64                                                     
+  fakeroot-1.32.1-1.fc39.x86_64                                                 
+  fakeroot-libs-1.32.1-1.fc39.x86_64                                            
+  fedora-packager-0.6.0.7-7.fc39.noarch                                         
+  fedpkg-1.44-6.fc39.noarch                                                     
+  gdk-pixbuf2-2.42.10-5.fc39.x86_64                                             
+  git-core-2.43.0-1.fc39.x86_64                                                 
+  glib2-2.78.1-1.fc39.x86_64                                                    
+  gnupg2-2.4.3-4.fc39.x86_64                                                    
+  gnutls-3.8.2-1.fc39.x86_64                                                    
+  gobject-introspection-1.78.1-1.fc39.x86_64                                    
+  groff-base-1.23.0-3.fc39.x86_64                                               
+  http-parser-2.9.4-9.fc39.x86_64                                               
+  hunspell-1.7.2-5.fc39.x86_64                                                  
+  hunspell-en-US-0.20201207-7.fc39.noarch                                       
+  hunspell-filesystem-1.7.2-5.fc39.x86_64                                       
+  ima-evm-utils-1.5-2.fc39.x86_64                                               
+  json-c-0.17-1.fc39.x86_64                                                     
+  json-glib-1.8.0-1.fc39.x86_64                                                 
+  kmod-libs-30-6.fc39.x86_64                                                    
+  koji-1.33.1-2.fc39.noarch                                                     
+  less-633-2.fc39.x86_64                                                        
+  libappstream-glib-0.8.2-4.fc39.x86_64                                         
+  libassuan-2.5.6-2.fc39.x86_64                                                 
+  libb2-0.98.1-9.fc39.x86_64                                                    
+  libcbor-0.10.2-2.fc39.x86_64                                                  
+  libcomps-0.1.20-1.fc39.x86_64                                                 
+  libdnf-0.72.0-1.fc39.x86_64                                                   
+  libedit-3.1-48.20230828cvs.fc39.x86_64                                        
+  libfido2-1.13.0-3.fc39.x86_64                                                 
+  libfsverity-1.4-10.fc39.x86_64                                                
+  libgcrypt-1.10.2-2.fc39.x86_64                                                
+  libgit2-1.7.1-2.fc39.x86_64                                                   
+  libgpg-error-1.47-2.fc39.x86_64                                               
+  libjpeg-turbo-2.1.4-3.fc39.x86_64                                             
+  libksba-1.6.4-2.fc39.x86_64                                                   
+  libmodulemd-2.15.0-5.fc39.x86_64                                              
+  libpng-2:1.6.37-15.fc39.x86_64                                                
+  librepo-1.17.0-1.fc39.x86_64                                                  
+  libreport-filesystem-2.17.11-3.fc39.noarch                                    
+  libseccomp-2.5.3-6.fc39.x86_64                                                
+  libsolv-0.7.25-1.fc39.x86_64                                                  
+  libssh2-1.11.0-2.fc39.x86_64                                                  
+  libstemmer-2.2.0-7.fc39.x86_64                                                
+  libuser-0.64-4.fc39.x86_64                                                    
+  libxslt-1.1.39-1.fc39.x86_64                                                  
+  libyaml-0.2.5-12.fc39.x86_64                                                  
+  mock-5.2-1.fc39.noarch                                                        
+  mock-core-configs-39.2-1.fc39.noarch                                          
+  mock-filesystem-5.2-1.fc39.noarch                                             
+  mpdecimal-2.5.1-7.fc39.x86_64                                                 
+  ncurses-6.4-7.20230520.fc39.x86_64                                            
+  nettle-3.9.1-2.fc39.x86_64                                                    
+  npth-1.6-14.fc39.x86_64                                                       
+  openssh-9.3p1-9.fc39.x86_64                                                   
+  openssh-clients-9.3p1-9.fc39.x86_64                                           
+  passwd-0.80-15.fc39.x86_64                                                    
+  perl-AutoLoader-5.74-501.fc39.noarch                                          
+  perl-B-1.88-501.fc39.x86_64                                                   
+  perl-Carp-1.54-500.fc39.noarch                                                
+  perl-Class-Struct-0.68-501.fc39.noarch                                        
+  perl-Data-Dumper-2.188-501.fc39.x86_64                                        
+  perl-Digest-1.20-500.fc39.noarch                                              
+  perl-Digest-MD5-2.58-500.fc39.x86_64                                          
+  perl-DynaLoader-1.54-501.fc39.x86_64                                          
+  perl-Encode-4:3.19-500.fc39.x86_64                                            
+  perl-Errno-1.37-501.fc39.x86_64                                               
+  perl-Exporter-5.77-500.fc39.noarch                                            
+  perl-Fcntl-1.15-501.fc39.x86_64                                               
+  perl-File-Basename-2.86-501.fc39.noarch                                       
+  perl-File-Path-2.18-500.fc39.noarch                                           
+  perl-File-Temp-1:0.231.100-500.fc39.noarch                                    
+  perl-File-stat-1.13-501.fc39.noarch                                           
+  perl-FileHandle-2.05-501.fc39.noarch                                          
+  perl-Getopt-Long-1:2.54-500.fc39.noarch                                       
+  perl-Getopt-Std-1.13-501.fc39.noarch                                          
+  perl-HTTP-Tiny-0.088-3.fc39.noarch                                            
+  perl-IO-1.52-501.fc39.x86_64                                                  
+  perl-IO-Socket-IP-0.42-1.fc39.noarch                                          
+  perl-IO-Socket-SSL-2.083-3.fc39.noarch                                        
+  perl-IPC-Open3-1.22-501.fc39.noarch                                           
+  perl-MIME-Base64-3.16-500.fc39.x86_64                                         
+  perl-Mozilla-CA-20230801-1.fc39.noarch                                        
+  perl-Net-SSLeay-1.92-10.fc39.x86_64                                           
+  perl-POSIX-2.13-501.fc39.x86_64                                               
+  perl-PathTools-3.89-500.fc39.x86_64                                           
+  perl-Pod-Escapes-1:1.07-500.fc39.noarch                                       
+  perl-Pod-Perldoc-3.28.01-501.fc39.noarch                                      
+  perl-Pod-Simple-1:3.45-4.fc39.noarch                                          
+  perl-Pod-Usage-4:2.03-500.fc39.noarch                                         
+  perl-Scalar-List-Utils-5:1.63-500.fc39.x86_64                                 
+  perl-SelectSaver-1.02-501.fc39.noarch                                         
+  perl-Socket-4:2.037-3.fc39.x86_64                                             
+  perl-Storable-1:3.32-500.fc39.x86_64                                          
+  perl-Symbol-1.09-501.fc39.noarch                                              
+  perl-Term-ANSIColor-5.01-501.fc39.noarch                                      
+  perl-Term-Cap-1.18-500.fc39.noarch                                            
+  perl-Text-ParseWords-3.31-500.fc39.noarch                                     
+  perl-Text-Tabs+Wrap-2023.0511-3.fc39.noarch                                   
+  perl-Time-Local-2:1.350-3.fc39.noarch                                         
+  perl-URI-5.21-1.fc39.noarch                                                   
+  perl-base-2.27-501.fc39.noarch                                                
+  perl-constant-1.33-501.fc39.noarch                                            
+  perl-if-0.61.000-501.fc39.noarch                                              
+  perl-interpreter-4:5.38.0-501.fc39.x86_64                                     
+  perl-libnet-3.15-501.fc39.noarch                                              
+  perl-libs-4:5.38.0-501.fc39.x86_64                                            
+  perl-locale-1.10-501.fc39.noarch                                              
+  perl-mro-1.28-501.fc39.x86_64                                                 
+  perl-overload-1.37-501.fc39.noarch                                            
+  perl-overloading-0.02-501.fc39.noarch                                         
+  perl-parent-1:0.241-500.fc39.noarch                                           
+  perl-podlators-1:5.01-500.fc39.noarch                                         
+  perl-vars-1.05-501.fc39.noarch                                                
+  pigz-2.8-2.fc39.x86_64                                                        
+  procps-ng-4.0.3-5.fc39.x86_64                                                 
+  python-pip-wheel-23.2.1-1.fc39.noarch                                         
+  python3-3.12.0-1.fc39.x86_64                                                  
+  python3-GitPython-3.1.40-1.fc39.noarch                                        
+  python3-argcomplete-2.0.0-12.fc39.noarch                                      
+  python3-authlib-1.2.1-2.fc39.noarch                                           
+  python3-babel-2.12.1-6.fc39.noarch                                            
+  python3-backoff-2.2.1-4.fc39.noarch                                           
+  python3-beautifulsoup4-4.12.2-4.fc39.noarch                                   
+  python3-blessed-1.19.1-6.fc39.noarch                                          
+  python3-bugzilla-3.2.0-8.fc39.noarch                                          
+  python3-cccolutils-1.5-25.fc39.x86_64                                         
+  python3-cffi-1.15.1-6.fc39.x86_64                                             
+  python3-chardet-5.2.0-1.fc39.noarch                                           
+  python3-charset-normalizer-3.2.0-2.fc39.noarch                                
+  python3-cheetah-3.2.6.post1-6.fc39.x86_64                                     
+  python3-click-8.1.3-5.fc39.noarch                                             
+  python3-construct-2.10.68-6.fc39.noarch                                       
+  python3-cryptography-41.0.3-1.fc39.x86_64                                     
+  python3-dateutil-1:2.8.2-10.fc39.noarch                                       
+  python3-decorator-5.1.1-7.fc39.noarch                                         
+  python3-distro-1.8.0-6.fc39.noarch                                            
+  python3-dnf-4.18.1-2.fc39.noarch                                              
+  python3-enchant-3.2.2-10.fc39.noarch                                          
+  python3-fedora-1.1.1-10.fc39.noarch                                           
+  python3-file-magic-5.44-5.fc39.noarch                                         
+  python3-gitdb-4.0.10-3.fc39.noarch                                            
+  python3-gobject-base-3.46.0-1.fc39.x86_64                                     
+  python3-gobject-base-noarch-3.46.0-1.fc39.noarch                              
+  python3-gssapi-1.7.3-6.fc39.x86_64                                            
+  python3-hawkey-0.72.0-1.fc39.x86_64                                           
+  python3-idna-3.4-4.fc39.noarch                                                
+  python3-jinja2-3.1.2-5.fc39.noarch                                            
+  python3-kerberos-1.3.0-21.fc39.x86_64                                         
+  python3-kitchen-1.2.6-17.fc39.noarch                                          
+  python3-koji-1.33.1-2.fc39.noarch                                             
+  python3-libcomps-0.1.20-1.fc39.x86_64                                         
+  python3-libdnf-0.72.0-1.fc39.x86_64                                           
+  python3-libmodulemd-2.15.0-5.fc39.x86_64                                      
+  python3-libs-3.12.0-1.fc39.x86_64                                             
+  python3-lockfile-1:0.12.2-11.fc39.noarch                                      
+  python3-lxml-4.9.3-2.fc39.x86_64                                              
+  python3-markupsafe-2.1.3-2.fc39.x86_64                                        
+  python3-munch-2.5.0-13.fc39.noarch                                            
+  python3-openidc-client-0.6.0-20.20220119git0e2ed81.fc39.noarch                
+  python3-ply-3.11-20.fc39.noarch                                               
+  python3-progressbar2-3.53.2-9.fc39.noarch                                     
+  python3-pybeam-0.7-7.fc39.noarch                                              
+  python3-pycparser-2.20-11.fc39.noarch                                         
+  python3-pycurl-7.45.2-5.fc39.x86_64                                           
+  python3-pygit2-1.13.3-1.fc39.x86_64                                           
+  python3-pyroute2-0.7.3-3.fc39.noarch                                          
+  python3-pysocks-1.7.1-20.fc39.noarch                                          
+  python3-pyxdg-0.27-9.fc39.noarch                                              
+  python3-pyyaml-6.0.1-11.fc39.x86_64                                           
+  python3-requests-2.28.2-5.fc39.noarch                                         
+  python3-requests-gssapi-1.2.3-9.fc39.noarch                                   
+  python3-requests-kerberos-0.12.0-21.fc39.noarch                               
+  python3-rpkg-1.66-13.fc39.noarch                                              
+  python3-rpm-4.19.0-1.fc39.x86_64                                              
+  python3-rpmautospec-0.3.8-1.fc39.noarch                                       
+  python3-setuptools-67.7.2-7.fc39.noarch                                       
+  python3-six-1.16.0-12.fc39.noarch                                             
+  python3-smmap-5.0.0-6.fc39.noarch                                             
+  python3-soupsieve-2.5-1.fc39.noarch                                           
+  python3-templated-dictionary-1.2-4.fc39.noarch                                
+  python3-tomli-w-1.0.0-9.fc39.noarch                                           
+  python3-urllib3-1.26.18-1.fc39.noarch                                         
+  python3-urllib3+socks-1.26.18-1.fc39.noarch                                   
+  python3-utils-3.3.3-4.fc39.noarch                                             
+  python3-wcwidth-0.2.5-14.fc39.noarch                                          
+  python3-zstandard-0.21.0-3.fc39.x86_64                                        
+  rpkg-common-1.66-13.fc39.noarch                                               
+  rpm-sign-libs-4.19.0-1.fc39.x86_64                                            
+  rpmautospec-0.3.8-1.fc39.noarch                                               
+  rpmdevtools-9.6-4.fc39.noarch                                                 
+  rpmlint-2.4.0-10.fc39.noarch                                                  
+  rpmlint-fedora-license-data-1.35-1.fc39.noarch                                
+  shared-mime-info-2.2-4.fc39.x86_64                                            
+  systemd-254.7-1.fc39.x86_64                                                   
+  systemd-container-254.7-1.fc39.x86_64                                         
+  systemd-pam-254.7-1.fc39.x86_64                                               
+  systemd-rpm-macros-254.7-1.fc39.noarch                                        
+  tito-0.6.24-2.fc39.noarch                                                     
+  tpm2-tss-4.0.1-4.fc39.x86_64                                                  
+  tzdata-2023c-2.fc39.noarch                                                    
+  usermode-1.114-8.fc39.x86_64                                                  
+  zchunk-libs-1.3.2-1.fc39.x86_64                                               
+
+Complete!
+INFO: 
+Finish: run
+INFO:__main__:running command: mock -r /var/lib/copr-rpmbuild/results/mock-config.cfg --copyin /var/lib/copr-rpmbuild/workspace/workdir-hbhv3jjy/script /script
+INFO: mock.py version 5.2 starting (python version = 3.11.3, NVR = mock-5.2-1.fc38), args: /usr/libexec/mock/mock -r /var/lib/copr-rpmbuild/results/mock-config.cfg --copyin /var/lib/copr-rpmbuild/workspace/workdir-hbhv3jjy/script /script
+Start(bootstrap): init plugins
+INFO: tmpfs initialized
+INFO: selinux enabled
+INFO: chroot_scan: initialized
+INFO: compress_logs: initialized
+Finish(bootstrap): init plugins
+Start: init plugins
+INFO: tmpfs initialized
+INFO: selinux enabled
+INFO: chroot_scan: initialized
+INFO: compress_logs: initialized
+Finish: init plugins
+INFO: Signal handler active
+Start: run
+Mock Version: 5.2
+INFO: Mock Version: 5.2
+Start(bootstrap): chroot init
+INFO: mounting tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64-bootstrap/root.
+INFO: reusing tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64-bootstrap/root.
+INFO: calling preinit hooks
+INFO: enabled root cache
+INFO: enabled package manager cache
+Start(bootstrap): cleaning package manager metadata
+Finish(bootstrap): cleaning package manager metadata
+INFO: Package manager dnf detected and used (fallback)
+Finish(bootstrap): chroot init
+Start: chroot init
+INFO: mounting tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64/root.
+INFO: reusing tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64/root.
+INFO: calling preinit hooks
+INFO: enabled root cache
+INFO: enabled package manager cache
+Start: cleaning package manager metadata
+Finish: cleaning package manager metadata
+INFO: enabled HW Info plugin
+INFO: Package manager dnf detected and used (direct choice)
+Finish: chroot init
+INFO: copying /var/lib/copr-rpmbuild/workspace/workdir-hbhv3jjy/script to /var/lib/mock/copr-custom-fedora-39-x86_64/root/script
+Finish: run
+INFO:__main__:running command: mock -r /var/lib/copr-rpmbuild/results/mock-config.cfg --chroot 'set -ex; chmod a+x /script; rm -rf /workdir; mkdir -p /workdir; chown mockbuild /workdir;'
+INFO: mock.py version 5.2 starting (python version = 3.11.3, NVR = mock-5.2-1.fc38), args: /usr/libexec/mock/mock -r /var/lib/copr-rpmbuild/results/mock-config.cfg --chroot 'set -ex; chmod a+x /script; rm -rf /workdir; mkdir -p /workdir; chown mockbuild /workdir;'
+Start(bootstrap): init plugins
+INFO: tmpfs initialized
+INFO: selinux enabled
+INFO: chroot_scan: initialized
+INFO: compress_logs: initialized
+Finish(bootstrap): init plugins
+Start: init plugins
+INFO: tmpfs initialized
+INFO: selinux enabled
+INFO: chroot_scan: initialized
+INFO: compress_logs: initialized
+Finish: init plugins
+INFO: Signal handler active
+Start: run
+Mock Version: 5.2
+INFO: Mock Version: 5.2
+Start(bootstrap): chroot init
+INFO: mounting tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64-bootstrap/root.
+INFO: reusing tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64-bootstrap/root.
+INFO: calling preinit hooks
+INFO: enabled root cache
+INFO: enabled package manager cache
+Start(bootstrap): cleaning package manager metadata
+Finish(bootstrap): cleaning package manager metadata
+INFO: Package manager dnf detected and used (fallback)
+Finish(bootstrap): chroot init
+Start: chroot init
+INFO: mounting tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64/root.
+INFO: reusing tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64/root.
+INFO: calling preinit hooks
+INFO: enabled root cache
+INFO: enabled package manager cache
+Start: cleaning package manager metadata
+Finish: cleaning package manager metadata
+INFO: enabled HW Info plugin
+INFO: Package manager dnf detected and used (direct choice)
+Finish: chroot init
+INFO: Running in chroot: ['set -ex; chmod a+x /script; rm -rf /workdir; mkdir -p /workdir; chown mockbuild /workdir;']
+Start: chroot ['set -ex; chmod a+x /script; rm -rf /workdir; mkdir -p /workdir; chown mockbuild /workdir;']
++ chmod a+x /script
++ rm -rf /workdir
++ mkdir -p /workdir
++ chown mockbuild /workdir
+Finish: chroot ['set -ex; chmod a+x /script; rm -rf /workdir; mkdir -p /workdir; chown mockbuild /workdir;']
+Finish: run
+INFO:__main__:running command: mock -r /var/lib/copr-rpmbuild/results/mock-config.cfg --copyin /var/lib/copr-rpmbuild/results/hook_payload /workdir/hook_payload
+INFO: mock.py version 5.2 starting (python version = 3.11.3, NVR = mock-5.2-1.fc38), args: /usr/libexec/mock/mock -r /var/lib/copr-rpmbuild/results/mock-config.cfg --copyin /var/lib/copr-rpmbuild/results/hook_payload /workdir/hook_payload
+Start(bootstrap): init plugins
+INFO: tmpfs initialized
+INFO: selinux enabled
+INFO: chroot_scan: initialized
+INFO: compress_logs: initialized
+Finish(bootstrap): init plugins
+Start: init plugins
+INFO: tmpfs initialized
+INFO: selinux enabled
+INFO: chroot_scan: initialized
+INFO: compress_logs: initialized
+Finish: init plugins
+INFO: Signal handler active
+Start: run
+Mock Version: 5.2
+INFO: Mock Version: 5.2
+Start(bootstrap): chroot init
+INFO: mounting tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64-bootstrap/root.
+INFO: reusing tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64-bootstrap/root.
+INFO: calling preinit hooks
+INFO: enabled root cache
+INFO: enabled package manager cache
+Start(bootstrap): cleaning package manager metadata
+Finish(bootstrap): cleaning package manager metadata
+INFO: Package manager dnf detected and used (fallback)
+Finish(bootstrap): chroot init
+Start: chroot init
+INFO: mounting tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64/root.
+INFO: reusing tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64/root.
+INFO: calling preinit hooks
+INFO: enabled root cache
+INFO: enabled package manager cache
+Start: cleaning package manager metadata
+Finish: cleaning package manager metadata
+INFO: enabled HW Info plugin
+INFO: Package manager dnf detected and used (direct choice)
+Finish: chroot init
+INFO: copying /var/lib/copr-rpmbuild/results/hook_payload to /var/lib/mock/copr-custom-fedora-39-x86_64/root/workdir/hook_payload
+Finish: run
+INFO:__main__:running command: mock -r /var/lib/copr-rpmbuild/results/mock-config.cfg --shell 'chmod a+r /workdir/hook_payload'
+INFO: mock.py version 5.2 starting (python version = 3.11.3, NVR = mock-5.2-1.fc38), args: /usr/libexec/mock/mock -r /var/lib/copr-rpmbuild/results/mock-config.cfg --shell 'chmod a+r /workdir/hook_payload'
+Start(bootstrap): init plugins
+INFO: tmpfs initialized
+INFO: selinux enabled
+INFO: chroot_scan: initialized
+INFO: compress_logs: initialized
+Finish(bootstrap): init plugins
+Start: init plugins
+INFO: tmpfs initialized
+INFO: selinux enabled
+INFO: chroot_scan: initialized
+INFO: compress_logs: initialized
+Finish: init plugins
+INFO: Signal handler active
+Start: run
+Start(bootstrap): chroot init
+INFO: mounting tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64-bootstrap/root.
+INFO: reusing tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64-bootstrap/root.
+INFO: calling preinit hooks
+INFO: enabled root cache
+INFO: enabled package manager cache
+Start(bootstrap): cleaning package manager metadata
+Finish(bootstrap): cleaning package manager metadata
+INFO: Package manager dnf detected and used (fallback)
+Finish(bootstrap): chroot init
+Start: chroot init
+INFO: mounting tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64/root.
+INFO: reusing tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64/root.
+INFO: calling preinit hooks
+INFO: enabled root cache
+INFO: enabled package manager cache
+Start: cleaning package manager metadata
+Finish: cleaning package manager metadata
+INFO: enabled HW Info plugin
+INFO: Package manager dnf detected and used (direct choice)
+Finish: chroot init
+Start: shell
+Finish: shell
+Finish: run
+INFO:__main__:running command: mock -r /var/lib/copr-rpmbuild/results/mock-config.cfg --chroot 'su - mockbuild -c '"'"'set -xe ; cd /workdir ; COPR_OWNER=@copr COPR_PROJECT=copr-pull-requests COPR_PACKAGE=copr-frontend COPR_RESULTDIR=/workdir/results/frontend /script'"'"''
+INFO: mock.py version 5.2 starting (python version = 3.11.3, NVR = mock-5.2-1.fc38), args: /usr/libexec/mock/mock -r /var/lib/copr-rpmbuild/results/mock-config.cfg --chroot 'su - mockbuild -c '"'"'set -xe ; cd /workdir ; COPR_OWNER=@copr COPR_PROJECT=copr-pull-requests COPR_PACKAGE=copr-frontend COPR_RESULTDIR=/workdir/results/frontend /script'"'"''
+Start(bootstrap): init plugins
+INFO: tmpfs initialized
+INFO: selinux enabled
+INFO: chroot_scan: initialized
+INFO: compress_logs: initialized
+Finish(bootstrap): init plugins
+Start: init plugins
+INFO: tmpfs initialized
+INFO: selinux enabled
+INFO: chroot_scan: initialized
+INFO: compress_logs: initialized
+Finish: init plugins
+INFO: Signal handler active
+Start: run
+Mock Version: 5.2
+INFO: Mock Version: 5.2
+Start(bootstrap): chroot init
+INFO: mounting tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64-bootstrap/root.
+INFO: reusing tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64-bootstrap/root.
+INFO: calling preinit hooks
+INFO: enabled root cache
+INFO: enabled package manager cache
+Start(bootstrap): cleaning package manager metadata
+Finish(bootstrap): cleaning package manager metadata
+INFO: Package manager dnf detected and used (fallback)
+Finish(bootstrap): chroot init
+Start: chroot init
+INFO: mounting tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64/root.
+INFO: reusing tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64/root.
+INFO: calling preinit hooks
+INFO: enabled root cache
+INFO: enabled package manager cache
+Start: cleaning package manager metadata
+Finish: cleaning package manager metadata
+INFO: enabled HW Info plugin
+INFO: Package manager dnf detected and used (direct choice)
+Finish: chroot init
+INFO: Running in chroot: ["su - mockbuild -c 'set -xe ; cd /workdir ; COPR_OWNER=@copr COPR_PROJECT=copr-pull-requests COPR_PACKAGE=copr-frontend COPR_RESULTDIR=/workdir/results/frontend /script'"]
+Start: chroot ["su - mockbuild -c 'set -xe ; cd /workdir ; COPR_OWNER=@copr COPR_PROJECT=copr-pull-requests COPR_PACKAGE=copr-frontend COPR_RESULTDIR=/workdir/results/frontend /script'"]
++ cd /workdir
++ COPR_OWNER=@copr
++ COPR_PROJECT=copr-pull-requests
++ COPR_PACKAGE=copr-frontend
++ COPR_RESULTDIR=/workdir/results/frontend
++ /script
++ set -e
++ clone_url_parent=https://github.com/fedora-copr/copr
+++ basename https://github.com/fedora-copr/copr
++ workdir=copr
++ workdir=copr
+++ readlink -f hook_payload
++ hook_payload=/workdir/hook_payload
++ mkdir -p /workdir/results/frontend
+++ readlink -f /workdir/results/frontend
++ resultdir=/workdir/results/frontend
++ test -d copr-ci-tooling
++ git clone --depth 1 https://github.com/praiskup/copr-ci-tooling.git
+Cloning into 'copr-ci-tooling'...
++ export PATH=/workdir/copr-ci-tooling:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
++ PATH=/workdir/copr-ci-tooling:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
++ git clone --recursive --no-single-branch https://github.com/fedora-copr/copr
+Cloning into 'copr'...
++ cd copr
++ webhook-checkout /workdir/hook_payload
+From https://github.com/fedora-copr/copr
+ * [new ref]           6e59e72d33054e07f7f93201709ac1d0afbdbe3e -> pull-requests/pr-detached-2977
+Note: switching to 'refs/remotes/pull-requests/pr-detached-2977'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at 6e59e72d Merge be7ff4eee8476638876d3c6dfdef9feb8234d0e5 into 94f00da2241609959d22f5244d545664a67fedff
+++ basename /workdir/results/frontend
++ basename=frontend
++ cd frontend
++ tito build --srpm --test -o /workdir/results/frontend
+Creating output directory: /workdir/results/frontend
+Building package [copr-frontend-1.202-1]
+Wrote: /workdir/results/frontend/copr-frontend-git-13.b0c33fc.tar.gz
+
+setting SOURCE_DATE_EPOCH=1700697600
+Wrote: /workdir/results/frontend/copr-frontend-1.202-1.git.13.6e59e72.src.rpm
+
+
++ cd /workdir/results/frontend
++ bsdtar -xf copr-frontend-1.202-1.git.13.6e59e72.src.rpm
+Finish: chroot ["su - mockbuild -c 'set -xe ; cd /workdir ; COPR_OWNER=@copr COPR_PROJECT=copr-pull-requests COPR_PACKAGE=copr-frontend COPR_RESULTDIR=/workdir/results/frontend /script'"]
+Finish: run
+Running: mock -r /var/lib/copr-rpmbuild/results/mock-config.cfg --copyout /workdir/results/frontend /var/lib/copr-rpmbuild/workspace/workdir-hbhv3jjy/srcdir
+
+cmd: ['mock', '-r', '/var/lib/copr-rpmbuild/results/mock-config.cfg', '--copyout', '/workdir/results/frontend', '/var/lib/copr-rpmbuild/workspace/workdir-hbhv3jjy/srcdir']
+cwd: .
+rc: 0
+stdout: 
+stderr: INFO: mock.py version 5.2 starting (python version = 3.11.3, NVR = mock-5.2-1.fc38), args: /usr/libexec/mock/mock -r /var/lib/copr-rpmbuild/results/mock-config.cfg --copyout /workdir/results/frontend /var/lib/copr-rpmbuild/workspace/workdir-hbhv3jjy/srcdir
+Start(bootstrap): init plugins
+INFO: tmpfs initialized
+INFO: selinux enabled
+INFO: chroot_scan: initialized
+INFO: compress_logs: initialized
+Finish(bootstrap): init plugins
+Start: init plugins
+INFO: tmpfs initialized
+INFO: selinux enabled
+INFO: chroot_scan: initialized
+INFO: compress_logs: initialized
+Finish: init plugins
+INFO: Signal handler active
+Start: run
+Mock Version: 5.2
+INFO: Mock Version: 5.2
+Start(bootstrap): chroot init
+INFO: mounting tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64-bootstrap/root.
+INFO: reusing tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64-bootstrap/root.
+INFO: calling preinit hooks
+INFO: enabled root cache
+INFO: enabled package manager cache
+Start(bootstrap): cleaning package manager metadata
+Finish(bootstrap): cleaning package manager metadata
+INFO: Package manager dnf detected and used (fallback)
+Finish(bootstrap): chroot init
+Start: chroot init
+INFO: mounting tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64/root.
+INFO: reusing tmpfs at /var/lib/mock/copr-custom-fedora-39-x86_64/root.
+INFO: calling preinit hooks
+INFO: enabled root cache
+INFO: enabled package manager cache
+Start: cleaning package manager metadata
+Finish: cleaning package manager metadata
+INFO: enabled HW Info plugin
+INFO: Package manager dnf detected and used (direct choice)
+Finish: chroot init
+INFO: copying /var/lib/mock/copr-custom-fedora-39-x86_64/root/workdir/results/frontend to /var/lib/copr-rpmbuild/workspace/workdir-hbhv3jjy/srcdir
+Finish: run
+
+Running: mock -r /var/lib/copr-rpmbuild/results/mock-config.cfg --scrub all
+
+cmd: ['mock', '-r', '/var/lib/copr-rpmbuild/results/mock-config.cfg', '--scrub', 'all']
+cwd: .
+rc: 0
+stdout: 
+stderr: INFO: mock.py version 5.2 starting (python version = 3.11.3, NVR = mock-5.2-1.fc38), args: /usr/libexec/mock/mock -r /var/lib/copr-rpmbuild/results/mock-config.cfg --scrub all
+Start(bootstrap): init plugins
+INFO: tmpfs initialized
+INFO: selinux enabled
+INFO: chroot_scan: initialized
+INFO: compress_logs: initialized
+Finish(bootstrap): init plugins
+Start: init plugins
+INFO: tmpfs initialized
+INFO: selinux enabled
+INFO: chroot_scan: initialized
+INFO: compress_logs: initialized
+Finish: init plugins
+INFO: Signal handler active
+Start: run
+Start: scrub ['all']
+INFO: scrubbing everything for mock-config
+INFO: unmounting tmpfs.
+INFO: unmounting tmpfs.
+Finish: scrub ['all']
+Finish: run
+
+Running: rpmbuild -bs --define '_sourcedir /var/lib/copr-rpmbuild/workspace/workdir-hbhv3jjy/srcdir' --define '_rpmdir /var/lib/copr-rpmbuild/workspace/workdir-hbhv3jjy/srcdir' --define '_builddir /var/lib/copr-rpmbuild/workspace/workdir-hbhv3jjy/srcdir' --define '_specdir /var/lib/copr-rpmbuild/workspace/workdir-hbhv3jjy/srcdir' --define '_srcrpmdir /var/lib/copr-rpmbuild/results' /var/lib/copr-rpmbuild/workspace/workdir-hbhv3jjy/srcdir/copr-frontend.spec
+
+cmd: ['rpmbuild', '-bs', '--define', '_sourcedir /var/lib/copr-rpmbuild/workspace/workdir-hbhv3jjy/srcdir', '--define', '_rpmdir /var/lib/copr-rpmbuild/workspace/workdir-hbhv3jjy/srcdir', '--define', '_builddir /var/lib/copr-rpmbuild/workspace/workdir-hbhv3jjy/srcdir', '--define', '_specdir /var/lib/copr-rpmbuild/workspace/workdir-hbhv3jjy/srcdir', '--define', '_srcrpmdir /var/lib/copr-rpmbuild/results', '/var/lib/copr-rpmbuild/workspace/workdir-hbhv3jjy/srcdir/copr-frontend.spec']
+cwd: .
+rc: 0
+stdout: setting SOURCE_DATE_EPOCH=1700697600
+Wrote: /var/lib/copr-rpmbuild/results/copr-frontend-1.202-1.git.13.6e59e72.src.rpm
+stderr: 
+
+Output: ['hook_payload', 'mock-config.cfg', 'copr-frontend-1.202-1.git.13.6e59e72.src.rpm']
+Running SRPMResults tool
+Package info: {
+    "name": "copr-frontend",
+    "epoch": null,
+    "version": "1.202",
+    "release": "1.git.13.6e59e72",
+    "exclusivearch": [],
+    "excludearch": []
+}
+SRPMResults finished
