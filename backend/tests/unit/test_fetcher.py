@@ -59,7 +59,7 @@ class TestProviders:
                 {"name": name.removesuffix(".gz"), "content": content}
                 for name, content in logs.items()
             ],
-            key=lambda item: item["name"],
+            key=sort_by_name,
         )
         assert expected_result == sorted(provider.fetch_logs(), key=sort_by_name)
 
@@ -123,10 +123,10 @@ class TestProviders:
             return
 
         result = sorted(provider.fetch_logs(), key=sort_by_name)
-        expected_result = [
+        expected_result = sorted([
             {"name": name, "content": content}
             for name, content in koji_chroot_logs_x86_64.items()
-        ]
+        ], key=sort_by_name)
 
         assert len(result) == 3
         assert expected_result == result
