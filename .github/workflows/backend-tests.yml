@@ -1,0 +1,30 @@
+name: Test backend
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  test-backend:
+    runs-on: ubuntu-latest
+    container: fedora:latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python --version 3.9
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run: |
+          sudo dnf install -y git
+          python -m pip install --upgrade pip
+          python -m pip install poetry
+          poetry install
+      - name: Run tests
+        run: |
+          poetry run pytest -vvv tests/

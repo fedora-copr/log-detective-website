@@ -55,6 +55,6 @@ COPY --from=0 /src/backend /src/backend
 # According to the documentation, gunicorn is a valid production server
 # https://www.uvicorn.org/deployment/
 WORKDIR /src/backend
-ENV PYTHONPATH="${PYTHONPATH}:/src"
+ENV PYTHONPATH="${PYTHONPATH}:/src/backend"
 
 CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "api:app", "-b", "0.0.0.0:8080"]

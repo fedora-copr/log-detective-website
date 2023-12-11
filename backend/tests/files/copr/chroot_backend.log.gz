@@ -1,0 +1,172 @@
+[2023-12-03 20:57:53,162][  INFO][PID:917156] Marking build as starting
+[2023-12-03 20:57:53,222][  INFO][PID:917156] Trying to allocate VM
+[2023-12-03 20:57:56,252][  INFO][PID:917156] Allocated host ResallocHost, ticket_id=68388, hostname=54.161.44.226
+[2023-12-03 20:57:56,253][  INFO][PID:917156] Allocating ssh connection to builder
+[2023-12-03 20:57:56,253][  INFO][PID:917156] Checking that builder machine is OK
+[2023-12-03 20:57:56,264][  INFO][PID:917156] Popen command started: ssh -F /home/copr/.ssh/config mockbuilder@54.161.44.226 'rpm -q copr-rpmbuild --qf "%{VERSION}
+"'
+[2023-12-03 20:57:56,596][  INFO][PID:917156] Popen command started: ssh -F /home/copr/.ssh/config mockbuilder@54.161.44.226 '/usr/bin/test -f /etc/mock/fedora-39-x86_64.cfg'
+[2023-12-03 20:57:56,812][  INFO][PID:917156] Filling build.info file with builder info
+[2023-12-03 20:57:56,813][  INFO][PID:917156] Sending build state back to frontend: {
+    "builds": [
+        {
+            "timeout": 18000,
+            "frontend_base_url": "https://copr.fedorainfracloud.org",
+            "memory_reqs": 2048,
+            "enable_net": false,
+            "project_owner": "@copr",
+            "project_name": "copr-pull-requests",
+            "project_dirname": "copr-pull-requests:pr:2977",
+            "submitter": null,
+            "ended_on": null,
+            "started_on": 1701637076.8134327,
+            "submitted_on": null,
+            "status": 3,
+            "chroot": "fedora-39-x86_64",
+            "arch": "x86_64",
+            "buildroot_pkgs": [],
+            "task_id": "6720971-fedora-39-x86_64",
+            "build_id": 6720971,
+            "package_name": "copr-frontend",
+            "package_version": "1.202-1.git.13.6e59e72",
+            "git_repo": "https://copr-dist-git.fedorainfracloud.org/git/@copr/copr-pull-requests:pr:2977/copr-frontend",
+            "git_hash": "1b09bc55d0bb401869e4f805f540e2d8eb2e7102",
+            "git_branch": null,
+            "source_type": null,
+            "source_json": null,
+            "pkg_name": null,
+            "pkg_main_version": null,
+            "pkg_epoch": null,
+            "pkg_release": null,
+            "srpm_url": null,
+            "uses_devel_repo": false,
+            "sandbox": "@copr/copr-pull-requests--a3dad979-fbd8-4a6c-a9d1-c93134617f89",
+            "results": null,
+            "appstream": false,
+            "background": true,
+            "fedora_review": false,
+            "isolation": "default",
+            "repo_priority": null,
+            "repos": [
+                {
+                    "baseurl": "https://download.copr.fedorainfracloud.org/results/@copr/copr-pull-requests/fedora-39-x86_64/",
+                    "id": "copr_base",
+                    "name": "Copr repository",
+                    "priority": null
+                },
+                {
+                    "baseurl": "https://download.copr.fedorainfracloud.org/results/@copr/copr-dev/fedora-39-x86_64/",
+                    "id": "copr_copr_copr_dev",
+                    "name": "Additional repo copr_copr_copr_dev"
+                }
+            ],
+            "tags": [
+                "arch_x86_64"
+            ],
+            "with_opts": [],
+            "without_opts": [],
+            "destdir": "/var/lib/copr/public_html/results/@copr/copr-pull-requests:pr:2977",
+            "results_repo_url": "https://download.copr.fedorainfracloud.org/results/@copr/copr-pull-requests:pr:2977",
+            "result_dir": "06720971-copr-frontend",
+            "built_packages": "",
+            "id": 6720971,
+            "mockchain_macros": {
+                "copr_username": "@copr",
+                "copr_projectname": "copr-pull-requests",
+                "vendor": "Fedora Project COPR (@copr/copr-pull-requests)"
+            }
+        }
+    ]
+}
+[2023-12-03 20:57:56,876][  INFO][PID:917156] Sending fedora-messaging bus message in build.start
+[2023-12-03 20:57:57,754][  INFO][PID:917156] Sending fedora-messaging bus message in chroot.start
+[2023-12-03 20:57:57,787][  INFO][PID:917156] Starting remote build: copr-rpmbuild --verbose --drop-resultdir --task-url https://copr.fedorainfracloud.org/backend/get-build-task/6720971-fedora-39-x86_64 --chroot fedora-39-x86_64 --detached
+[2023-12-03 20:57:57,800][  INFO][PID:917156] Popen command started: ssh -F /home/copr/.ssh/config mockbuilder@54.161.44.226 'copr-rpmbuild --verbose --drop-resultdir --task-url https://copr.fedorainfracloud.org/backend/get-build-task/6720971-fedora-39-x86_64 --chroot fedora-39-x86_64 --detached'
+[2023-12-03 20:57:58,241][  INFO][PID:917156] Downloading the builder-live.log file, attempt 1
+[2023-12-03 20:57:58,255][  INFO][PID:917156] Popen command started: ssh -F /home/copr/.ssh/config mockbuilder@54.161.44.226 copr-rpmbuild-log
+[2023-12-03 20:59:31,745][  INFO][PID:917156] Downloading results from builder
+[2023-12-03 20:59:31,746][  INFO][PID:917156] rsyncing of mockbuilder@54.161.44.226:/var/lib/copr-rpmbuild/results/ to /var/lib/copr/public_html/results/@copr/copr-pull-requests:pr:2977/fedora-39-x86_64/06720971-copr-frontend started
+[2023-12-03 20:59:31,758][  INFO][PID:917156] Popen command started: /usr/bin/rsync -rltDvH --chmod=D755,F644 -e 'ssh -F /home/copr/.ssh/config' mockbuilder@54.161.44.226:/var/lib/copr-rpmbuild/results/ /var/lib/copr/public_html/results/@copr/copr-pull-requests:pr:2977/fedora-39-x86_64/06720971-copr-frontend/ &> /var/lib/copr/public_html/results/@copr/copr-pull-requests:pr:2977/fedora-39-x86_64/06720971-copr-frontend/build-06720971.rsync.log
+[2023-12-03 20:59:32,022][  INFO][PID:917156] rsyncing finished.
+[2023-12-03 20:59:32,024][  INFO][PID:917156] Releasing VM back to pool
+[2023-12-03 20:59:32,038][  INFO][PID:917156] Searching for 'success' file in resultdir
+[2023-12-03 20:59:32,039][ ERROR][PID:917156] Build failed: Backend process error: No success file => build failure
+[2023-12-03 20:59:32,040][  INFO][PID:917156] Finished build: id=6720971 failed=True timeout=18000 destdir=/var/lib/copr/public_html/results/@copr/copr-pull-requests:pr:2977 chroot=fedora-39-x86_64 
+[2023-12-03 20:59:32,042][ ERROR][PID:917156] Backend process error: No success file => build failure
+[2023-12-03 20:59:32,043][  INFO][PID:917156] Worker failed build, took 95.2297751903534
+[2023-12-03 20:59:32,044][  INFO][PID:917156] Sending build state back to frontend: {
+    "builds": [
+        {
+            "timeout": 18000,
+            "frontend_base_url": "https://copr.fedorainfracloud.org",
+            "memory_reqs": 2048,
+            "enable_net": false,
+            "project_owner": "@copr",
+            "project_name": "copr-pull-requests",
+            "project_dirname": "copr-pull-requests:pr:2977",
+            "submitter": null,
+            "ended_on": 1701637172.043208,
+            "started_on": 1701637076.8134327,
+            "submitted_on": null,
+            "status": 0,
+            "chroot": "fedora-39-x86_64",
+            "arch": "x86_64",
+            "buildroot_pkgs": [],
+            "task_id": "6720971-fedora-39-x86_64",
+            "build_id": 6720971,
+            "package_name": "copr-frontend",
+            "package_version": "1.202-1.git.13.6e59e72",
+            "git_repo": "https://copr-dist-git.fedorainfracloud.org/git/@copr/copr-pull-requests:pr:2977/copr-frontend",
+            "git_hash": "1b09bc55d0bb401869e4f805f540e2d8eb2e7102",
+            "git_branch": null,
+            "source_type": null,
+            "source_json": null,
+            "pkg_name": null,
+            "pkg_main_version": null,
+            "pkg_epoch": null,
+            "pkg_release": null,
+            "srpm_url": null,
+            "uses_devel_repo": false,
+            "sandbox": "@copr/copr-pull-requests--a3dad979-fbd8-4a6c-a9d1-c93134617f89",
+            "results": null,
+            "appstream": false,
+            "background": true,
+            "fedora_review": false,
+            "isolation": "default",
+            "repo_priority": null,
+            "repos": [
+                {
+                    "baseurl": "https://download.copr.fedorainfracloud.org/results/@copr/copr-pull-requests/fedora-39-x86_64/",
+                    "id": "copr_base",
+                    "name": "Copr repository",
+                    "priority": null
+                },
+                {
+                    "baseurl": "https://download.copr.fedorainfracloud.org/results/@copr/copr-dev/fedora-39-x86_64/",
+                    "id": "copr_copr_copr_dev",
+                    "name": "Additional repo copr_copr_copr_dev"
+                }
+            ],
+            "tags": [
+                "arch_x86_64"
+            ],
+            "with_opts": [],
+            "without_opts": [],
+            "destdir": "/var/lib/copr/public_html/results/@copr/copr-pull-requests:pr:2977",
+            "results_repo_url": "https://download.copr.fedorainfracloud.org/results/@copr/copr-pull-requests:pr:2977",
+            "result_dir": "06720971-copr-frontend",
+            "built_packages": "",
+            "id": 6720971,
+            "mockchain_macros": {
+                "copr_username": "@copr",
+                "copr_projectname": "copr-pull-requests",
+                "vendor": "Fedora Project COPR (@copr/copr-pull-requests)"
+            }
+        }
+    ]
+}
+[2023-12-03 20:59:32,104][  INFO][PID:917156] Sending fedora-messaging bus message in build.end
+[2023-12-03 20:59:32,146][  INFO][PID:917156] Compressing /var/lib/copr/public_html/results/@copr/copr-pull-requests:pr:2977/fedora-39-x86_64/06720971-copr-frontend/builder-live.log by gzip
+[2023-12-03 20:59:32,164][  INFO][PID:917156] Running command 'gzip /var/lib/copr/public_html/results/@copr/copr-pull-requests:pr:2977/fedora-39-x86_64/06720971-copr-frontend/builder-live.log' as PID 927284
+[2023-12-03 20:59:32,174][  INFO][PID:917156] Finished after 0 seconds with exit code 0 (gzip /var/lib/copr/public_html/results/@copr/copr-pull-requests:pr:2977/fedora-39-x86_64/06720971-copr-frontend/builder-live.log)
+[2023-12-03 20:59:32,176][  INFO][PID:917156] Compressing /var/lib/copr/public_html/results/@copr/copr-pull-requests:pr:2977/fedora-39-x86_64/06720971-copr-frontend/backend.log by gzip

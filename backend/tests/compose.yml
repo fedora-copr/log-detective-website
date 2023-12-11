@@ -1,0 +1,16 @@
+version: "3"
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile
+    hostname: backend
+    working_dir: /opt/log-detective-website/backend/
+    command: "pytest -vvv tests/"
+    volumes:
+      - .:/opt/log-detective-website:z
+      - persistent:/persistent
+    environment:
+      - ENV=devel
+      - FEEDBACK_DIR=/persistent/results
+      - PYTHONPATH=/opt/log-detective-website/backend
